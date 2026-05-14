@@ -1,45 +1,13 @@
-const STORAGE_KEY = "coprayer-state-v1";
+const STORAGE_KEY = "coprayer-state-v2";
 
 const palette = ["#71806d", "#b37960", "#7d7964", "#b99654", "#b46678", "#5f746f"];
 
 const initialState = {
-  activeProfileId: "p1",
+  activeProfileId: null,
   view: "profiles",
   sort: "desc",
-  profiles: [
-    { id: "p1", name: "하은", color: palette[0] },
-    { id: "p2", name: "민준", color: palette[1] },
-    { id: "p3", name: "서연", color: palette[2] },
-  ],
-  prayers: [
-    {
-      id: "r1",
-      profileId: "p1",
-      title: "이번 주 가족 예배를 위해",
-      body: "각자의 일정이 바쁘지만 마음을 모아 예배할 수 있도록 함께 기도해 주세요.",
-      createdAt: "2026-05-12T10:20:00.000Z",
-      updatedAt: null,
-      prayedBy: ["p2"],
-      comments: [
-        {
-          id: "c1",
-          profileId: "p2",
-          body: "오늘 저녁에 함께 기도할게요.",
-          createdAt: "2026-05-12T11:05:00.000Z",
-        },
-      ],
-    },
-    {
-      id: "r2",
-      profileId: "p2",
-      title: "새로운 직장 적응",
-      body: "업무와 관계 안에서 지혜롭게 배우고 건강한 리듬을 찾도록 기도 부탁해요.",
-      createdAt: "2026-05-13T01:30:00.000Z",
-      updatedAt: null,
-      prayedBy: ["p1", "p3"],
-      comments: [],
-    },
-  ],
+  profiles: [],
+  prayers: [],
 };
 
 let state = loadState();
@@ -134,6 +102,12 @@ function renderProfiles() {
 
 function renderActiveProfile() {
   const profile = getActiveProfile();
+  if (!profile) {
+    activeProfile.textContent = "프로필을 추가해 주세요";
+    composerAuthor.textContent = "프로필 필요";
+    return;
+  }
+
   activeProfile.replaceChildren(makeAvatar(profile), document.createTextNode(`${profile.name}으로 참여 중`));
   composerAuthor.textContent = profile.name;
 }
@@ -147,7 +121,7 @@ function renderBoard() {
   if (state.prayers.length === 0) {
     const empty = document.createElement("div");
     empty.className = "empty-state";
-    empty.textContent = "아직 공유된 기도제목이 없습니다.";
+    empty.textContent = state.profiles.length === 0 ? "먼저 프로필을 추가해 주세요." : "아직 공유된 기도제목이 없습니다.";
     prayerBoard.append(empty);
     return;
   }
@@ -181,8 +155,8 @@ function renderPrayerCard(prayer) {
   const profile = getProfile(prayer.profileId);
   const active = getActiveProfile();
   const node = prayerTemplate.content.firstElementChild.cloneNode(true);
-  const isAuthor = prayer.profileId === active.id;
-  const hasPrayed = prayer.prayedBy.includes(active.id);
+  const isAuthor = active && prayer.profileId === active.id;
+  const hasPrayed = active && prayer.prayedBy.includes(active.id);
 
   node.querySelector(".author-block .avatar").replaceWith(makeAvatar(profile));
   node.querySelector(".author-name").textContent = profile.name;
@@ -284,7 +258,8 @@ function bindCommentForm(node, prayerId) {
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     const body = input.value.trim();
-    if (!body) return;
+    const active = getActiveProfile();
+    if (!body || !active) return;
 
     state.prayers = state.prayers.map((prayer) => {
       if (prayer.id !== prayerId) return prayer;
@@ -294,7 +269,7 @@ function bindCommentForm(node, prayerId) {
           ...prayer.comments,
           {
             id: createId("c"),
-            profileId: getActiveProfile().id,
+            profileId: active.id,
             body,
             createdAt: new Date().toISOString(),
           },
@@ -307,7 +282,8 @@ function bindCommentForm(node, prayerId) {
 }
 
 function togglePrayerReaction(prayerId) {
-  const activeId = getActiveProfile().id;
+  const activeId = getActiveProfile()?.id;
+  if (!activeId) return;
   state.prayers = state.prayers.map((prayer) => {
     if (prayer.id !== prayerId) return prayer;
     const prayedBy = prayer.prayedBy.includes(activeId)
@@ -347,12 +323,13 @@ prayerForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const title = prayerForm.elements.prayerTitle.value.trim();
   const body = prayerForm.elements.prayerBody.value.trim();
-  if (!title || !body) return;
+  const active = getActiveProfile();
+  if (!title || !body || !active) return;
 
   state.prayers = [
     {
       id: createId("r"),
-      profileId: getActiveProfile().id,
+      profileId: active.id,
       title,
       body,
       createdAt: new Date().toISOString(),
