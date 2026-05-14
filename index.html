@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My prayer</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="sidebar" aria-label="프로필">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">✦</div>
+          <div>
+            <h1>My prayer</h1>
+            <p>함께 나누는 기도제목</p>
+          </div>
+        </div>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <h2>내 프로필</h2>
+          </div>
+          <div id="profileList" class="profile-list"></div>
+          <form id="profileForm" class="profile-form" autocomplete="off">
+            <label for="profileName">프로필 추가</label>
+            <div class="inline-form">
+              <input id="profileName" name="profileName" type="text" maxlength="18" placeholder="이름" required />
+              <button type="submit" aria-label="프로필 추가">+</button>
+            </div>
+          </form>
+        </section>
+      </aside>
+
+      <section class="content">
+        <header class="topbar">
+          <div>
+            <p class="scripture">너희가 내안에 거하고 내말이 너희안에 거하면 무엇이든지 원하는대로 구하라 그리하면 이루리라</p>
+          </div>
+          <div class="active-profile" id="activeProfile"></div>
+        </header>
+
+        <section class="composer" aria-label="기도제목 작성">
+          <form id="prayerForm">
+            <div class="composer-top">
+              <label for="prayerTitle">기도제목</label>
+              <span id="composerAuthor"></span>
+            </div>
+            <input id="prayerTitle" name="prayerTitle" type="text" maxlength="70" placeholder="제목을 입력하세요" required />
+            <textarea id="prayerBody" name="prayerBody" rows="4" maxlength="500" placeholder="함께 기도할 내용을 적어 주세요" required></textarea>
+            <div class="composer-actions">
+              <p>등록일과 작성 프로필이 함께 표시됩니다.</p>
+              <button type="submit">공유하기</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="toolbar" aria-label="목록 보기 설정">
+          <div class="segmented" role="tablist" aria-label="정렬 방식">
+            <button id="viewProfiles" class="is-active" type="button">프로필별</button>
+            <button id="viewTimeline" type="button">전체 시간순</button>
+          </div>
+          <select id="sortOrder" aria-label="정렬 순서">
+            <option value="desc">최신순</option>
+            <option value="asc">오래된순</option>
+          </select>
+        </section>
+
+        <section id="prayerBoard" class="prayer-board" aria-live="polite"></section>
+      </section>
+    </main>
+
+    <template id="prayerTemplate">
+      <article class="prayer-card">
+        <header class="prayer-card-header">
+          <div class="author-block">
+            <div class="avatar" aria-hidden="true"></div>
+            <div>
+              <strong class="author-name"></strong>
+              <time class="created-at"></time>
+            </div>
+          </div>
+          <button class="edit-button" type="button" aria-label="기도제목 수정">수정</button>
+        </header>
+        <div class="prayer-copy">
+          <h4></h4>
+          <p></p>
+        </div>
+        <form class="edit-form" hidden>
+          <input class="edit-title" type="text" maxlength="70" required />
+          <textarea class="edit-body" rows="4" maxlength="500" required></textarea>
+          <div class="edit-actions">
+            <button class="cancel-edit" type="button">취소</button>
+            <button type="submit">저장</button>
+          </div>
+        </form>
+        <div class="reaction-row">
+          <button class="pray-button" type="button"></button>
+          <span class="reaction-summary"></span>
+        </div>
+        <section class="comments">
+          <h5>댓글</h5>
+          <div class="comment-list"></div>
+          <form class="comment-form">
+            <input type="text" maxlength="180" placeholder="댓글을 남겨 주세요" required />
+            <button type="submit">등록</button>
+          </form>
+        </section>
+      </article>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
