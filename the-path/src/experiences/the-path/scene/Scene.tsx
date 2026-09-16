@@ -1,12 +1,12 @@
 import { useEffect, useRef } from 'react'
 import { PARAMS } from '../params'
-import { usePrefersDark } from '../hooks/usePrefersDark'
+import { usePrefersDark } from '../../../shared/usePrefersDark'
 import {
   availableMoves,
   type SessionAction,
   type SessionState,
 } from '../state/session'
-import { screenToWorld, worldToScreen, type Camera } from './camera'
+import { screenToWorld, worldToScreen, type Camera } from '../../../shared/camera'
 import { drawScene } from './render'
 import { resolveTheme } from './theme'
 

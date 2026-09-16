@@ -1,7 +1,7 @@
 import { PARAMS } from '../params'
 import type { Graph } from '../graph/types'
 import type { Phase, PendingMove } from '../state/session'
-import { worldToScreen, type Camera } from './camera'
+import { worldToScreen, type Camera } from '../../../shared/camera'
 import type { Theme } from './theme'
 
 export interface DrawInput {

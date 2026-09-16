@@ -1,5 +1,5 @@
 import { PARAMS } from '../params'
-import { createRng, randInt, randRange, type Rng } from './rng'
+import { createRng, randInt, randRange, type Rng } from '../../../shared/rng'
 import type { Graph, GraphEdge, GraphNode } from './types'
 
 function nodeId(stage: number, index: number): string {
