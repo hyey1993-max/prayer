@@ -1,58 +1,46 @@
-import { useEffect, useReducer, useState } from 'react'
-import { PARAMS } from './params'
-import { Scene } from './scene/Scene'
-import { createSession, sessionReducer } from './state/session'
+import { lazy, Suspense, useState } from 'react'
+
+const ThePathExperience = lazy(() => import('./experiences/the-path/ThePathExperience'))
+const TheParticularExperience = lazy(
+  () => import('./experiences/the-particular/TheParticularExperience'),
+)
+
+type ExperienceId = 'the-path' | 'the-particular'
+
+const EXPERIENCES: { id: ExperienceId; label: string }[] = [
+  { id: 'the-path', label: 'The Path' },
+  { id: 'the-particular', label: 'The Particular' },
+]
 
 export default function App() {
-  const [state, dispatch] = useReducer(sessionReducer, undefined, () => createSession())
-  const [showCaption, setShowCaption] = useState(false)
-  const [showRestart, setShowRestart] = useState(false)
-
-  useEffect(() => {
-    if (state.phase !== 'retrospective') {
-      setShowCaption((v) => (v ? false : v))
-      setShowRestart((v) => (v ? false : v))
-      return
-    }
-
-    const captionTimer = window.setTimeout(
-      () => setShowCaption(true),
-      PARAMS.text.captionDelayMs,
-    )
-    const restartTimer = window.setTimeout(
-      () => setShowRestart(true),
-      PARAMS.text.captionDelayMs + PARAMS.text.captionFadeInMs,
-    )
-    return () => {
-      window.clearTimeout(captionTimer)
-      window.clearTimeout(restartTimer)
-    }
-  }, [state.phase])
+  const [active, setActive] = useState<ExperienceId>('the-path')
 
   return (
-    <div className="the-path-root">
-      <Scene key={state.graph.seed} state={state} dispatch={dispatch} />
-
-      <div
-        className="the-path-caption"
-        style={{
-          opacity: showCaption ? 1 : 0,
-          transitionDuration: `${PARAMS.text.captionFadeInMs}ms`,
-        }}
-        aria-hidden={!showCaption}
+    <div className="app-shell">
+      <nav
+        className={`experience-menu${active === 'the-particular' ? ' on-dark' : ''}`}
+        aria-label="Select piece"
       >
-        {PARAMS.text.caption}
-      </div>
+        {EXPERIENCES.map((exp) => (
+          <button
+            key={exp.id}
+            type="button"
+            className={exp.id === active ? 'is-active' : ''}
+            onClick={() => setActive(exp.id)}
+            aria-current={exp.id === active}
+          >
+            {exp.label}
+          </button>
+        ))}
+      </nav>
 
-      <button
-        type="button"
-        className="the-path-restart"
-        style={{ opacity: showRestart ? 1 : 0, pointerEvents: showRestart ? 'auto' : 'none' }}
-        onClick={() => dispatch({ type: 'RESTART' })}
-        aria-label="Begin again"
-      >
-        ↺
-      </button>
+      <Suspense fallback={null}>
+        {active === 'the-path' ? (
+          <ThePathExperience key="the-path" />
+        ) : (
+          <TheParticularExperience key="the-particular" />
+        )}
+      </Suspense>
     </div>
   )
 }
