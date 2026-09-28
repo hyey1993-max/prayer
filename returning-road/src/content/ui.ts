@@ -1,0 +1,20 @@
+/** 화면에 보이는 고정 문구. 결과 문장은 result.ts, 질문은 steps.ts에 있다. */
+export const ui = {
+  title: '돌아오는 길',
+  subtitle: '길을 돌아보고 다시 돌아오는 자리',
+  intro: '새 목적지를 찾기 전에, 걸어온 길을 다시 알아보는 일곱 걸음.',
+  duration: '약 7분',
+  privacy: '답은 이 기기 밖으로 나가지 않습니다.',
+  scriptureToggle: '처음부터 말씀과 함께 걷기',
+  scriptureToggleHint: '걸음마다 그 장면의 구절을 먼저 보여 줍니다.',
+  start: '걷기 시작',
+  resume: '이어서 걷기',
+  restart: '처음부터 다시 걷기',
+  next: '이 답으로 걷기',
+  back: '뒤로',
+  writeOwn: '직접 적기',
+  writeOwnPlaceholder: '한 줄로 적어 주세요',
+  multiHint: '여러 개를 골라도 괜찮아요.',
+  pathLabel: (done: number, total: number) => `걸어온 길: ${total}걸음 중 ${done}걸음`,
+  notYet: '여기부터는 아직 길을 내는 중이에요.',
+}
