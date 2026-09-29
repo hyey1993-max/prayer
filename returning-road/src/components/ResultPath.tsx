@@ -125,7 +125,7 @@ export function ResultPath({ stations, companions }: Props) {
 
   useEffect(() => () => cancelAnimationFrame(frame.current), [])
 
-  const label = `${pathText.alt} 나란히 걷던 길 옆에는 ${companions.join(', ')}.`
+  const label = `${pathText.alt} ${pathText.companionsLabel}: ${companions.join(', ')}.`
 
   return (
     <figure className={`result-path is-${phase}`}>

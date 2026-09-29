@@ -45,7 +45,7 @@ export function QuestionScreen({ step, answers, scriptureFirst, onToggle, onCust
 
       {stations.length > 0 && (
         <p className="stations-recap">
-          <span className="sr-only">방금 적은 걸어온 곳: </span>
+          <span className="sr-only">{ui.stationsRecap}: </span>
           {stations.map((s, i) => (
             <span key={`${s}-${i}`}>
               {i > 0 && <span className="stations-recap__sep" aria-hidden="true" />}
@@ -57,7 +57,7 @@ export function QuestionScreen({ step, answers, scriptureFirst, onToggle, onCust
 
       <h2 id={questionId} className="question__text" ref={headingRef} tabIndex={-1}>
         <span className="sr-only">
-          일곱 걸음 중 {step.number}번째{step.stations ? ', 두 번째 화면' : ''}.{' '}
+          {ui.stepLabel(step.number, step.stations ? '두 번째 화면' : undefined)}{' '}
         </span>
         {step.question}
       </h2>

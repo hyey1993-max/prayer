@@ -73,8 +73,11 @@ function hopeParagraph(a: Answers): ResultParagraph {
     where.forEach((id) => used.add(id))
     const whereText =
       where.length === 2
-        ? `${T.hope.recognitionWhere.titled}도, ${T.hope.recognitionWhere.followed}도요`
-        : `${T.hope.recognitionWhere[where[0]]}요`
+        ? fill(T.hope.recognitionWhereBoth, {
+            a: T.hope.recognitionWhere.titled,
+            b: T.hope.recognitionWhere.followed,
+          })
+        : fill(T.hope.recognitionWhereOne, { a: T.hope.recognitionWhere[where[0]] })
     sentences.push(fill(T.hope.recognition, { where: whereText }))
   }
 

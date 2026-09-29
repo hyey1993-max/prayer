@@ -90,7 +90,7 @@ export function ResultScreen({ answers, scriptureFirst, background, onBack, onRe
       <div ref={captureRef} className="result__capture">
         <div className="result__letter">
           <h2 id="result-title" className="sr-only" ref={headingRef} tabIndex={-1}>
-            다시 읽은 당신의 길
+            {resultUi.title}
           </h2>
           {paragraphs.map((p) => (
             <div key={p.id} className="result__para">
@@ -113,12 +113,13 @@ export function ResultScreen({ answers, scriptureFirst, background, onBack, onRe
 
         <ResultPath stations={stations} companions={companions.length ? companions : [pathText.companionsFallback]} />
 
-        {/* 말씀과 함께 걸은 사람에게는 숨길 이야기가 없으니 가까이 두고 펼쳐 둔다 */}
+        {/* 성경 구절과 함께 본 사람에게는 숨길 이야기가 없으니 가까이 두고 펼쳐 둔다 */}
         <section className={`reveal${scriptureFirst ? ' reveal--near' : ''}`} aria-labelledby="reveal-title">
           <h3 id="reveal-title" className="reveal__lead">
             {scriptureFirst ? revealText.leadScripture : revealText.lead}
           </h3>
           <p className="reveal__body">{revealText.body}</p>
+          <p className="reveal__note">{revealText.paraphraseNote}</p>
           <details className="reveal__list" open={scriptureFirst}>
             <summary>{revealText.listToggle}</summary>
             <ol>
@@ -157,7 +158,7 @@ export function ResultScreen({ answers, scriptureFirst, background, onBack, onRe
           {save.kind === 'failed' && resultUi.saveFailed}
         </p>
         {save.kind === 'saved' && (
-          <img className="result__preview" src={save.url} alt="저장할 결과 이미지" />
+          <img className="result__preview" src={save.url} alt={resultUi.previewAlt} />
         )}
 
         <div className="result__end">

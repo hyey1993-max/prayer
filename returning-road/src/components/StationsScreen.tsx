@@ -60,7 +60,7 @@ export function StationsScreen({ step, stations, scriptureFirst, onChange, onBac
       {scriptureFirst && <Verse scene={step.scene} />}
 
       <h2 id="q-stations" className="question__text" ref={headingRef} tabIndex={-1}>
-        <span className="sr-only">일곱 걸음 중 {step.number}번째, 첫 화면. </span>
+        <span className="sr-only">{ui.stepLabel(step.number, '첫 화면')} </span>
         {copy.question}
       </h2>
       {copy.hint && <p className="question__hint">{copy.hint}</p>}
@@ -79,7 +79,7 @@ export function StationsScreen({ step, stations, scriptureFirst, onChange, onBac
               className="line-input"
               value={name}
               maxLength={24}
-              placeholder={i === 0 ? '처음 걸어온 곳' : '그다음 걸어온 곳'}
+              placeholder={i === 0 ? ui.stationFirstPlaceholder : ui.stationNextPlaceholder}
               onChange={(e) => set(i, e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
