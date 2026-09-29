@@ -4,6 +4,8 @@ import { paragraphScenes, pathText, resultUi, revealText } from '../content/resu
 import { stepByKey, steps } from '../content/steps'
 import type { Answers } from '../content/types'
 import { ui } from '../content/ui'
+import { resultLink, shareLink, testLink, type ShareOutcome } from '../lib/share'
+import { encodeResult } from '../lib/shareCode'
 import { ResultPath } from './ResultPath'
 import { Verse } from './Verse'
 
@@ -14,7 +16,12 @@ interface Props {
   onBack: () => void
   onRestart: () => void
   onClear: () => void
+  /** 누군가 공유한 결과 링크로 연 경우: 다시 하기·답 지우기 대신 '나도 해 보기' */
+  shared?: boolean
+  onTryIt?: () => void
 }
+
+type ShareState = { kind: 'idle' } | { kind: ShareOutcome; url: string }
 
 type SaveState = { kind: 'idle' } | { kind: 'saving' } | { kind: 'saved'; url: string } | { kind: 'failed' }
 
@@ -24,7 +31,16 @@ const today = () => {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
 }
 
-export function ResultScreen({ answers, scriptureFirst, background, onBack, onRestart, onClear }: Props) {
+export function ResultScreen({
+  answers,
+  scriptureFirst,
+  background,
+  onBack,
+  onRestart,
+  onClear,
+  shared = false,
+  onTryIt,
+}: Props) {
   const paragraphs = useMemo(() => composeResult(answers), [answers])
   const headingRef = useRef<HTMLHeadingElement>(null)
   const captureRef = useRef<HTMLDivElement>(null)
@@ -32,6 +48,14 @@ export function ResultScreen({ answers, scriptureFirst, background, onBack, onRe
   const [save, setSave] = useState<SaveState>({ kind: 'idle' })
   const [confirming, setConfirming] = useState(false)
   const [cleared, setCleared] = useState(false)
+  const [share, setShare] = useState<ShareState>({ kind: 'idle' })
+
+  const doShare = async (which: 'result' | 'test') => {
+    const url = which === 'result' ? resultLink(encodeResult({ answers, scriptureFirst })) : testLink()
+    const text = which === 'result' ? resultUi.shareResultText : resultUi.shareTestText
+    const outcome = await shareLink({ title: ui.title, text, url })
+    setShare({ kind: outcome, url })
+  }
 
   useEffect(() => headingRef.current?.focus(), [])
 
@@ -87,6 +111,14 @@ export function ResultScreen({ answers, scriptureFirst, background, onBack, onRe
 
   return (
     <section className="screen result" aria-labelledby="result-title">
+      {shared && (
+        <div className="result__banner">
+          <p>{resultUi.sharedBanner}</p>
+          <button type="button" className="button button--quiet" onClick={onTryIt}>
+            {resultUi.tryIt}
+          </button>
+        </div>
+      )}
       <div ref={captureRef} className="result__capture">
         <div className="result__letter">
           <h2 id="result-title" className="sr-only" ref={headingRef} tabIndex={-1}>
@@ -161,8 +193,48 @@ export function ResultScreen({ answers, scriptureFirst, background, onBack, onRe
           <img className="result__preview" src={save.url} alt={resultUi.previewAlt} />
         )}
 
+        <div className="share">
+          <div className="share__buttons">
+            {!shared && (
+              <button type="button" className="button button--primary" onClick={() => doShare('result')}>
+                {resultUi.shareResult}
+              </button>
+            )}
+            <button type="button" className="button button--outline" onClick={() => doShare('test')}>
+              {resultUi.shareTest}
+            </button>
+          </div>
+          {!shared && <p className="share__note">{resultUi.shareResultNote}</p>}
+          <p className="result__status" aria-live="polite">
+            {share.kind === 'shared' && resultUi.shared}
+            {share.kind === 'copied' && resultUi.copied}
+            {share.kind === 'manual' && resultUi.manual}
+          </p>
+          {share.kind === 'manual' && (
+            <>
+              <label htmlFor="share-link" className="sr-only">
+                {resultUi.linkLabel}
+              </label>
+              <input
+                id="share-link"
+                className="line-input share__link"
+                readOnly
+                value={share.url}
+                onFocus={(e) => e.currentTarget.select()}
+                autoFocus
+              />
+            </>
+          )}
+        </div>
+
         <div className="result__end">
-          {confirming ? (
+          {shared ? (
+            <div className="actions actions--start">
+              <button type="button" className="button button--primary" onClick={onTryIt}>
+                {resultUi.tryIt}
+              </button>
+            </div>
+          ) : confirming ? (
             <div className="confirm" role="group" aria-labelledby="restart-q">
               <p id="restart-q">{resultUi.restartConfirm}</p>
               <div className="actions actions--start">

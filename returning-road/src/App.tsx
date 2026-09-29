@@ -8,6 +8,7 @@ import { emptyAnswers, type Answers } from './content/types'
 import { ui } from './content/ui'
 import { duskOf, flow, QUESTION_SCREENS, RESULT_INDEX } from './flow'
 import { skyAt } from './lib/sky'
+import { decodeResult } from './lib/shareCode'
 import * as storage from './lib/storage'
 
 function hasAnswer(answers: Answers, index: number): boolean {
@@ -22,12 +23,17 @@ function hasAnswer(answers: Answers, index: number): boolean {
 
 export default function App() {
   const saved = useMemo(() => storage.load(), [])
-  const [index, setIndex] = useState(0)
-  const [answers, setAnswers] = useState<Answers>(emptyAnswers)
-  const [scriptureFirst, setScriptureFirst] = useState(saved?.scriptureFirst ?? false)
+  // 누군가 공유한 결과 링크(#r1.…)로 들어왔다면 그 결과를 바로 보여 준다
+  const sharedResult = useMemo(() => decodeResult(window.location.hash), [])
+  const [viewingShared, setViewingShared] = useState(Boolean(sharedResult))
+  const [index, setIndex] = useState(sharedResult ? RESULT_INDEX : 0)
+  const [answers, setAnswers] = useState<Answers>(() => sharedResult?.answers ?? emptyAnswers())
+  const [scriptureFirst, setScriptureFirst] = useState(
+    sharedResult ? sharedResult.scriptureFirst : (saved?.scriptureFirst ?? false),
+  )
   const [canResume, setCanResume] = useState(Boolean(saved && saved.step > 0))
-  // '답 지우기' 뒤에는 이 기기에 다시 저장하지 않는다
-  const [persist, setPersist] = useState(true)
+  // '답 지우기' 뒤, 그리고 남의 결과를 보는 동안에는 이 기기에 저장하지 않는다
+  const [persist, setPersist] = useState(!sharedResult)
 
   const screen = flow[index]
 
@@ -68,6 +74,20 @@ export default function App() {
     setPersist(true)
     setAnswers({ ...emptyAnswers(), ...saved.answers })
     setIndex(Math.min(Math.max(1, saved.step), RESULT_INDEX))
+  }
+
+  // 공유받은 결과에서 '나도 해 보기': 주소의 결과를 지우고, 내 기기의 기록으로 시작 화면에 선다
+  const tryIt = () => {
+    try {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search)
+    } catch {
+      /* 주소를 바꾸지 못해도 계속한다 */
+    }
+    setViewingShared(false)
+    setAnswers(emptyAnswers())
+    setScriptureFirst(saved?.scriptureFirst ?? false)
+    setPersist(true)
+    setIndex(0)
   }
 
   const back = () => setIndex((i) => Math.max(0, i - 1))
@@ -137,6 +157,8 @@ export default function App() {
               storage.clear()
               setCanResume(false)
             }}
+            shared={viewingShared}
+            onTryIt={tryIt}
           />
         )}
       </main>

@@ -851,6 +851,57 @@ body {
   margin-top: 0.8em;
 }
 
+/* 공유 */
+.share {
+  width: 100%;
+  margin-top: 1.6em;
+  padding-top: 1.6em;
+  border-top: 1px solid var(--hairline);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.share__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.share__note {
+  margin: 0;
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+
+.share__link {
+  font-size: 0.86rem;
+}
+
+.button--outline {
+  border-color: var(--muted);
+}
+
+.button--outline:hover {
+  border-color: var(--fg);
+}
+
+/* 공유받은 결과를 열었을 때 맨 위 한 줄 */
+.result__banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 12px;
+  margin: 0 0 2.4em;
+  font-size: 0.9rem;
+}
+
+.result__banner p {
+  margin: 0;
+  color: var(--lamp);
+}
+
 /* 이미지로 찍는 동안 */
 .is-capturing {
   padding: 32px 24px;

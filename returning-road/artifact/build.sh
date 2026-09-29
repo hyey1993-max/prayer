@@ -4,7 +4,8 @@
 set -e
 cd "$(dirname "$0")/.."
 npx tsc -b
-npx vite build --mode artifact
+# 공유 링크는 아티팩트 안쪽 주소가 아니라 claude.ai 링크를 가리켜야 한다
+VITE_SHARE_URL="${VITE_SHARE_URL:-https://claude.ai/artifact/LKqLa8crynJ11PcaFNie5U}" npx vite build --mode artifact
 cp node_modules/pretendard/dist/web/variable/woff2/PretendardVariable.woff2 dist-artifact/
 JS=$(cd dist-artifact/assets && ls index-*.js)
 CSS=$(cd dist-artifact/assets && ls index-*.css)

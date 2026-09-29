@@ -133,11 +133,26 @@ export const resultUi = {
   saved: '이미지를 만들었어요. 저장되지 않았다면 아래 이미지를 길게 누르거나 마우스 오른쪽 버튼으로 저장해 주세요.',
   saveFailed: '이미지를 만들지 못했어요. 화면을 캡처해 두셔도 좋아요.',
   previewAlt: '저장할 결과 이미지',
-  fileName: (date: string) => `돌아오는길_${date}.png`,
+  fileName: (date: string) => `돌아보는길_${date}.png`,
   restart: '처음부터 다시 하기',
   restartConfirm: '지금까지의 답이 모두 지워져요. 처음부터 다시 할까요?',
   restartYes: '다시 하기',
   restartNo: '취소',
   clear: '답 지우기',
+
+  // 공유
+  shareResult: '결과 링크 공유',
+  shareTest: '테스트 공유하기',
+  shareResultText: '돌아보는 길에서 지나온 커리어를 돌아봤어요.',
+  shareTestText: '다음 목적지를 찾기 전에, 지금까지 걸어온 커리어를 돌아보는 일곱 가지 질문이에요.',
+  shareResultNote: '결과 링크에는 고른 답과 직접 적은 말이 담겨요. 믿을 수 있는 사람에게만 보내 주세요.',
+  shared: '공유했어요.',
+  copied: '링크를 복사했어요. 메신저나 메일에 붙여 넣어 보내 보세요.',
+  manual: '아래 링크를 길게 누르거나 전체 선택해서 복사해 주세요.',
+  linkLabel: '공유할 링크',
+
+  // 누군가 공유한 결과를 열었을 때
+  sharedBanner: '누군가 공유한 돌아보는 길 결과예요.',
+  tryIt: '나도 해 보기',
   cleared: '이 기기에 남아 있던 답을 지웠어요. 이 화면을 닫으면 다시 볼 수 없어요.',
 }
