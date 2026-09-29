@@ -5,9 +5,11 @@ import type { Answers } from '../content/types'
  * 저장소가 막혀 있거나(시크릿 창 등) 실패해도 조용히 넘어간다.
  */
 
-const KEY = 'returning-road/v1'
+// v2: step은 화면 순서(flow)의 위치. 4단계가 두 화면으로 나뉘며 바뀌었다.
+const KEY = 'returning-road/v2'
 
 export interface Saved {
+  /** flow 안의 화면 위치 */
   step: number
   answers: Answers
   scriptureFirst: boolean

@@ -4,6 +4,9 @@ import type { Step } from './types'
  * 일곱 걸음의 질문과 선택지.
  * scene 구절은 테스트 도중에는 보이지 않고, 결과 화면의 드러남 영역에서만 공개된다.
  * (설정에서 '처음부터 말씀과 함께 걷기'를 켜면 단계마다 먼저 보인다.)
+ * 배경(dusk)은 한낮(0)에서 해질녘(0.5)으로 걸음마다 조금씩 기울고, 6단계에서 저녁(1)이 된다.
+ * 주의: 0.33~0.48 사이의 배경에서는 잉크색도 저녁빛 텍스트도 WCAG AA(4.5:1)를 넘지 못한다.
+ * 그래서 글자색이 바뀌는 4-1 → 4-2 사이에서 한 번 크게 기운다. (src/lib/sky.test.ts가 검사)
  * 구절 본문은 개역한글판 기준. 배포 전에 원문과 한 번 더 대조할 것.
  */
 export const steps: Step[] = [
@@ -11,7 +14,7 @@ export const steps: Step[] = [
     number: 1,
     key: 'recurring',
     question: '요즘 일에 대해 혼자 걸을 때, 가장 자주 되뇌는 이야기는 무엇인가요?',
-    dusk: 0.1,
+    dusk: 0.06,
     options: [
       { id: 'lost_place', label: '이만큼 했는데 아직 내 자리를 모르겠다' },
       { id: 'must_prove', label: '뭔가를 더 증명해야 인정받을 것 같다' },
@@ -28,7 +31,7 @@ export const steps: Step[] = [
     number: 2,
     key: 'hope',
     question: '마지막으로 몸담았던 곳에서, 가장 크게 바랐던 것은 무엇이었나요?',
-    dusk: 0.22,
+    dusk: 0.13,
     options: [
       { id: 'recognition', label: '인정받고 더 큰 역할로 성장할 거라고', echo: '인정받고 더 큰 역할로 자라는 것' },
       { id: 'rooted', label: '내가 만든 일하는 방식이 뿌리내릴 거라고', echo: '당신이 만든 일하는 방식이 뿌리내리는 것' },
@@ -45,7 +48,7 @@ export const steps: Step[] = [
     number: 3,
     key: 'evidence',
     question: '바란 모양은 아니었지만, 사실 이미 있었던 증거는 무엇인가요?',
-    dusk: 0.36,
+    dusk: 0.2,
     options: [
       { id: 'followed', label: '사람들이 내 방식을 실제로 따라준 것', echo: '당신의 방식을 실제로 따라준 사람들' },
       { id: 'results', label: '내 판단이 만들어낸 결과와 숫자들', echo: '당신의 판단이 만들어낸 결과와 숫자들' },
@@ -62,10 +65,13 @@ export const steps: Step[] = [
   {
     number: 4,
     key: 'thread',
-    question: '처음부터 걸어온 곳들을 적어보세요. 모양만 바뀌어 반복되던 것은 무엇이었나요?',
-    hint: '학교, 회사, 프로젝트, 무엇이든 괜찮아요. 순서대로 일곱 곳까지.',
-    dusk: 0.52,
-    collectsStations: true,
+    question: '이 길 위에서, 모양만 바뀌어 반복되던 것은 무엇이었나요?',
+    dusk: 0.5,
+    stations: {
+      question: '처음부터 걸어온 곳들을 순서대로 적어보세요.',
+      hint: '학교, 회사, 프로젝트, 무엇이든 괜찮아요. 일곱 곳까지 적을 수 있어요.',
+      dusk: 0.27,
+    },
     options: [
       { id: 'set_criteria', label: '근거 없이 흔들리는 것에 기준을 세우는 일', echo: '흔들리는 것에 기준을 세우는 일' },
       { id: 'structure_confusion', label: '사람들이 헤매는 지점을 구조로 정리하는 일' },
@@ -84,7 +90,7 @@ export const steps: Step[] = [
     number: 5,
     key: 'burning',
     question: '그땐 그냥 일이었지만, 돌아보니 마음이 뜨거웠던 순간은 언제였나요?',
-    dusk: 0.7,
+    dusk: 0.62,
     options: [
       { id: 'wrong_then_saw', label: '내가 틀렸다가 비로소 제대로 보게 된 순간', echo: '당신이 틀렸다가 비로소 제대로 보게 된 순간' },
       { id: 'someone_saw_self', label: '누군가가 스스로를 알아보게 된 순간' },

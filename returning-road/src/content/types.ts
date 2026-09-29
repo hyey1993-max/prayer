@@ -36,8 +36,12 @@ export interface Step {
   scene: Scene
   /** 배경 시간대. 0 = 한낮, 1 = 저녁 */
   dusk: number
-  /** 4단계처럼 정거장 입력을 먼저 받는 단계 */
-  collectsStations?: boolean
+  /** 4단계처럼, 선택지 앞에 걸어온 곳(정거장)을 적는 화면을 따로 두는 단계 */
+  stations?: {
+    question: string
+    hint?: string
+    dusk: number
+  }
 }
 
 export interface Answers {

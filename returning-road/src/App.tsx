@@ -2,28 +2,34 @@ import { useEffect, useMemo, useState } from 'react'
 import { PathLine } from './components/PathLine'
 import { QuestionScreen } from './components/QuestionScreen'
 import { StartScreen } from './components/StartScreen'
-import { steps } from './content/steps'
+import { StationsScreen } from './components/StationsScreen'
 import { emptyAnswers, type Answers } from './content/types'
 import { ui } from './content/ui'
+import { duskOf, flow, QUESTION_SCREENS, RESULT_INDEX } from './flow'
 import { skyAt } from './lib/sky'
 import * as storage from './lib/storage'
 
-/** 0 = 시작 화면, 1~7 = 질문, 8 = 결과 (아직 준비 중) */
-type Screen = number
-const RESULT = steps.length + 1
+function hasAnswer(answers: Answers, index: number): boolean {
+  const screen = flow[index]
+  if (screen.kind === 'stations') return answers.stations.some((s) => s.trim())
+  if (screen.kind === 'choice') {
+    const key = screen.step.key
+    return answers[key].length > 0 || Boolean(answers.custom?.[key]?.trim())
+  }
+  return false
+}
 
 export default function App() {
   const saved = useMemo(() => storage.load(), [])
-  const [screen, setScreen] = useState<Screen>(0)
+  const [index, setIndex] = useState(0)
   const [answers, setAnswers] = useState<Answers>(emptyAnswers)
   const [scriptureFirst, setScriptureFirst] = useState(saved?.scriptureFirst ?? false)
   const [canResume, setCanResume] = useState(Boolean(saved && saved.step > 0))
 
-  const step = screen >= 1 && screen <= steps.length ? steps[screen - 1] : undefined
+  const screen = flow[index]
 
   // 해가 기우는 길
-  const dusk = screen === 0 ? 0 : step ? step.dusk : 1
-  const sky = skyAt(dusk)
+  const sky = skyAt(duskOf(screen))
   useEffect(() => {
     const root = document.documentElement.style
     root.setProperty('--bg', sky.bg)
@@ -35,38 +41,37 @@ export default function App() {
   }, [sky.bg, sky.fg, sky.muted, sky.hairline, sky.dark])
 
   useEffect(() => {
-    if (screen > 0) storage.save({ step: screen, answers, scriptureFirst })
-  }, [screen, answers, scriptureFirst])
+    if (index > 0) storage.save({ step: index, answers, scriptureFirst })
+  }, [index, answers, scriptureFirst])
 
-  // 하단 길: 끝낸 걸음만큼, 그리고 지금 걸음에서 답을 고르면 반걸음 더
-  const progress = useMemo(() => {
-    if (screen === 0) return 0
-    if (!step) return 1
-    const current = answers[step.key].length > 0 || Boolean(answers.custom?.[step.key]?.trim())
-    return (screen - 1 + (current ? 0.5 : 0)) / steps.length
-  }, [screen, step, answers])
+  // 하단 길: 끝낸 화면만큼, 그리고 지금 화면에서 답을 적거나 고르면 반걸음 더
+  const progress =
+    index === 0 ? 0 : index >= RESULT_INDEX ? 1 : (index - 1 + (hasAnswer(answers, index) ? 0.5 : 0)) / QUESTION_SCREENS
 
-  const completed = Math.min(steps.length, Math.max(0, screen - 1))
+  // 스크린리더용: 끝낸 걸음 수 (4-1만 끝냈으면 아직 3걸음)
+  const stepsDone =
+    screen.kind === 'start' ? 0 : screen.kind === 'result' ? 7 : screen.step.number - 1
 
   const start = () => {
     storage.clear()
     setAnswers(emptyAnswers())
     setCanResume(false)
-    setScreen(1)
+    setIndex(1)
   }
 
   const resume = () => {
     if (!saved) return start()
     setAnswers({ ...emptyAnswers(), ...saved.answers })
-    setScreen(Math.min(saved.step, RESULT))
+    setIndex(Math.min(Math.max(1, saved.step), RESULT_INDEX))
   }
 
-  const updateAnswers = (fn: (a: Answers) => Answers) => setAnswers((a) => fn(a))
+  const back = () => setIndex((i) => Math.max(0, i - 1))
+  const next = () => setIndex((i) => Math.min(RESULT_INDEX, i + 1))
 
   return (
     <>
       <main className="page">
-        {screen === 0 && (
+        {screen.kind === 'start' && (
           <StartScreen
             scriptureFirst={scriptureFirst}
             onScriptureFirst={setScriptureFirst}
@@ -76,39 +81,50 @@ export default function App() {
           />
         )}
 
-        {step && (
-          <QuestionScreen
-            key={step.key}
-            step={step}
-            answers={answers}
+        {screen.kind === 'stations' && (
+          <StationsScreen
+            key={`stations-${screen.step.key}`}
+            step={screen.step}
+            stations={answers.stations}
             scriptureFirst={scriptureFirst}
-            onToggle={(id) =>
-              updateAnswers((a) => ({
-                ...a,
-                [step.key]: a[step.key].includes(id)
-                  ? a[step.key].filter((x) => x !== id)
-                  : [...a[step.key], id],
-              }))
-            }
-            onCustom={(text) =>
-              updateAnswers((a) => {
-                const custom = { ...a.custom }
-                if (text === undefined) delete custom[step.key]
-                else custom[step.key] = text
-                return { ...a, custom }
-              })
-            }
-            onStations={(stations) => updateAnswers((a) => ({ ...a, stations }))}
-            onBack={() => setScreen((s) => s - 1)}
-            onNext={() => setScreen((s) => s + 1)}
+            onChange={(stations) => setAnswers((a) => ({ ...a, stations }))}
+            onBack={back}
+            onNext={next}
           />
         )}
 
-        {screen === RESULT && (
+        {screen.kind === 'choice' && (
+          <QuestionScreen
+            key={screen.step.key}
+            step={screen.step}
+            answers={answers}
+            scriptureFirst={scriptureFirst}
+            onToggle={(id) => {
+              const key = screen.step.key
+              setAnswers((a) => ({
+                ...a,
+                [key]: a[key].includes(id) ? a[key].filter((x) => x !== id) : [...a[key], id],
+              }))
+            }}
+            onCustom={(text) => {
+              const key = screen.step.key
+              setAnswers((a) => {
+                const custom = { ...a.custom }
+                if (text === undefined) delete custom[key]
+                else custom[key] = text
+                return { ...a, custom }
+              })
+            }}
+            onBack={back}
+            onNext={next}
+          />
+        )}
+
+        {screen.kind === 'result' && (
           <section className="screen">
             <p className="question__text">{ui.notYet}</p>
             <div className="actions">
-              <button type="button" className="button button--quiet" onClick={() => setScreen(steps.length)}>
+              <button type="button" className="button button--quiet" onClick={back}>
                 {ui.back}
               </button>
               <button type="button" className="button button--primary" onClick={start}>
@@ -121,8 +137,8 @@ export default function App() {
 
       <PathLine
         progress={progress}
-        stations={answers.stations}
-        label={ui.pathLabel(completed, steps.length)}
+        stations={answers.stations.map((s) => s.trim()).filter(Boolean)}
+        label={ui.pathLabel(stepsDone, 7)}
       />
     </>
   )
