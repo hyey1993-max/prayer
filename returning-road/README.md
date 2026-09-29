@@ -8,6 +8,7 @@ npm install
 npm run dev     # 개발 서버
 npm test        # composeResult 단위 테스트
 npm run build   # 정적 빌드 (dist/)
+npm run build:artifact  # claude.ai 아티팩트용 빌드 (dist-artifact/, 폰트 파일 수를 줄인 판)
 ```
 
 ## 구조
