@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { composeResult } from '../compose/composeResult'
-import { pathText, resultUi, revealText } from '../content/result'
+import { paragraphScenes, pathText, resultUi, revealText } from '../content/result'
 import { stepByKey, steps } from '../content/steps'
 import type { Answers } from '../content/types'
 import { ui } from '../content/ui'
 import { ResultPath } from './ResultPath'
+import { Verse } from './Verse'
 
 interface Props {
   answers: Answers
@@ -94,6 +95,8 @@ export function ResultScreen({ answers, scriptureFirst, background, onBack, onRe
           {paragraphs.map((p) => (
             <div key={p.id} className="result__para">
               <p>{p.text}</p>
+              {scriptureFirst &&
+                paragraphScenes[p.id].map((key) => <Verse key={key} scene={stepByKey[key].scene} />)}
               {p.practices && p.practices.length > 0 && (
                 <ul className="practices">
                   {p.practices.map((x) => (
@@ -110,12 +113,13 @@ export function ResultScreen({ answers, scriptureFirst, background, onBack, onRe
 
         <ResultPath stations={stations} companions={companions.length ? companions : [pathText.companionsFallback]} />
 
-        <section className="reveal" aria-labelledby="reveal-title">
+        {/* 말씀과 함께 걸은 사람에게는 숨길 이야기가 없으니 가까이 두고 펼쳐 둔다 */}
+        <section className={`reveal${scriptureFirst ? ' reveal--near' : ''}`} aria-labelledby="reveal-title">
           <h3 id="reveal-title" className="reveal__lead">
             {scriptureFirst ? revealText.leadScripture : revealText.lead}
           </h3>
           <p className="reveal__body">{revealText.body}</p>
-          <details className="reveal__list">
+          <details className="reveal__list" open={scriptureFirst}>
             <summary>{revealText.listToggle}</summary>
             <ol>
               {steps.map((s) => (

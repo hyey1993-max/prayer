@@ -1,3 +1,5 @@
+import type { ChoiceKey } from './types'
+
 /**
  * 결과 글의 문장 템플릿.
  * {중괄호} 자리는 composeResult가 채운다. 조합 규칙 자체는 src/compose/composeResult.ts에 있다.
@@ -83,6 +85,18 @@ export const resultText = {
     burning: '{quoted}이라고 적은 순간',
     companions: '{quoted}이라고 적은 것',
   } as Record<string, string>,
+}
+
+/**
+ * '처음부터 말씀과 함께 걷기'를 켠 사람에게는 결과 글 문단마다 이 걸음들의 구절을 함께 보여 준다.
+ * 문단 → 그 문단을 만든 걸음(steps.ts의 key)
+ */
+export const paragraphScenes: Record<'recurring' | 'hope' | 'path' | 'burning' | 'return', ChoiceKey[]> = {
+  recurring: ['recurring'],
+  hope: ['hope', 'evidence'],
+  path: ['thread'],
+  burning: ['burning'],
+  return: ['companions', 'return'],
 }
 
 /** 결과 글 맨 아래, 스크롤 후에만 나타나는 드러남 영역 */

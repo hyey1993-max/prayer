@@ -829,6 +829,21 @@ body {
   margin: 0.3em 0 0;
 }
 
+.reveal--near {
+  margin-top: 5em;
+}
+
+/* 결과 글 안의 구절: 문단 바로 아래 작게 */
+.result__para .verse {
+  margin: 1.2em 0 0;
+  font-size: 0.92rem;
+  line-height: 1.8;
+}
+
+.result__para .verse + .verse {
+  margin-top: 0.8em;
+}
+
 /* 이미지로 찍는 동안 */
 .is-capturing {
   padding: 32px 24px;
