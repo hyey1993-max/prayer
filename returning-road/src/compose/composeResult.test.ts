@@ -25,7 +25,7 @@ describe('composeResult — 설계자 샘플 답', () => {
     expect(text).toContain('맡고 있던 역할로도')
     expect(text).toContain('당신의 방식을 따라준 사람들로도요')
     // 문장에 안 쓰인 증거도 호명된다
-    expect(text).toContain('일과 함께 끝까지 해낸 다른 것도')
+    expect(text).toContain('일과 함께 끝까지 해낸 다른 것도 그 증거였어요')
   })
 
   it('정거장을 순서대로 잇고, 드러내는 일과 기준을 세우는 일을 하나로 묶는다', () => {
@@ -107,11 +107,58 @@ describe('composeResult — 규칙 분기', () => {
     })
     expect(byId(r, 'recurring').text).toContain("'쉬어도 되는지 모르겠어'라는 이야기")
     expect(byId(r, 'burning').text).toContain("'새벽에 문제를 풀었을 때'라고 적은 순간")
+    expect(byId(r, 'recurring').text).not.toContain('이라는')
   })
 
   it('아무것도 고르지 않아도 깨지지 않고 다섯 문단을 준다', () => {
     const r = composeResult(emptyAnswers())
     expect(r).toHaveLength(5)
     r.forEach((p) => expect(p.text.length).toBeGreaterThan(10))
+  })
+})
+
+describe('composeResult — 비어 보이지 않는가', () => {
+  const minimumLength = 40
+
+  it('모든 단계에서 선택지 하나씩만 고른 경우', () => {
+    const r = composeResult({
+      ...emptyAnswers(),
+      recurring: ['must_prove'],
+      hope: ['belonging'],
+      evidence: ['results'],
+      stations: ['첫 회사'],
+      thread: ['make_first'],
+      burning: ['made_something'],
+      companions: ['words'],
+      return: ['work_for_opening'],
+    })
+    r.forEach((p) => expect(p.text.length).toBeGreaterThan(minimumLength))
+    // belonging인데 관계의 증거가 없으니 fallback으로 증거를 나열한다
+    expect(byId(r, 'hope').text).toContain('당신의 판단이 만들어낸 결과와 숫자들이 있었어요')
+    expect(byId(r, 'path').text).toContain('첫 회사. 한 곳이었지만')
+    expect(byId(r, 'path').text).toContain('이것이 모양만 바뀌어 반복되던 당신의 일이에요')
+    expect(byId(r, 'burning').text).toContain('처음으로 무언가를 세상에 내놓은 순간이었어요')
+    expect(byId(r, 'return').text).toContain('힘들 때 붙잡고 있던 말과 신념이 함께 걷고 있었어요')
+    expect(byId(r, 'return').practices![0].action).toContain('누구의 눈이 열렸나')
+  })
+
+  it("모든 단계를 '직접 적기'로만 채운 경우, 적은 말이 따옴표로 그대로 들어간다", () => {
+    const custom = {
+      recurring: '이 일을 계속해도 되는 걸까',
+      hope: '팀을 끝까지 지키는 것',
+      evidence: '떠난 뒤에도 연락 오는 후배들',
+      thread: '엉킨 일정을 푸는 일',
+      burning: '신입이 처음 발표를 해낸 날',
+      companions: '매주 걷던 산책길',
+      return: '다음 곳에서는 먼저 묻는 사람이 된다',
+    }
+    const r = composeResult({ ...emptyAnswers(), stations: ['A사', 'B사'], custom })
+    r.forEach((p) => expect(p.text.length).toBeGreaterThan(minimumLength))
+    const all = r.map((p) => [p.text, ...(p.practices ?? []).map((x) => x.action)].join(' ')).join(' ')
+    for (const text of Object.values(custom)) expect(all).toContain(`'${text}'`)
+    expect(byId(r, 'recurring').text).toContain("'이 일을 계속해도 되는 걸까'라는 이야기")
+    expect(byId(r, 'hope').text).toContain("'팀을 끝까지 지키는 것'이라고 적은 바람")
+    expect(byId(r, 'hope').text).toContain("'떠난 뒤에도 연락 오는 후배들'이라고 적은 것")
+    expect(byId(r, 'return').text).toContain("'매주 걷던 산책길'이라고 적은 것이 함께")
   })
 })

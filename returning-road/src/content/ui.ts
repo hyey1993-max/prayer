@@ -8,6 +8,7 @@ export const ui = {
   scriptureToggle: '처음부터 말씀과 함께 걷기',
   scriptureToggleHint: '걸음마다 그 장면의 구절을 먼저 보여 줍니다.',
   start: '걷기 시작',
+  startOver: '처음부터 걷기',
   resume: '이어서 걷기',
   restart: '처음부터 다시 걷기',
   next: '이 답으로 걷기',
@@ -25,5 +26,4 @@ export const ui = {
   moveDown: '아래로',
   remove: '지우기',
   pathLabel: (done: number, total: number) => `걸어온 길: ${total}걸음 중 ${done}걸음`,
-  notYet: '여기부터는 아직 길을 내는 중이에요.',
 }

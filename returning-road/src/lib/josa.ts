@@ -25,7 +25,7 @@ function finalConsonant(word: string): { has: boolean; rieul: boolean } {
   return { has: false, rieul: false }
 }
 
-type Pair = '을/를' | '이/가' | '은/는' | '과/와' | '으로/로' | '이었/였' | '이에요/예요'
+type Pair = '을/를' | '이/가' | '은/는' | '과/와' | '으로/로' | '이었/였' | '이에요/예요' | '이라고/라고' | '이라는/라는'
 
 export function josa(word: string, pair: Pair): string {
   const { has, rieul } = finalConsonant(word)
@@ -46,7 +46,7 @@ export function joinList(items: string[], last = '그리고'): string {
  */
 export function fill(template: string, values: Record<string, string>): string {
   return template.replace(
-    /\{(\w+)\}(을|를|이었|였|이에요|예요|이|가|은|는|과|와|으로|로)?/g,
+    /\{(\w+)\}(이라고|라고|이라는|라는|을|를|이었|였|이에요|예요|이|가|은|는|과|와|으로|로)?/g,
     (_, key: string, particle: string | undefined) => {
       const value = values[key] ?? ''
       if (!particle) return value
@@ -64,4 +64,6 @@ const PARTICLE_PAIRS: Record<string, Pair> = {
   으로: '으로/로', 로: '으로/로',
   이었: '이었/였', 였: '이었/였',
   이에요: '이에요/예요', 예요: '이에요/예요',
+  이라고: '이라고/라고', 라고: '이라고/라고',
+  이라는: '이라는/라는', 라는: '이라는/라는',
 }

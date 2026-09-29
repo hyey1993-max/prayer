@@ -13,6 +13,9 @@ describe('josa', () => {
   it('fill은 자리 뒤 조사를 고친다', () => {
     expect(fill('{x}이었어요', { x: '나무' })).toBe('나무였어요')
     expect(fill('{x}을 봐요', { x: '바다' })).toBe('바다를 봐요')
+    // 따옴표 안 말의 받침을 보고 고른다
+    expect(fill('{q}이라고', { q: "'산책길'" })).toBe("'산책길'이라고")
+    expect(fill('{q}이라고', { q: "'걸까'" })).toBe("'걸까'라고")
   })
   it('joinList', () => {
     expect(joinList(['a'])).toBe('a')

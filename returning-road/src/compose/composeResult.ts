@@ -21,6 +21,13 @@ export interface ResultParagraph {
 
 const has = (list: string[], id: string) => list.includes(id)
 
+const quote = (text: string) => `'${text}'`
+
+/** 직접 적은 말을 따옴표 그대로 문장 안에 넣는다 */
+function customEcho(key: ChoiceKey, text: string): string {
+  return fill(T.customEcho[key] ?? '{quoted}', { quoted: quote(text) })
+}
+
 function optionOf(key: ChoiceKey, id: string) {
   return stepByKey[key].options.find((o) => o.id === id)
 }
@@ -33,7 +40,7 @@ function echoes(answers: Answers, key: ChoiceKey, ids = answers[key]): string[] 
     .map((o) => o.echo ?? o.label)
   const custom = answers.custom?.[key]?.trim()
   if (custom && ids === answers[key]) {
-    phrases.push(fill(T.customEcho[key] ?? "'{text}'", { text: custom }))
+    phrases.push(customEcho(key, custom))
   }
   return phrases
 }
@@ -47,14 +54,13 @@ function recurringParagraph(a: Answers): ResultParagraph {
 
   if (quotes.length === 0) return { id: 'recurring', text: T.recurring.none }
 
-  // 인용한 말이 '-다'로 끝나면 '…다'는, 아니면 '…'라는
+  // 인용한 말이 '-다'로 끝나면 '…다'는 이야기, 아니면 '…'라는/이라는 이야기
   const last = quotes[quotes.length - 1]
-  const tail = /다[.。]?$/.test(last) ? '는' : '라는'
-  const quoted = `${quotes.map((q) => `'${q}'`).join(', ')}${tail}`
-  return {
-    id: 'recurring',
-    text: `${fill(T.recurring.quoted, { quotes: quoted })} ${T.recurring.turn}`,
-  }
+  const joined = quotes.map(quote).join(', ')
+  const text = /다[.。]?$/.test(last)
+    ? T.recurring.quoted.replace('{quotes}이라는', `${joined}는`)
+    : fill(T.recurring.quoted, { quotes: joined })
+  return { id: 'recurring', text: `${text} ${T.recurring.turn}` }
 }
 
 function hopeParagraph(a: Answers): ResultParagraph {
@@ -105,7 +111,7 @@ function hopeParagraph(a: Answers): ResultParagraph {
     // 문장에 쓰이지 않은 나머지 증거도 조용히 호명한다
     const rest = echoes(a, 'evidence', evidence.filter((id) => !used.has(id)))
     const custom = a.custom?.evidence?.trim()
-    if (custom) rest.push(fill(T.customEcho.evidence, { text: custom }))
+    if (custom) rest.push(customEcho('evidence', custom))
     if (rest.length) sentences.push(fill(T.hope.leftover, { items: joinList(rest) }))
   }
 
@@ -119,7 +125,7 @@ function pathParagraph(a: Answers): ResultParagraph {
 
   if (stations.length) {
     sentences.push(fill(T.path.stations, { stations: stations.join(', ') }))
-    sentences.push(T.path.across)
+    sentences.push(stations.length === 1 ? T.path.acrossOne : T.path.across)
   } else {
     sentences.push(T.path.acrossNoStations)
   }
@@ -152,7 +158,7 @@ function orderThreads(a: Answers): string[] {
   }
   const phrases = echoes(a, 'thread', ids)
   const custom = a.custom?.thread?.trim()
-  if (custom) phrases.push(fill(T.customEcho.thread, { text: custom }))
+  if (custom) phrases.push(customEcho('thread', custom))
   return phrases
 }
 
@@ -161,7 +167,7 @@ function burningParagraph(a: Answers): ResultParagraph {
   const praised = has(burning, 'was_praised')
   const others = echoes(a, 'burning', burning.filter((id) => id !== 'was_praised'))
   const custom = a.custom?.burning?.trim()
-  if (custom) others.push(fill(T.customEcho.burning, { text: custom }))
+  if (custom) others.push(customEcho('burning', custom))
 
   if (!praised && others.length === 0) return { id: 'burning', text: T.burning.none }
 
@@ -217,7 +223,7 @@ function returnParagraph(a: Answers): ResultParagraph {
 
   const custom = a.custom?.return?.trim()
   if (custom) {
-    practices.push({ intention: custom, action: fill(T.return.custom, { text: custom }) })
+    practices.push({ intention: custom, action: fill(T.return.custom, { quoted: quote(custom) }) })
   }
 
   return {

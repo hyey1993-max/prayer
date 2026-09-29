@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { PathLine } from './components/PathLine'
 import { QuestionScreen } from './components/QuestionScreen'
+import { ResultScreen } from './components/ResultScreen'
 import { StartScreen } from './components/StartScreen'
 import { StationsScreen } from './components/StationsScreen'
 import { emptyAnswers, type Answers } from './content/types'
@@ -25,6 +26,8 @@ export default function App() {
   const [answers, setAnswers] = useState<Answers>(emptyAnswers)
   const [scriptureFirst, setScriptureFirst] = useState(saved?.scriptureFirst ?? false)
   const [canResume, setCanResume] = useState(Boolean(saved && saved.step > 0))
+  // '답 지우기' 뒤에는 이 기기에 다시 저장하지 않는다
+  const [persist, setPersist] = useState(true)
 
   const screen = flow[index]
 
@@ -41,8 +44,8 @@ export default function App() {
   }, [sky.bg, sky.fg, sky.muted, sky.hairline, sky.dark])
 
   useEffect(() => {
-    if (index > 0) storage.save({ step: index, answers, scriptureFirst })
-  }, [index, answers, scriptureFirst])
+    if (persist && index > 0) storage.save({ step: index, answers, scriptureFirst })
+  }, [persist, index, answers, scriptureFirst])
 
   // 하단 길: 끝낸 화면만큼, 그리고 지금 화면에서 답을 적거나 고르면 반걸음 더
   const progress =
@@ -56,11 +59,13 @@ export default function App() {
     storage.clear()
     setAnswers(emptyAnswers())
     setCanResume(false)
+    setPersist(true)
     setIndex(1)
   }
 
   const resume = () => {
     if (!saved) return start()
+    setPersist(true)
     setAnswers({ ...emptyAnswers(), ...saved.answers })
     setIndex(Math.min(Math.max(1, saved.step), RESULT_INDEX))
   }
@@ -70,7 +75,7 @@ export default function App() {
 
   return (
     <>
-      <main className="page">
+      <main className={`page${screen.kind === 'result' ? ' page--result' : ''}`}>
         {screen.kind === 'start' && (
           <StartScreen
             scriptureFirst={scriptureFirst}
@@ -121,25 +126,29 @@ export default function App() {
         )}
 
         {screen.kind === 'result' && (
-          <section className="screen">
-            <p className="question__text">{ui.notYet}</p>
-            <div className="actions">
-              <button type="button" className="button button--quiet" onClick={back}>
-                {ui.back}
-              </button>
-              <button type="button" className="button button--primary" onClick={start}>
-                {ui.restart}
-              </button>
-            </div>
-          </section>
+          <ResultScreen
+            answers={answers}
+            scriptureFirst={scriptureFirst}
+            background={sky.bg}
+            onBack={back}
+            onRestart={start}
+            onClear={() => {
+              setPersist(false)
+              storage.clear()
+              setCanResume(false)
+            }}
+          />
         )}
       </main>
 
-      <PathLine
-        progress={progress}
-        stations={answers.stations.map((s) => s.trim()).filter(Boolean)}
-        label={ui.pathLabel(stepsDone, 7)}
-      />
+      {/* 결과 화면에서는 이 길이 글 아래로 옮겨 가 되돌아가는 길이 된다 */}
+      {screen.kind !== 'result' && (
+        <PathLine
+          progress={progress}
+          stations={answers.stations.map((s) => s.trim()).filter(Boolean)}
+          label={ui.pathLabel(stepsDone, 7)}
+        />
+      )}
     </>
   )
 }

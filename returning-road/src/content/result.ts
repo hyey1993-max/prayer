@@ -5,7 +5,7 @@
  */
 export const resultText = {
   recurring: {
-    quoted: '당신은 {quotes} 이야기를 되뇌며 걷고 있었어요.',
+    quoted: '당신은 {quotes}이라는 이야기를 되뇌며 걷고 있었어요.',
     turn: '그런데 그 답은 당신이 고른 답들 안에 이미 있었습니다.',
     none: '당신은 말로 다 옮기지 못한 이야기를 품고 걷고 있었어요. 그런데 그 답은 당신이 고른 답들 안에 이미 있었습니다.',
   },
@@ -22,7 +22,7 @@ export const resultText = {
       '오래 함께하길 바랐던 관계는 {traces} 안에 이미 흔적을 남겼어요. 함께한 시간이 끝났다고 해서 그 흔적까지 사라지지는 않아요.',
     certainty:
       '확실한 답을 바랐지만, 당신이 모은 증거들은 한 곳의 확실함보다 더 오래 가는 무언가를 가리켜요.',
-    leftover: '{items}도 같은 쪽을 가리키고 있었어요.',
+    leftover: '{items}도 그 증거였어요.',
     fallback:
       '당신이 바랐던 건 {hopes}이었지만, 곁에는 {evidence}이 있었어요. 기대한 모양은 아니었지만 이미 곁에 있던 것들이에요.',
     noEvidence:
@@ -32,6 +32,7 @@ export const resultText = {
   path: {
     stations: '{stations}.',
     across: '이름도 모양도 다른 곳들이었지만, 당신은 그 길 위에서 모양만 바꾼 채 같은 일을 반복하고 있었어요.',
+    acrossOne: '한 곳이었지만, 그 안에서도 당신은 모양만 바꾼 채 같은 일을 반복하고 있었어요.',
     acrossNoStations: '처음부터 다시 읽어 보면, 당신은 자리마다 모양만 바꾼 채 같은 일을 반복하고 있었어요.',
     threads: '{threads}.',
     revealAndCriteria:
@@ -70,23 +71,49 @@ export const resultText = {
         "'왜 그만뒀나요'라는 질문에는 해명 대신 이렇게 답해보세요. '그곳에서 제가 반복해서 잘해온 일이 무엇인지 분명히 알게 됐고, 그 일을 더 믿고 맡겨주는 곳에서 다시 하고 싶습니다.'",
     } as Record<string, string>,
     threadFallback: '당신이 반복해온 일',
-    custom: "당신이 적은 한 줄, '{text}'. 이 문장을 다음 한 주의 첫 줄에 적어두세요.",
+    custom: '당신이 적은 한 줄, {quoted}. 이 문장을 다음 한 주의 첫 줄에 적어두세요.',
   },
 
-  /** '직접 적기'로 적은 말을 문장 안에 끼워 넣을 때의 모양 */
+  /** '직접 적기'로 적은 말을 문장 안에 끼워 넣을 때의 모양. {quoted}는 따옴표로 감싼 그 말. */
   customEcho: {
-    recurring: "'{text}'",
-    hope: "'{text}'라고 적은 바람",
-    evidence: "'{text}'라고 적은 것",
-    thread: "'{text}'라고 적은 일",
-    burning: "'{text}'라고 적은 순간",
-    companions: "'{text}'라고 적은 것",
+    recurring: '{quoted}',
+    hope: '{quoted}이라고 적은 바람',
+    evidence: '{quoted}이라고 적은 것',
+    thread: '{quoted}이라고 적은 일',
+    burning: '{quoted}이라고 적은 순간',
+    companions: '{quoted}이라고 적은 것',
   } as Record<string, string>,
 }
 
 /** 결과 글 맨 아래, 스크롤 후에만 나타나는 드러남 영역 */
 export const revealText = {
   lead: '이 길은 누가복음 24장, 엠마오로 가는 두 제자의 이야기를 따라 만들어졌습니다.',
+  /** '처음부터 말씀과 함께 걷기'를 켠 사람에게는 첫 문장이 이것으로 바뀐다 */
+  leadScripture: '당신이 함께 읽으며 걸어온 이야기입니다.',
   body: "그들은 길 위에서 동행자를 알아보지 못했지만, 나중에 이렇게 말했어요. '길에서 우리에게 말씀하실 때에 우리 속에서 마음이 뜨겁지 아니하더냐.'",
   listToggle: '일곱 걸음과 구절 나란히 보기',
+}
+
+/** 결과 화면의 길 연출 */
+export const pathText = {
+  /** 스크린리더용 대체 텍스트 */
+  alt: '걸어온 길을 되돌아가자, 나란히 걷던 또 하나의 길이 드러납니다.',
+  replay: '길을 한 번 더 되돌아가 보기',
+  companionsFallback: '곁에 있던 누군가',
+}
+
+/** 결과 화면의 버튼과 안내 */
+export const resultUi = {
+  saveImage: '결과를 이미지로 저장',
+  includeReveal: '이미지에 이야기의 원형도 함께 담기',
+  saving: '이미지를 만드는 중이에요.',
+  saved: '이미지를 만들었어요. 저장이 되지 않았다면 아래 이미지를 길게 누르거나 오른쪽 클릭해서 저장하세요.',
+  saveFailed: '이미지를 만들지 못했어요. 화면을 캡처해 두셔도 좋아요.',
+  fileName: (date: string) => `돌아오는길_${date}.png`,
+  restart: '처음부터 다시 걷기',
+  restartConfirm: '지금 답은 모두 지워져요. 처음부터 다시 걸을까요?',
+  restartYes: '처음부터 다시 걷기',
+  restartNo: '그대로 두기',
+  clear: '답 지우기',
+  cleared: '이 기기에 남아 있던 답을 지웠어요. 이 화면을 닫으면 다시 볼 수 없어요.',
 }

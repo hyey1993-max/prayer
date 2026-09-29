@@ -51,12 +51,18 @@ export function StartScreen({ scriptureFirst, onScriptureFirst, canResume, onSta
       </label>
 
       <div className="actions actions--start">
-        <button type="button" className="button button--primary" onClick={onStart}>
-          {canResume ? ui.restart : ui.start}
-        </button>
-        {canResume && (
-          <button type="button" className="button button--quiet" onClick={onResume}>
-            {ui.resume}
+        {canResume ? (
+          <>
+            <button type="button" className="button button--primary" onClick={onResume}>
+              {ui.resume}
+            </button>
+            <button type="button" className="button button--quiet" onClick={onStart}>
+              {ui.startOver}
+            </button>
+          </>
+        ) : (
+          <button type="button" className="button button--primary" onClick={onStart}>
+            {ui.start}
           </button>
         )}
       </div>
