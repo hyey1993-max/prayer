@@ -4,6 +4,7 @@ export const ui = {
   subtitle: '지나온 커리어를 되짚는 일곱 가지 질문',
   intro: '다음 목적지를 찾기 전에, 지금까지 걸어온 길을 먼저 돌아보세요.',
   duration: '약 7분',
+  analyticsNote: '방문 수와 단계 이동 횟수만 익명으로 집계해요. 고른 답과 적은 글은 포함되지 않아요.',
   privacy: '답은 이 기기에만 남아요. 결과 링크를 직접 공유할 때만 링크에 담겨요.',
   scriptureToggle: '성경 구절과 함께 보기',
   scriptureToggleHint: '각 질문의 바탕이 된 성경 구절을 쉬운 말로 풀어 질문 위에 함께 보여 줘요.',

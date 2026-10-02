@@ -4,6 +4,7 @@ import { paragraphScenes, pathText, resultUi, revealText } from '../content/resu
 import { stepByKey, steps } from '../content/steps'
 import type { Answers } from '../content/types'
 import { ui } from '../content/ui'
+import { analytics } from '../lib/analytics'
 import { resultLink, shareLink, testLink, type ShareOutcome } from '../lib/share'
 import { encodeResult } from '../lib/shareCode'
 import { ResultPath } from './ResultPath'
@@ -53,6 +54,7 @@ export function ResultScreen({
   const doShare = async (which: 'result' | 'test') => {
     const url = which === 'result' ? resultLink(encodeResult({ answers, scriptureFirst })) : testLink()
     const text = which === 'result' ? resultUi.shareResultText : resultUi.shareTestText
+    analytics.track(which === 'result' ? 'share-result' : 'share-test')
     const outcome = await shareLink({ title: ui.title, text, url })
     setShare({ kind: outcome, url })
   }
@@ -72,6 +74,7 @@ export function ResultScreen({
   const saveImage = async () => {
     const node = captureRef.current
     if (!node) return
+    analytics.track('save-image')
     setSave({ kind: 'saving' })
     try {
       // 이미지 저장 라이브러리는 결과 화면에서 누를 때만 불러온다

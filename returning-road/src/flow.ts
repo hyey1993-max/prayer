@@ -16,6 +16,20 @@ export const flow: Screen[] = [
   { kind: 'result' },
 ]
 
+/** 집계에 쓰는 화면 이름: q1, q2, q3, q4a(거쳐 온 곳), q4b(되풀이해 온 일), q5, q6, q7, result */
+export function screenName(screen: Screen): string {
+  switch (screen.kind) {
+    case 'start':
+      return 'start-screen'
+    case 'stations':
+      return `q${screen.step.number}a`
+    case 'choice':
+      return screen.step.stations ? `q${screen.step.number}b` : `q${screen.step.number}`
+    case 'result':
+      return 'result'
+  }
+}
+
 export const RESULT_INDEX = flow.length - 1
 /** 질문 화면 수 (시작과 결과를 뺀 것) */
 export const QUESTION_SCREENS = flow.length - 2

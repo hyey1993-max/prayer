@@ -6,7 +6,8 @@ import { StartScreen } from './components/StartScreen'
 import { StationsScreen } from './components/StationsScreen'
 import { emptyAnswers, type Answers } from './content/types'
 import { ui } from './content/ui'
-import { duskOf, flow, QUESTION_SCREENS, RESULT_INDEX } from './flow'
+import { duskOf, flow, QUESTION_SCREENS, RESULT_INDEX, screenName } from './flow'
+import { analytics } from './lib/analytics'
 import { skyAt } from './lib/sky'
 import { decodeResult } from './lib/shareCode'
 import * as storage from './lib/storage'
@@ -49,6 +50,16 @@ export default function App() {
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', sky.bg)
   }, [sky.bg, sky.fg, sky.muted, sky.hairline, sky.dark])
 
+  // 익명 집계: 방문 한 번, 그리고 처음 닿은 화면의 이름만. 답은 보내지 않는다.
+  useEffect(() => {
+    analytics.visit()
+    if (sharedResult) analytics.track('shared-result-opened')
+  }, [sharedResult])
+  useEffect(() => {
+    // 공유받은 결과를 보는 것은 '끝까지 해 본 것'이 아니므로 결과 도달로 세지 않는다
+    if (index > 0 && !viewingShared) analytics.track(screenName(flow[index]))
+  }, [index, viewingShared])
+
   useEffect(() => {
     if (persist && index > 0) storage.save({ step: index, answers, scriptureFirst })
   }, [persist, index, answers, scriptureFirst])
@@ -71,6 +82,7 @@ export default function App() {
 
   const resume = () => {
     if (!saved) return start()
+    analytics.track('resume')
     setPersist(true)
     setAnswers({ ...emptyAnswers(), ...saved.answers })
     setIndex(Math.min(Math.max(1, saved.step), RESULT_INDEX))
@@ -78,6 +90,7 @@ export default function App() {
 
   // 공유받은 결과에서 '나도 해 보기': 주소의 결과를 지우고, 내 기기의 기록으로 시작 화면에 선다
   const tryIt = () => {
+    analytics.track('try-it')
     try {
       window.history.replaceState(null, '', window.location.pathname + window.location.search)
     } catch {

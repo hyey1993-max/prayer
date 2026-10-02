@@ -36,6 +36,21 @@ npm run build:artifact  # claude.ai 아티팩트용 빌드 (dist-artifact/, 폰�
 - [x] 공유: 결과 링크(답을 주소 # 뒤에 담아 서버 없이 같은 결과를 보여 줌), 테스트 링크
 - [ ] 공유 미리보기 이미지, 정식 배포(Vercel)
 
+## 방문·단계 집계 (GoatCounter, 선택)
+
+몇 명이 시작했고 어느 단계까지 갔는지만 익명으로 센다. 고른 답, 직접 적은 글, 결과 링크(`#r1.…`)는 보내지 않는다.
+보내는 내용은 `src/lib/analytics.ts` 하나에서 모두 볼 수 있다. 스크립트를 불러오지 않고 이미지 요청 한 번으로 보낸다.
+
+켜는 방법
+1. goatcounter.com에서 가입하고 사이트 코드를 정한다 (예: `dolabo` → `https://dolabo.goatcounter.com`).
+2. Vercel 프로젝트 **Settings → Environment Variables**에 `VITE_GOATCOUNTER_URL` = `https://dolabo.goatcounter.com/count` 를 넣고 다시 배포한다.
+3. 정하지 않으면 아무것도 보내지 않고, 시작 화면의 집계 안내 문구도 나오지 않는다.
+4. localhost와 '추적 안 함'을 켠 브라우저에서도 보내지 않는다.
+
+GoatCounter 화면에서 보이는 것: `/` 방문, `/e/q1` … `/e/q7` 단계별 도달(4단계는 `q4a`, `q4b`), `/e/result` 결과까지 본 사람,
+`/e/save-image`, `/e/share-result`, `/e/share-test`, `/e/shared-result-opened`(공유받아 들어온 사람), `/e/try-it`, `/e/resume`.
+같은 사건은 한 번 연 페이지에서 한 번만 센다.
+
 ## 친구 세 명에게 해보게 할 때
 
 답의 내용은 묻지도 적지도 않는다. 옆에서 보며 아래만 기록한다.

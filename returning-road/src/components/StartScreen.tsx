@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { ui } from '../content/ui'
+import { analytics } from '../lib/analytics'
 
 interface Props {
   scriptureFirst: boolean
@@ -30,6 +31,7 @@ export function StartScreen({ scriptureFirst, onScriptureFirst, canResume, onSta
         <div>
           <dt className="sr-only">개인정보</dt>
           <dd>{ui.privacy}</dd>
+          {analytics.enabled && <dd>{ui.analyticsNote}</dd>}
         </div>
       </dl>
 
