@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""THE THRESHOLD 콘텐츠 생성기 (표준 라이브러리만 사용).
+"""Tracé 콘텐츠 생성기 (표준 라이브러리만 사용).
 
   python3 scripts/threshold.py week12            # 1~2주차 인스타 캡션 5개 + 릴스 스크립트 2개
   python3 scripts/threshold.py daily             # 오늘(서울 기준) 분량 → output/YYYY-MM-DD/
@@ -26,7 +26,7 @@ USED_THREADS = ROOT / "used_threads.json"
 WINNERS = ROOT / "winners.md"
 THREADS_QUEUE = ROOT / "content" / "threads_queue.md"
 
-BASE_TAGS = ["#TheThreshold", "#감도", "#디지털Zine"]
+BASE_TAGS = ["#Trace", "#감도", "#디지털Zine"]
 # 캡션마다 하나 이상 들어가야 하는 실제 검색어 (공백 무시하고 비교)
 SEARCH_KEYWORDS = ["강남 조용한 카페", "혼자 가기 좋은 곳", "강남 카페", "강남역 카페",
                    "조용한 카페", "혼자 카페", "강남 산책", "작업하기 좋은 카페"]
@@ -164,7 +164,7 @@ def reels_script(place):
 [25-30초] 지도+텍스트
 화면: 다시 지도, 점 하나만 남기고 정지
 자막: {coord}
-텍스트: THE THRESHOLD
+텍스트: Tracé
 """
 
 
