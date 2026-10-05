@@ -1,5 +1,7 @@
 # 사진·촬영 슬롯
 
+**적용됨(도쿄 사진 5장):** 릴스 A 1·3·4, 릴스 B 2·3, 릴스 C 2·3, 캐러셀 D 1·2·4·7, 인용 E 1·3. 카드 `cards.json`의 `photo` 값을 바꾸면 다른 사진으로 교체된다. 사진 속 사람은 멀리서 찍힌 컷이지만 얼굴이 알아보일 정도면 다른 컷으로 바꾸는 편이 안전하다.
+
 에세이 안의 이미지는 내가 볼 수 없다. 아래 번호 이름으로 `photos/essay/`에 넣으면 해당 카드 배경으로 어둡게 깔린다.
 예: `photos/essay/reels_a_low_threshold_02.jpg` → 릴스 A 2번 카드.
 없으면 지금처럼 검은 선 격자 배경이다. 사진을 넣은 뒤 `python3 scripts/render_cards.py content/essay_seoul_tokyo/cards.json`을 다시 실행한다.
