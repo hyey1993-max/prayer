@@ -9,7 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 FONTS = ROOT / "assets" / "fonts"
-SIZES = {"hook": (1080, 1350), "reels": (1080, 1920), "carousel": (1080, 1350), "quote": (1080, 1350), "longform": (1080, 1350)}
+SIZES = {"hook": (1080, 1350), "hookreels": (1080, 1920), "reels": (1080, 1920), "carousel": (1080, 1350), "quote": (1080, 1350), "longform": (1080, 1350)}
 
 
 def chrome():
@@ -121,9 +121,12 @@ def hl(t):
     return re.sub(r"\[\[(.+?)\]\]", r"<em>\1</em>", esc(t))
 
 
-def page_hook(card, idx, total, brand, part, bg):
+def page_hook(card, idx, total, brand, part, bg, kind="hook"):
     """레퍼런스형: 위는 사진, 아래는 짧고 굵은 훅 제목. 본문 카드는 원문을 그대로."""
-    w, h = SIZES["hook"]
+    w, h = SIZES[kind]
+    reels = kind == "hookreels"
+    ph = int(h * (0.6 if reels else 0.535))                      # 사진 영역 높이
+    top_pad, bot_pad = (230, 330) if reels else (130, 64)   # 릴스는 인스타 UI 가림 영역을 비운다
     typ = card.get("type", "body")
     photo = f"url(data:image/jpeg;base64,{b64(bg)})" if bg else "none"
     top = f'<div class=bar><span>{html.escape(brand)}</span><span>{html.escape(part)} · {idx + 1:02d}/{total:02d}</span></div>'
@@ -133,6 +136,8 @@ def page_hook(card, idx, total, brand, part, bg):
         inner = f"""<div class=photo style="background-image:{photo}"></div>
 <div class=low><p class=label>{esc(card.get("label"))}</p><h1 class="{big}">{hl(card["h"])}</h1>
 <p class=sub>{esc(card.get("sub"))}</p><p class=foot>{foot}</p></div>"""
+    elif typ == "big":
+        inner = f'<div class="pad mid"><p class=label>{esc(card.get("label"))}</p><h1 class=big>{hl(card["h"])}</h1><p class=sub>{esc(card.get("sub"))}</p></div>'
     elif typ == "list":
         rows = "".join(f'<li><b>{i + 1:02d}</b><span>{hl(x)}</span></li>' for i, x in enumerate(card["items"]))
         inner = f'<div class=pad><p class=label>{esc(card.get("label"))}</p><h1>{hl(card["h"])}</h1><ol>{rows}</ol><p class=foot>{esc(card.get("sub"))}</p></div>'
@@ -143,15 +148,17 @@ def page_hook(card, idx, total, brand, part, bg):
 html,body{{width:{w}px;height:{h}px;background:#0b0b0a;color:#f2f1ec;overflow:hidden}}
 body{{position:relative;font-family:"SansKR",sans-serif}}
 em{{font-style:normal;color:#f2c94c}}
-.bar{{position:absolute;z-index:2;top:44px;left:64px;right:64px;display:flex;justify-content:space-between;font:400 24px "SansKR",sans-serif;letter-spacing:.12em;color:#f2f1ecbb;text-shadow:0 1px 6px #0009}}
-.photo{{position:absolute;left:0;right:0;top:0;height:720px;background:#1b1b19 center/cover no-repeat}}
+.bar{{position:absolute;z-index:2;top:{150 if reels else 44}px;left:64px;right:64px;display:flex;justify-content:space-between;font:400 24px "SansKR",sans-serif;letter-spacing:.12em;color:#f2f1ecbb;text-shadow:0 1px 6px #0009}}
+.photo{{position:absolute;left:0;right:0;top:0;height:{ph}px;background:#1b1b19 center/cover no-repeat}}
 .photo:before{{content:"";position:absolute;inset:0 0 auto 0;height:160px;background:linear-gradient(#0b0b0aaa,transparent)}}
 .photo:after{{content:"";position:absolute;inset:auto 0 0 0;height:260px;background:linear-gradient(transparent,#0b0b0a)}}
-.low{{position:absolute;left:64px;right:64px;top:640px;bottom:56px;display:flex;flex-direction:column;gap:22px}}
-.pad{{position:absolute;left:64px;right:64px;top:130px;bottom:64px;display:flex;flex-direction:column;gap:30px}}
+.low{{position:absolute;left:64px;right:64px;top:{ph - 80}px;bottom:{bot_pad if reels else 56}px;display:flex;flex-direction:column;gap:22px}}
+.pad{{position:absolute;left:64px;right:64px;top:{top_pad}px;bottom:{bot_pad}px;display:flex;flex-direction:column;gap:30px}}
 .label{{font:400 28px "SansKR",sans-serif;letter-spacing:.06em;color:#f2c94c}}
 h1{{font:900 76px/1.22 "HeavyKR",sans-serif;letter-spacing:-.02em;word-break:keep-all}}
 h1.cover{{font-size:96px}}
+.mid{{justify-content:center}}
+h1.big{{font-size:{100 if reels else 88}px;line-height:1.24}}
 .sub{{font:400 32px/1.55 "SansKR",sans-serif;color:#c9c7bf;word-break:keep-all}}
 .foot{{margin-top:auto;font:400 26px "SansKR",sans-serif;color:#9a9891;text-align:right}}
 .body{{font:400 37px/1.78 "SansKR",sans-serif;color:#dedcd5;word-break:keep-all;border-top:2px solid #f2f1ec33;padding-top:30px}}
@@ -177,7 +184,7 @@ def main():
                 photos = [str(ROOT / "photos" / "essay" / c["photo"])]
             with tempfile.NamedTemporaryFile("w", suffix=".html", delete=False, encoding="utf-8") as f:
                 bgp = photos[0] if photos else None
-                f.write(page_hook(c, i, len(cards), data["brand"], s.get("part", ""), bgp) if kind == "hook"
+                f.write(page_hook(c, i, len(cards), data["brand"], s.get("part", ""), bgp, kind) if kind in ("hook", "hookreels")
                         else page_long(c, i, len(cards), data["brand"], s.get("part", ""), bgp) if kind == "longform"
                         else page(kind, c, i, len(cards), data["brand"], bgp))
             png = out / f"{i + 1:02d}.jpg"
