@@ -1,0 +1,113 @@
+{
+ "brand": "Tracé",
+ "sets": {
+  "font_a_song_myung": {
+   "title": "한글 본문 후보 · 송명",
+   "kind": "manifesto",
+   "color": "#1a1af0",
+   "kr_font": "song-myung-korean-400-normal.woff2",
+   "cards": [
+    {
+     "handle": "@trace.map",
+     "sign": "",
+     "date": "October 6th, 2026",
+     "title": "Tracé: Map Principles",
+     "items": [
+      {
+       "h": "평점이 없다",
+       "en": "No Ratings",
+       "t": "별점과 리뷰 수를 싣지 않는다. 대신 왜 이 장소인지를 한 문장으로 남긴다."
+      },
+      {
+       "h": "알고리즘이 고르지 않는다",
+       "en": "No Algorithm",
+       "t": "많이 저장된 곳이 다시 위로 올라오는 추천 대신, 한 사람이 자기 감도로 고른 장소만 올린다."
+      },
+      {
+       "h": "맥락을 남긴다",
+       "en": "Context",
+       "t": "좌표, 가면 좋은 시간, 기준점에서의 거리. 그리고 그 장소를 고른 이유."
+      },
+      {
+       "h": "검은 선으로 그린다",
+       "en": "Black Line",
+       "t": "어디로 갔는지보다 어떻게 걸었는지가 보이는 지도. 타인의 궤도가 아닌 나만의 속도의 궤적."
+      }
+     ]
+    }
+   ]
+  },
+  "font_b_black_white_picture": {
+   "title": "한글 본문 후보 · 흑백사진",
+   "kind": "manifesto",
+   "color": "#1a1af0",
+   "kr_font": "black-and-white-picture-korean-400-normal.woff2",
+   "cards": [
+    {
+     "handle": "@trace.map",
+     "sign": "",
+     "date": "October 6th, 2026",
+     "title": "Tracé: Map Principles",
+     "items": [
+      {
+       "h": "평점이 없다",
+       "en": "No Ratings",
+       "t": "별점과 리뷰 수를 싣지 않는다. 대신 왜 이 장소인지를 한 문장으로 남긴다."
+      },
+      {
+       "h": "알고리즘이 고르지 않는다",
+       "en": "No Algorithm",
+       "t": "많이 저장된 곳이 다시 위로 올라오는 추천 대신, 한 사람이 자기 감도로 고른 장소만 올린다."
+      },
+      {
+       "h": "맥락을 남긴다",
+       "en": "Context",
+       "t": "좌표, 가면 좋은 시간, 기준점에서의 거리. 그리고 그 장소를 고른 이유."
+      },
+      {
+       "h": "검은 선으로 그린다",
+       "en": "Black Line",
+       "t": "어디로 갔는지보다 어떻게 걸었는지가 보이는 지도. 타인의 궤도가 아닌 나만의 속도의 궤적."
+      }
+     ]
+    }
+   ]
+  },
+  "font_c_gowun_batang": {
+   "title": "한글 본문 후보 · 고운바탕",
+   "kind": "manifesto",
+   "color": "#1a1af0",
+   "kr_font": "gowun-batang-korean-400-normal.woff2",
+   "cards": [
+    {
+     "handle": "@trace.map",
+     "sign": "",
+     "date": "October 6th, 2026",
+     "title": "Tracé: Map Principles",
+     "items": [
+      {
+       "h": "평점이 없다",
+       "en": "No Ratings",
+       "t": "별점과 리뷰 수를 싣지 않는다. 대신 왜 이 장소인지를 한 문장으로 남긴다."
+      },
+      {
+       "h": "알고리즘이 고르지 않는다",
+       "en": "No Algorithm",
+       "t": "많이 저장된 곳이 다시 위로 올라오는 추천 대신, 한 사람이 자기 감도로 고른 장소만 올린다."
+      },
+      {
+       "h": "맥락을 남긴다",
+       "en": "Context",
+       "t": "좌표, 가면 좋은 시간, 기준점에서의 거리. 그리고 그 장소를 고른 이유."
+      },
+      {
+       "h": "검은 선으로 그린다",
+       "en": "Black Line",
+       "t": "어디로 갔는지보다 어떻게 걸었는지가 보이는 지도. 타인의 궤도가 아닌 나만의 속도의 궤적."
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

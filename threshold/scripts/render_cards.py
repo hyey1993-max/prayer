@@ -168,14 +168,14 @@ li b{{font:400 28px "SansKR",sans-serif;color:#f2c94c;min-width:44px}}
 </style><body>{top}{inner}</body>"""
 
 
-def page_manifesto(card, idx, total, brand, color):
+def page_manifesto(card, idx, total, brand, color, kr_font="nanum-gothic-coding-korean-400-normal.woff2"):
     """선언문형: 단색 배경, 밑줄 제목, 소제목 + 본문, 하단 서명·날짜"""
     w, h = SIZES["manifesto"]
     face = lambda fam, w, f: f'@font-face{{font-family:"{fam}";font-weight:{w};src:url(data:font/woff2;base64,{b64(FONTS / f)}) format("woff2")}}'
     mono = (face("Display", 400, "instrument-serif-latin-400-normal.woff2")
             + face("Type", 400, "courier-prime-latin-400-normal.woff2")
             + face("Type", 700, "courier-prime-latin-700-normal.woff2")
-            + face("TypeKR", 400, "nanum-gothic-coding-korean-400-normal.woff2"))
+            + face("TypeKR", 400, kr_font))
     rows = "".join(f'<section><h2>{esc(it["h"])}<span>{esc(it.get("en"))}</span></h2><p>{esc(it["t"])}</p></section>' for it in card["items"])
     page_no = f"{idx + 1}/{total}" if total > 1 else ""
     few = len(card["items"]) <= 3                     # 항목이 적으면 글자를 키워 지면을 채운다
@@ -217,7 +217,7 @@ def main():
                 photos = [str(ROOT / "photos" / "essay" / c["photo"])]
             with tempfile.NamedTemporaryFile("w", suffix=".html", delete=False, encoding="utf-8") as f:
                 bgp = photos[0] if photos else None
-                f.write(page_manifesto(c, i, len(cards), data["brand"], s.get("color", "#1a1af0")) if kind == "manifesto"
+                f.write(page_manifesto(c, i, len(cards), data["brand"], s.get("color", "#1a1af0"), s.get("kr_font", "nanum-gothic-coding-korean-400-normal.woff2")) if kind == "manifesto"
                         else page_hook(c, i, len(cards), data["brand"], s.get("part", ""), bgp, kind) if kind in ("hook", "hookreels")
                         else page_long(c, i, len(cards), data["brand"], s.get("part", ""), bgp) if kind == "longform"
                         else page(kind, c, i, len(cards), data["brand"], bgp))

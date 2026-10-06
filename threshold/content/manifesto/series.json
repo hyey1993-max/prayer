@@ -52,7 +52,8 @@
       }
      ]
     }
-   ]
+   ],
+   "kr_font": "song-myung-korean-400-normal.woff2"
   },
   "walking_principles": {
    "title": "Walking Principles (1장)",
@@ -87,7 +88,8 @@
       }
      ]
     }
-   ]
+   ],
+   "kr_font": "song-myung-korean-400-normal.woff2"
   },
   "map_principles": {
    "title": "Map Principles (1장)",
@@ -122,7 +124,8 @@
       }
      ]
     }
-   ]
+   ],
+   "kr_font": "song-myung-korean-400-normal.woff2"
   }
  }
 }
