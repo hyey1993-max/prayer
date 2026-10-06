@@ -171,8 +171,11 @@ li b{{font:400 28px "SansKR",sans-serif;color:#f2c94c;min-width:44px}}
 def page_manifesto(card, idx, total, brand, color):
     """선언문형: 단색 배경, 밑줄 제목, 소제목 + 본문, 하단 서명·날짜"""
     w, h = SIZES["manifesto"]
-    mono = f'@font-face{{font-family:"Mono";font-weight:400;src:url(data:font/woff2;base64,{b64(FONTS / "ibm-plex-mono-latin-400-normal.woff2")}) format("woff2")}}' \
-           f'@font-face{{font-family:"Mono";font-weight:600;src:url(data:font/woff2;base64,{b64(FONTS / "ibm-plex-mono-latin-600-normal.woff2")}) format("woff2")}}'
+    face = lambda fam, w, f: f'@font-face{{font-family:"{fam}";font-weight:{w};src:url(data:font/woff2;base64,{b64(FONTS / f)}) format("woff2")}}'
+    mono = (face("Display", 400, "instrument-serif-latin-400-normal.woff2")
+            + face("Type", 400, "courier-prime-latin-400-normal.woff2")
+            + face("Type", 700, "courier-prime-latin-700-normal.woff2")
+            + face("TypeKR", 400, "nanum-gothic-coding-korean-400-normal.woff2"))
     rows = "".join(f'<section><h2>{esc(it["h"])}<span>{esc(it.get("en"))}</span></h2><p>{esc(it["t"])}</p></section>' for it in card["items"])
     page_no = f"{idx + 1}/{total}" if total > 1 else ""
     few = len(card["items"]) <= 3                     # 항목이 적으면 글자를 키워 지면을 채운다
@@ -180,21 +183,21 @@ def page_manifesto(card, idx, total, brand, color):
 *{{box-sizing:border-box;margin:0;padding:0}}
 html,body{{width:{w}px;height:{h}px;background:{color};color:#fff;overflow:hidden}}
 .page{{position:absolute;left:110px;right:110px;top:120px;bottom:96px;display:flex;flex-direction:column}}
-h1{{font:700 62px/1.15 "SerifKR",serif;letter-spacing:-.035em;border-bottom:3px solid #fff;padding-bottom:10px;word-break:keep-all}}
-.handle{{align-self:flex-end;font:400 24px "Mono","SansKR",monospace;margin-top:10px;opacity:.9}}
+h1{{font:400 74px/1.1 "Display","SerifKR",serif;letter-spacing:-.025em;-webkit-text-stroke:1.4px #fff;border-bottom:3px solid #fff;padding-bottom:10px;word-break:keep-all}}
+.handle{{align-self:flex-end;font:400 25px "Type",monospace;margin-top:10px;opacity:.9}}
 .items{{display:flex;flex-direction:column;gap:{56 if few else 34}px;margin-top:{40 if few else 22}px}}
 h2{{font:700 {44 if few else 37}px/1.2 "SerifKR",serif;letter-spacing:-.03em;display:flex;align-items:baseline;gap:16px;word-break:keep-all}}
-h2 span{{font:600 21px "Mono",monospace;letter-spacing:0;opacity:.75}}
-section p{{margin-top:{14 if few else 8}px;font:400 {31 if few else 27}px/1.6 "Mono","SansKR",monospace;letter-spacing:.01em;word-break:keep-all;text-align:justify}}
+h2 span{{font:700 22px "Type",monospace;letter-spacing:0;opacity:.75}}
+section p{{margin-top:{14 if few else 8}px;font:400 {31 if few else 27}px/1.6 "Type","TypeKR",monospace;letter-spacing:0;word-break:keep-all;text-align:justify}}
 .foot{{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end}}
-.foot .h{{font:400 22px "Mono",monospace;opacity:.9}}
-.sign{{text-align:right;font:700 30px/1.25 "SerifKR",serif;letter-spacing:-.03em}}
-.sign small{{display:block;font:400 26px/1.3 "SerifKR",serif}}
-.pg{{position:absolute;right:110px;top:64px;font:400 22px "Mono",monospace;opacity:.7}}
+.foot .h{{font:400 24px "Type",monospace;opacity:.9}}
+.sign{{text-align:right;font:400 34px/1.2 "Display","SerifKR",serif;letter-spacing:-.02em;-webkit-text-stroke:.6px #fff}}
+.sign small{{display:block;font:400 32px/1.2 "Display","SerifKR",serif}}
+.pg{{position:absolute;right:110px;top:64px;font:400 22px "Type",monospace;opacity:.7}}
 </style><body><div class=pg>{page_no}</div><div class=page>
 <h1>{esc(card["title"])}</h1><p class=handle>{esc(card.get("handle"))}</p>
 <div class=items>{rows}</div>
-<div class=foot><span class=h>{esc(card.get("handle"))}</span><p class=sign>{esc(card.get("sign"))}<small>{esc(card.get("date"))}</small></p></div>
+<div class=foot><span class=h>{esc(card.get("handle"))}</span><p class=sign>{esc(card.get("sign"))}{f"<small>{esc(card.get(chr(100)+chr(97)+chr(116)+chr(101)))}</small>" if card.get("date") else ""}</p></div>
 </div></body>"""
 
 
