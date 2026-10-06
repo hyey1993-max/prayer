@@ -4,7 +4,7 @@
   "ux_principles": {
    "title": "UX Principles (2장)",
    "kind": "manifesto",
-   "color": "#1a1af0",
+   "color": "#2a33cf",
    "cards": [
     {
      "handle": "@trace.map",
@@ -58,7 +58,7 @@
   "walking_principles": {
    "title": "Walking Principles (1장)",
    "kind": "manifesto",
-   "color": "#1a1af0",
+   "color": "#2a33cf",
    "cards": [
     {
      "handle": "@trace.map",
@@ -94,7 +94,7 @@
   "map_principles": {
    "title": "Map Principles (1장)",
    "kind": "manifesto",
-   "color": "#1a1af0",
+   "color": "#2a33cf",
    "cards": [
     {
      "handle": "@trace.map",

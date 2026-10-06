@@ -4,7 +4,7 @@
   "font_a_song_myung": {
    "title": "한글 본문 후보 · 송명",
    "kind": "manifesto",
-   "color": "#1a1af0",
+   "color": "#2a33cf",
    "kr_font": "song-myung-korean-400-normal.woff2",
    "cards": [
     {
@@ -40,7 +40,7 @@
   "font_b_black_white_picture": {
    "title": "한글 본문 후보 · 흑백사진",
    "kind": "manifesto",
-   "color": "#1a1af0",
+   "color": "#2a33cf",
    "kr_font": "black-and-white-picture-korean-400-normal.woff2",
    "cards": [
     {
@@ -76,7 +76,7 @@
   "font_c_gowun_batang": {
    "title": "한글 본문 후보 · 고운바탕",
    "kind": "manifesto",
-   "color": "#1a1af0",
+   "color": "#2a33cf",
    "kr_font": "gowun-batang-korean-400-normal.woff2",
    "cards": [
     {

@@ -217,7 +217,7 @@ def main():
                 photos = [str(ROOT / "photos" / "essay" / c["photo"])]
             with tempfile.NamedTemporaryFile("w", suffix=".html", delete=False, encoding="utf-8") as f:
                 bgp = photos[0] if photos else None
-                f.write(page_manifesto(c, i, len(cards), data["brand"], s.get("color", "#1a1af0"), s.get("kr_font", "nanum-gothic-coding-korean-400-normal.woff2")) if kind == "manifesto"
+                f.write(page_manifesto(c, i, len(cards), data["brand"], s.get("color", "#2a33cf"), s.get("kr_font", "nanum-gothic-coding-korean-400-normal.woff2")) if kind == "manifesto"
                         else page_hook(c, i, len(cards), data["brand"], s.get("part", ""), bgp, kind) if kind in ("hook", "hookreels")
                         else page_long(c, i, len(cards), data["brand"], s.get("part", ""), bgp) if kind == "longform"
                         else page(kind, c, i, len(cards), data["brand"], bgp))
