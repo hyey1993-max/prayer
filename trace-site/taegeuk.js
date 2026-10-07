@@ -15,6 +15,7 @@ const TILT = -0.62;
 let BG = "255,255,255";
 const readBG = () => { const m = getComputedStyle(document.body).backgroundColor.match(/\d+/g); if (m) BG = m.slice(0, 3).join(","); };
 readBG(); matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", () => { readBG(); draw(true); });
+addEventListener("trace-theme", () => { readBG(); draw(true); });   // 상단 Light/Dark 버튼
 // 팔레트 [색, 비율, 밝은 색인가]. 양은 밝은 색이, 음은 어두운 색이 조금 더 자주 나온다.
 const INK = [["#d8452e", .15, 0], ["#eea195", .11, 1], ["#e2a93b", .11, 1], ["#8fd3c1", .1, 1], ["#a9c4d8", .07, 1],
              ["#fbf6ea", .08, 1], ["#3f8f86", .1, 0], ["#23395b", .12, 0], ["#1f4a3c", .07, 0], ["#2b2724", .09, 0]];

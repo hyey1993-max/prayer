@@ -10,6 +10,16 @@ const paras = (host, list) => list.forEach(t => t.split("\n").forEach(line => li
 const label = l => `${String(l.no).padStart(2, "0")} · ${l.en}`;
 const groupOf = l => D.groups.find(g => g.key === l.group);
 
+// ---------- 테마: 라이트(아이보리) ↔ 다크 ----------
+const themeBtn = $("#theme"), sysDark = matchMedia("(prefers-color-scheme: dark)");
+const isDark = () => (document.documentElement.dataset.theme || (sysDark.matches ? "dark" : "light")) === "dark";
+function paintTheme(){ const d = isDark(); themeBtn.textContent = d ? "Light" : "Dark"; themeBtn.setAttribute("aria-pressed", String(d));
+  window.dispatchEvent(new Event("trace-theme")); }
+themeBtn.addEventListener("click", () => { const t = isDark() ? "light" : "dark"; document.documentElement.dataset.theme = t;
+  try { localStorage.setItem("trace-theme", t); } catch (e) {} paintTheme(); });
+sysDark.addEventListener?.("change", paintTheme);
+paintTheme();
+
 // ---------- 목록 ----------
 const host = $("#groups");
 D.groups.forEach(g => {

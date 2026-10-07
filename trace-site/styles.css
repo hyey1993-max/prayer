@@ -1,6 +1,6 @@
-/* Laws of Simplicity 형식: 흰 종이, 도트 매트릭스 라벨, 세리프 본문, 점으로 찍은 아이콘, 오른쪽 가장자리에 걸친 그림 */
+/* Laws of Simplicity 형식: 아이보리 종이(라이트) / 먹색(다크), 도트 매트릭스 라벨, 세리프 본문, 점으로 찍은 아이콘, 오른쪽 가장자리에 걸친 그림 */
 :root{
-  --paper:#ffffff; --ink:#151517; --muted:#6c6c70; --rule:#e4e4e6; --soft:#f5f5f6; --link:#5a6b8c;
+  --paper:#f3eee3; --ink:#1a1916; --muted:#6e6a62; --rule:#ddd6c8; --soft:#ebe5d8; --link:#5a6b8c; color-scheme:light;
   --dot:"IBM Plex Mono",ui-monospace,Menlo,monospace;
   --serif:"Newsreader","Noto Serif KR",Georgia,serif;
 }
@@ -21,6 +21,9 @@ a:focus-visible,input:focus-visible,canvas:focus-visible{outline:2px solid var(-
 .brand span{font-weight:400;color:var(--muted)}
 .top nav{display:flex;gap:20px;font:500 13px var(--dot)}
 .top nav a{text-decoration:none;color:var(--muted)} .top nav a:hover{color:var(--ink)}
+.theme{font:500 13px var(--dot);color:var(--muted);background:none;border:1px solid var(--rule);border-radius:999px;padding:2px 12px;cursor:pointer}
+.theme:hover{color:var(--ink);border-color:var(--ink)}
+.theme:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 
 /* 목록 + 오른쪽 태극 */
 .stage{display:grid;grid-template-columns:minmax(0,880px) minmax(0,1fr);gap:40px;max-width:1480px;margin:0 auto}
