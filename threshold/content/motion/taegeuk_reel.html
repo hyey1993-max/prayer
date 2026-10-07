@@ -13,15 +13,15 @@ button{align-self:flex-start;font:500 13px var(--mono);color:var(--fg);backgroun
 button:focus-visible{outline:2px solid var(--warm);outline-offset:3px}
 </style>
 <main>
-  <div><h1>Tracé <b>음과 양</b> · Reels</h1><p>20초 반복. 모임 → 흩어짐 → 충돌 → 순환 → 다시 모임.</p></div>
-  <canvas id="c" width="1080" height="1920" role="img" aria-label="흩어진 흰 입자와 검은 입자가 태극으로 모였다가, 저절로 흩어지고 부딪힌 뒤 다시 순환하며 모이는 20초 영상"></canvas>
+  <div><h1>Tracé <b>음과 양</b> · Reels</h1><p>12초 반복. 모임 → 흩어짐 → 충돌 → 순환 → 다시 모임.</p></div>
+  <canvas id="c" width="1080" height="1920" role="img" aria-label="흩어진 흰 입자와 검은 입자가 태극으로 모였다가, 저절로 흩어지고 부딪힌 뒤 다시 순환하며 모이는 12초 영상"></canvas>
   <button id="play" type="button" aria-pressed="true">재생 중</button>
 </main>
 <script>
 (() => {
 "use strict";
 // 화면: 1080×1920. 인스타 릴스 UI가 덮는 위(약 220px)와 아래(약 380px), 오른쪽 버튼 영역(약 170px)은 비운다.
-const W = 1080, H = 1920, CX = 540, CY = 820, R = 400, N = 13000, LOOP = 20;
+const W = 1080, H = 1920, CX = 540, CY = 820, R = 400, N = 13000, LOOP = 12;
 const BG = [13,13,16], TILT = -0.62;            // 검은 바탕 (The Path 팔레트)
 const MONO = '"IBM Plex Mono", ui-monospace, monospace', SANS = '"Noto Sans KR", system-ui, sans-serif';
 // 에세이 원문 문장 (수정하지 않음)
@@ -31,8 +31,8 @@ const Q = {
   flow:     ["태극의 역동성", "음과 양이 서로를 밀어내고 끌어당기며 끊임없이 순환하는 태극의 ‘역동성’처럼, 유저의 시선과 동선은 인터페이스 위를 유연하게 흘러가야 한다."],
 };
 // 타임라인 [시작초, mix(0 응축 ~ 1 역동), 문장]
-const TL = [[0, 0, "condense"], [6, 1, "dynamic"], [12, .5, "flow"], [16.5, 0, "condense"]];
-const BURSTS = [6, 18.6];                                   // 이 순간 저절로 흩어진다
+const TL = [[0, 0, "condense"], [3.5, .8, "dynamic"], [7, .45, "flow"], [9.6, 0, "flow"]];
+const BURSTS = [3.5, 11.2];                                   // 이 순간 저절로 흩어진다
 const clamp = (v,a=0,b=1) => Math.max(a, Math.min(b, v)), lerp = (a,b,k) => a + (b-a)*k;
 const ease = k => k < .5 ? 2*k*k : 1 - Math.pow(-2*k + 2, 2)/2;
 function rng(seed){ let s = seed >>> 0; return () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296); }
@@ -45,34 +45,34 @@ function reset(seed = 7){
   for (let i = 0; i < N; i++){ let x, y; do { x = (r()*2-1)*R; y = (r()*2-1)*R; } while (x*x + y*y > R*R);
     if (Math.hypot(x, y) > R*.82){ const e = 1 + (r()-.5)*.18; x *= e; y *= e; }
     col[i] = isWhite(x, y) ? 1 : 0; const o = i*6;
-    P[o] = r()*W; P[o+1] = 120 + r()*(H-240);              // 시작: 화면 전체에 흩어져 있다
+    const k = 1.03 + r()*.22; P[o] = CX + x*k + (r()-.5)*24; P[o+1] = CY + y*k + (r()-.5)*24;   // 시작: 끝 장면과 이어지도록 거의 모인 상태
     P[o+4] = x; P[o+5] = y; }
 }
 function mixAt(tt){ let i = 0; while (i < TL.length - 1 && tt >= TL[i+1][0]) i++;
   const [t0, m0] = TL[i], prev = i ? TL[i-1][1] : TL[0][1]; return lerp(prev, m0, ease(clamp((tt - t0)/2.2))); }
 function quoteAt(tt){ let i = 0; while (i < TL.length - 1 && tt >= TL[i+1][0]) i++; return { q: Q[TL[i][2]], age: tt - TL[i][0] }; }
-function autoPointer(tt){ if (tt < 7.5 || tt > 11.5) return null;            // 역동 구간에 S자 경계를 따라 젓는다
-  const u = (tt - 7.5)/4, a = u*Math.PI*2.2, s = Math.sin(a)*R*.55, c = Math.cos(TILT), sn = Math.sin(TILT);
+function autoPointer(tt){ if (tt < 4.6 || tt > 7.4) return null;            // 역동 구간에 S자 경계를 따라 젓는다
+  const u = (tt - 4.6)/2.8, a = u*Math.PI*1.4, s = Math.sin(a)*R*.55, c = Math.cos(TILT), sn = Math.sin(TILT);
   const lx = s*Math.cos(a*.5)*.9, ly = (u-.5)*R*1.6; return [CX + lx*c - ly*sn, CY + lx*sn + ly*c]; }
 
 function step(){
   t += 1/60;
-  for (const b of BURSTS) if (t >= b && !fired.has(b)){ fired.add(b); burst = 2.8; }
+  for (const b of BURSTS) if (t >= b && !fired.has(b)){ fired.add(b); burst = 1.3; }
   const p = autoPointer(t); pv = p && ptr ? [p[0]-ptr[0], p[1]-ptr[1]] : [0,0]; ptr = p;
   const m = mixAt(t), early = clamp(t/1.6);                  // 처음 1.6초 동안 모이는 힘을 서서히 키운다
-  const spring = lerp(.022, .0018, m) * lerp(.55, 1.6, early), flow = lerp(.06, 1.25, m), damp = lerp(.86, .94, m);
-  const rot = t*lerp(.22, .55, m), cr = Math.cos(rot), sr = Math.sin(rot);
+  const spring = lerp(.022, .0018, m) * lerp(.55, 1.6, early), flow = lerp(.05, .7, m), damp = lerp(.86, .94, m);
+  const rot = t/LOOP*Math.PI*2   /* 12초에 정확히 한 바퀴: 끝과 처음이 같은 각도 */, cr = Math.cos(rot), sr = Math.sin(rot);
   for (let i = 0; i < N; i++){ const o = i*6; let x = P[o], y = P[o+1], vx = P[o+2], vy = P[o+3];
     vx += (CX + P[o+4]*cr - P[o+5]*sr - x)*spring; vy += (CY + P[o+4]*sr + P[o+5]*cr - y)*spring;
     const sign = col[i] ? 1 : -1, a = Math.sin(x*.0045 + t*.35)*2.1 + Math.cos(y*.0052 - t*.28)*2.1 + sign*.9;
     vx += Math.cos(a)*flow*.18; vy += Math.sin(a)*flow*.18;
     const dx = x - CX, dy = y - CY, d = Math.hypot(dx, dy) + 1;
     vx += (-dy/d)*.05*(1+m)*sign; vy += (dx/d)*.05*(1+m)*sign;
-    if (burst > 0){ vx += dx/d*burst*7 + (-dy/d)*burst*2*sign; vy += dy/d*burst*7 + (dx/d)*burst*2*sign; }
+    if (burst > 0){ vx += dx/d*burst*5 + (-dy/d)*burst*1.2*sign; vy += dy/d*burst*5 + (dx/d)*burst*1.2*sign; }
     if (ptr){ const ex = x - ptr[0], ey = y - ptr[1], e = Math.hypot(ex, ey);
-      if (e < 220){ const f = 1 - e/220; vx += (-ey/(e+1))*f*2.2 + pv[0]*f*.22; vy += (ex/(e+1))*f*2.2 + pv[1]*f*.22; } }
+      if (e < 220){ const f = 1 - e/220; vx += (-ey/(e+1))*f*1.1 + pv[0]*f*.15; vy += (ex/(e+1))*f*1.1 + pv[1]*f*.15; } }
     vx *= damp; vy *= damp; P[o] = x + vx; P[o+1] = y + vy; P[o+2] = vx; P[o+3] = vy; }
-  burst *= .9; if (burst < .01) burst = 0;
+  burst *= .94; if (burst < .01) burst = 0;
 }
 function wrap(g, s, maxW){ const words = s.split(" "), out = []; let cur = "";
   for (const w of words){ const tr = cur ? cur + " " + w : w; if (g.measureText(tr).width > maxW && cur){ out.push(cur); cur = w; } else cur = tr; }
