@@ -20,3 +20,7 @@
 ```sh
 cd trace-site && python3 -m http.server 8000
 ```
+
+## Credit
+
+The taegeuk interaction (`taegeuk.js`) is inspired by the flow-field work of [Tyler Hobbs](https://www.tylerxhobbs.com) (Fidenza): colored segments on cream paper, dot fields when condensed, flowing strokes when dynamic. The code and the work are original; only the approach is borrowed.
