@@ -129,7 +129,8 @@ def page_hook(card, idx, total, brand, part, bg, kind="hook"):
     top_pad, bot_pad = (230, 330) if reels else (130, 64)   # 릴스는 인스타 UI 가림 영역을 비운다
     typ = card.get("type", "body")
     photo = f"url(data:image/jpeg;base64,{b64(bg)})" if bg else "none"
-    top = f'<div class=bar><span>{html.escape(brand)}</span><span>{html.escape(part)} · {idx + 1:02d}/{total:02d}</span></div>'
+    right = f'{html.escape(part)} · {idx + 1:02d}/{total:02d}' if part else ""   # part가 없으면 쪽 번호도 뺀다 (릴스 표지 등)
+    top = f'<div class=bar><span>{html.escape(brand)}</span><span>{right}</span></div>'
     if typ in ("cover", "title", "end"):
         big = "cover" if typ == "cover" else ""
         foot = {"cover": "넘겨서 보기 →", "end": "저장해두고 다시 보기"}.get(typ, "")
