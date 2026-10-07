@@ -69,6 +69,7 @@ a:focus-visible,input:focus-visible,canvas:focus-visible{outline:2px solid var(-
 .foot .rights p:first-child{color:var(--ink)}
 .foot .src{margin:0}
 .foot a{color:var(--link)}
+.foot .contact{flex-basis:100%;margin:8px 0 0;padding-top:16px;border-top:1px solid var(--rule)}
 
 /* 상세 */
 #law{max-width:560px;margin:0 auto}
