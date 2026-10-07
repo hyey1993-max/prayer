@@ -22,10 +22,11 @@ const src = fs.readFileSync(htmlPath, "utf8").replace(/<link[^>]+fonts\.googleap
   if (flag === "--frames"){
     for (const s of list.split(",").map(Number)){ fs.writeFileSync(out.replace(/\.mp4$/, `_${s}s.jpg`), Buffer.from((await frameAt(s)).split(",")[1], "base64")); }
   } else {
-    // 앞 2초는 버려 잔상이 자리 잡게 하고, 18초 한 바퀴를 담는다
-    await frameAt(2);
+    // 페이지가 정한 만큼(WARM, 기본 2초) 버려 잔상이 자리 잡게 하고, LOOP초 한 바퀴를 담는다
+    const { warm, loop } = await page.evaluate(() => ({ warm: window.TAEGEUK.WARM ?? 2, loop: window.TAEGEUK.LOOP ?? 18 }));
+    if (warm > 0) await frameAt(warm);
     const ff = spawn(ffmpeg, ["-y","-loglevel","error","-f","image2pipe","-framerate","30","-c:v","mjpeg","-i","-","-c:v","libx264","-pix_fmt","yuv420p","-crf","27","-preset","slow","-movflags","+faststart", out]);
-    for (let f = 1; f <= 18*30; f++){ const url = await frameAt(2 + f/30);
+    for (let f = 1; f <= loop*30; f++){ const url = await frameAt(warm + f/30);
       if (!ff.stdin.write(Buffer.from(url.split(",")[1], "base64"))) await new Promise(r => ff.stdin.once("drain", r)); }
     ff.stdin.end(); await new Promise(r => ff.on("close", r));
   }
