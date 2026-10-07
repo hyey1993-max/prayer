@@ -28,6 +28,19 @@ const src = k => D.groups.find(g => g.key === k).source;
 for (const [id, k] of [["#src-ux", "ux"], ["#src-walk", "walk"]]){ const a = $(id); a.href = src(k).url; a.target = "_blank"; a.rel = "noopener"; }
 
 // ---------- 상세 ----------
+// 모션 영상: 속성을 먼저 달고 src를 넣는다 (iOS 자동재생 조건). 정지 화면(poster)을 깔고,
+// 자동재생이 막히면(저전력 모드 등) 재생 버튼을 보여준다.
+function motion(src, poster, label){
+  const v = document.createElement("video");
+  v.muted = true; v.loop = true; v.playsInline = true; v.preload = "metadata";
+  for (const a of ["muted", "playsinline", "loop"]) v.setAttribute(a, "");
+  if (poster) v.poster = poster;
+  v.setAttribute("aria-label", label);
+  if (reduce) v.controls = true; else { v.autoplay = true; v.setAttribute("autoplay", ""); }
+  v.src = src;
+  if (!reduce) v.addEventListener("loadedmetadata", () => { const p = v.play(); if (p) p.catch(() => { v.controls = true; }); }, { once: true });
+  return v;
+}
 const view = $("#law"), home = $("#home");
 function showLaw(no){
   const l = D.laws.find(x => x.no === no); if (!l){ showHome(); return; }
@@ -42,18 +55,10 @@ function showLaw(no){
     const cite = el("p", "cite"); const a = el("a", null, g.source.title); a.href = g.source.url; a.target = "_blank"; a.rel = "noopener";
     cite.append("> From the essay · ", a); view.append(cite);
   }
-  const v = document.createElement("video");
-  Object.assign(v, { src: l.video, muted: true, loop: true, playsInline: true, preload: "metadata" });
-  v.setAttribute("muted", ""); v.setAttribute("playsinline", ""); v.setAttribute("aria-label", `${l.en} motion`);
-  if (reduce) v.controls = true; else v.autoplay = true;
-  view.append(v);
+  view.append(motion(l.video, l.poster, `${l.en} motion`));
   // 인스타용으로 만든 모션 중 이 원칙과 닿는 것
   for (const x of l.extra || []){
-    const fig = el("figure", "extra"), ev = document.createElement("video");
-    Object.assign(ev, { src: x.video, muted: true, loop: true, playsInline: true, preload: "metadata" });
-    ev.setAttribute("muted", ""); ev.setAttribute("playsinline", ""); ev.setAttribute("aria-label", x.caption);
-    if (reduce) ev.controls = true; else ev.autoplay = true;
-    fig.append(ev, el("figcaption", "dot", x.caption)); view.append(fig);
+    const fig = el("figure", "extra"); fig.append(motion(x.video, x.poster, x.caption), el("figcaption", "dot", x.caption)); view.append(fig);
   }
   if (l.original.length){ const body = el("div", "body"); body.lang = "ko"; paras(body, l.original); view.append(body); }
   const nx = D.laws.find(x => x.no === l.no + 1) || D.laws[0];

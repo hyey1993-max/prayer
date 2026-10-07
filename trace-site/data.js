@@ -54,6 +54,7 @@ window.TRACE = {
     "그렇다면 기능주의 매트릭스 위에서 서비스 기획자는 어떻게 UX를 설계해야 하는가. 단순히 트래픽을 유도하는 자극적인 팝업이나 획일적인 랭킹 으로 유저를 줄 세우는 방식을 넘어, 유저가 화면 안에서 길을 잃지 않고 주체성을 지킬 수 있도록 ‘인간적 척도(Human Scale)’를 복원해야 한다."
    ],
    "video": "media/01_ux_human_scale.mp4",
+   "poster": "media/posters/01_ux_human_scale.jpg",
    "extra": []
   },
   {
@@ -68,6 +69,7 @@ window.TRACE = {
     "제한된 모바일 스크린이라는 사각형의 프레임은 마치 일본의 고도의 ‘응축’정신을 요구하는 공간이다. 기획자는 정보를 나열하는 대신, 핵심적인 정성 가치와 감도를 밀도 높게 축약하여 화면 속에 심어야 한다."
    ],
    "video": "media/02_ux_condense.mp4",
+   "poster": "media/posters/02_ux_condense.jpg",
    "extra": []
   },
   {
@@ -82,9 +84,11 @@ window.TRACE = {
     "그러나 그 짜임새 있는 응축의 공간을 흐르는 유저의 경험은 결코 갇혀있거나 고정되어서는 안 된다. 음과 양이 서로를 밀어내고 끌어당기며 끊임없이 순환하는 태극의 ‘역동성’처럼, 유저의 시선과 동선은 인터페이스 위를 유연하게 흘러가야 한다."
    ],
    "video": "media/03_ux_flow.mp4",
+   "poster": "media/posters/03_ux_flow.jpg",
    "extra": [
     {
      "video": "media/15_taegeuk_yin_yang_web.mp4",
+     "poster": "media/posters/15_taegeuk_yin_yang_web.jpg",
      "caption": "Yin and yang · the taegeuk interaction"
     }
    ]
@@ -101,6 +105,7 @@ window.TRACE = {
     "목적지(전환)로 유저를 강제 밀어 넣는 직선적 퍼널이 아니라, 정교하게 응축된 화면 사이를 유저가 스스로 탐색하고 사유할 수 있도록 태극의 궤적을 닮은 ‘시퀀스의 동선’을 깔아주는 것."
    ],
    "video": "media/04_ux_sequence.mp4",
+   "poster": "media/posters/04_ux_sequence.jpg",
    "extra": []
   },
   {
@@ -117,6 +122,7 @@ window.TRACE = {
     "공급자가 규정해 놓은 기능에 수동적으로 갇히지 않도록, 언제든 나만의 템포로 머물고 소통하며 움직일 수 있는 ‘낮은 문턱의 내비게이션’을 녹여내는 것이 기능주의 안에서 취해야 할 설계의 목적이자 의무다."
    ],
    "video": "media/05_ux_low_threshold.mp4",
+   "poster": "media/posters/05_ux_low_threshold.jpg",
    "extra": []
   },
   {
@@ -133,6 +139,7 @@ window.TRACE = {
     "디지털 UX 역시 마찬가지다. 진정한 아키텍처는 기획자가 단번에 찍어내는 완성형 결과물이 아니라, 시간이 흐르며 유저와 상호작용하는 ‘과정(Process)’ 그 자체다. 응축된 인터페이스 위에 유저들의 주체적인 참여와 역동적인 맥락이 더해질 때, 화면은 단순한 숫자의 매트릭스를 넘어 비로소 살아 숨 쉬는 유기적인 ‘장소’로 자라난다."
    ],
    "video": "media/06_ux_participation.mp4",
+   "poster": "media/posters/06_ux_participation.jpg",
    "extra": []
   },
   {
@@ -149,9 +156,11 @@ window.TRACE = {
     "“나는 오늘 얼마나 멈춰 서서 세상을 바라보았는가?”\n“이 거리의 냄새는 어떤 기억을 불러일으키는가?”\n이런 질문들이 관찰을 만들고, 관찰이 모여 당신만의 지도가 된다."
    ],
    "video": "media/07_walk_no_destination.mp4",
+   "poster": "media/posters/07_walk_no_destination.jpg",
    "extra": [
     {
      "video": "media/16_story_labyrinth_vs_maze.mp4",
+     "poster": "media/posters/16_story_labyrinth_vs_maze.jpg",
      "caption": "Labyrinth vs maze · Tracé Story, Chapter 2"
     }
    ]
@@ -169,6 +178,7 @@ window.TRACE = {
     "이것이 내면의 지도 제작이다.\n세상의 속도를 무작정 좇는 대신 자기 내면의 깊이를 직접 측량하는 것. 최단 경로를 거부하고 자신의 미학과 맞지 않는 소음으로부터 선명하게 경계를 긋는 행위는 방황이 아니다.\n그것은 타인의 지도 위에 갇히지 않고, 나만의 내면 지도를 그려내는 가장 단단한 주체성의 발현이다."
    ],
    "video": "media/08_walk_inner_map.mp4",
+   "poster": "media/posters/08_walk_inner_map.jpg",
    "extra": []
   },
   {
@@ -184,6 +194,7 @@ window.TRACE = {
     "화려한 속도와 자극적인 쇼츠의 소음이 지배하는 세상 속에서, 억지로 남의 박자에 발을 맞출 필요는 없다.\n정적인 몰입, 깊이 있는 사유, 절제라는 나만의 다른 북소리를 듣고 있다면, 그 무심하고 고요한 한 걸음 한 걸음이 곧 대체 불가능한 아카이브가 된다."
    ],
    "video": "media/09_walk_own_rhythm.mp4",
+   "poster": "media/posters/09_walk_own_rhythm.jpg",
    "extra": []
   },
   {
@@ -199,6 +210,7 @@ window.TRACE = {
     "벤야민이 말한 ‘아우라(Aura)’가 바로 이것이다.\n지금 당신이 보고 있는 이 거리의 기둥, 당신만이 이 순간에 이 각도에서 본다. 당신만이 이 시간의 빛이 그리는 그림자를 본다. 당신만이 이 자리에서 느끼는 고요함을 누린다.\n그 순간의 “현존(Presence)”이 바로 아우라다."
    ],
    "video": "media/10_walk_aura.mp4",
+   "poster": "media/posters/10_walk_aura.jpg",
    "extra": []
   },
   {
@@ -211,6 +223,7 @@ window.TRACE = {
    "def": "별점과 리뷰 수를 싣지 않는다. 대신 왜 이 장소인지를 한 문장으로 남긴다.",
    "original": [],
    "video": "media/11_map_no_ratings.mp4",
+   "poster": "media/posters/11_map_no_ratings.jpg",
    "extra": []
   },
   {
@@ -223,6 +236,7 @@ window.TRACE = {
    "def": "많이 저장된 곳이 다시 위로 올라오는 추천 대신, 한 사람이 자기 감도로 고른 장소만 올린다.",
    "original": [],
    "video": "media/12_map_no_algorithm.mp4",
+   "poster": "media/posters/12_map_no_algorithm.jpg",
    "extra": []
   },
   {
@@ -235,6 +249,7 @@ window.TRACE = {
    "def": "좌표, 가면 좋은 시간, 기준점에서의 거리. 그리고 그 장소를 고른 이유.",
    "original": [],
    "video": "media/13_map_context.mp4",
+   "poster": "media/posters/13_map_context.jpg",
    "extra": []
   },
   {
@@ -247,6 +262,7 @@ window.TRACE = {
    "def": "어디로 갔는지보다 어떻게 걸었는지가 보이는 지도. 타인의 궤도가 아닌 나만의 속도의 궤적.",
    "original": [],
    "video": "media/14_map_black_line.mp4",
+   "poster": "media/posters/14_map_black_line.jpg",
    "extra": []
   }
  ],

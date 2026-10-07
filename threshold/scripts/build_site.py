@@ -2,7 +2,8 @@
 """trace-site/data.js 와 media/ 를 만든다. 원문은 카드 데이터(series.json)에서 그대로 가져온다.
   python3 threshold/scripts/build_site.py
 """
-import json, shutil
+import json, shutil, subprocess
+import imageio_ffmpeg
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent          # threshold/
@@ -62,6 +63,13 @@ EXTRA = {
   "Flow": [("15_taegeuk_yin_yang_web.mp4", "Yin and yang · the taegeuk interaction")],
   "No Destination": [("16_story_labyrinth_vs_maze.mp4", "Labyrinth vs maze · Tracé Story, Chapter 2")],
 }
+FF = imageio_ffmpeg.get_ffmpeg_exe()
+(SITE / "media" / "posters").mkdir(parents=True, exist_ok=True)
+def poster(mp4):
+    """영상이 재생되지 않을 때(아이폰 저전력 모드 등) 보이는 정지 화면"""
+    out = SITE / "media" / "posters" / (Path(mp4).stem + ".jpg")
+    subprocess.run([FF, "-y", "-loglevel", "error", "-ss", "3", "-i", str(mp4), "-frames:v", "1", "-vf", "scale=720:-2", "-q:v", "4", str(out)], check=True)
+    return f"media/posters/{out.name}"
 media = sorted((ROOT / "content/motion/mp4_site").glob("[01][0-9]_*.mp4"))   # 사이트용: 영어 한 문장 + 한글 원칙 (LAW_EN=trace-site/data.js 로 capture_motion.js)
 laws, n = [], 0
 for g in groups:
@@ -70,9 +78,10 @@ for g in groups:
         shutil.copy(src, SITE / "media" / src.name)
         extra = []
         for f, cap in EXTRA.get(en, []):
-            shutil.copy(ROOT / "content/motion/mp4" / f, SITE / "media" / f); extra.append({"video": f"media/{f}", "caption": cap})
+            shutil.copy(ROOT / "content/motion/mp4" / f, SITE / "media" / f)
+            extra.append({"video": f"media/{f}", "poster": poster(SITE / "media" / f), "caption": cap})
         laws.append({"no": n, "group": g["key"], "en": en, "law": EN[en][0], "def_en": EN[en][1], "ko": d["h"], "def": d["t"],
-                     "original": original, "video": f"media/{src.name}", "extra": extra})
+                     "original": original, "video": f"media/{src.name}", "poster": poster(src), "extra": extra})
 data = {"groups": [{**{k: g[k] for k in ("key", "name", "title", "intro", "source", "outro")}, "title_en": GROUP_EN[g["key"]]} for g in groups], "laws": laws,
         # 'Tracé의 제안'(Ch.1 원문)을 영어로 옮긴 문장
         "closing": ["Rather than pointing to a destination someone else has chosen, the quiet record of discovering the aura of your own life should go on.",
