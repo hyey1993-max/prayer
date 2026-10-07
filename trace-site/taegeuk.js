@@ -1,24 +1,26 @@
 // 히어로 태극: 입자가 태극 자리로 돌아가려 하고, 흐름장이 양과 음을 서로 반대 방향으로 감는다.
-// 끌면 소용돌이, 슬라이더는 응축(0) ↔ 역동(1). 문장은 에세이 원문 그대로.
-// 표현은 Tyler Hobbs의 흐름장 작업(Fidenza 등)에서 영감을 받았다: 크림색 종이 위, 크기가 다른 여러 색의 점.
+// 원칙 02 Condense(점이 모인 상태)와 03 Flow(점이 흐르는 상태) 사이의 긴장을 보여준다.
+// 끌면 소용돌이, 슬라이더는 02(0) ↔ 03(1). 아래에는 지금 상태에 가까운 원칙을 띄우고 상세로 잇는다.
+// 표현은 Tyler Hobbs의 흐름장 작업(Fidenza 등)에서 영감을 받았다: 바탕 위, 크기가 다른 여러 색의 점.
 // 양과 음은 색을 나누지 않고 같은 팔레트를 쓰되 밝기만 살짝 기울여, 태극은 은은하게만 드러난다.
 // 응축일 때는 점의 밭, 역동일 때는 점이 흐름을 따라 점선으로 이어진다.
 (() => {
 "use strict";
 const cv = document.getElementById("taegeuk"); if (!cv) return;
-const g = cv.getContext("2d"), mixEl = document.getElementById("mix"), quoteEl = document.getElementById("quote");
+const g = cv.getContext("2d"), mixEl = document.getElementById("mix"), nowEl = document.getElementById("now");
 const W = 1080, H = 1080, CX = 540, CY = 540, R = 400;
 const N = matchMedia("(max-width: 600px)").matches ? 7000 : 12000;
-const BG = [239, 231, 216], TILT = -0.62;                     // 크림색 종이
+const TILT = -0.62;
+// 바탕은 페이지 배경색 그대로 (라이트·다크 모두). 테마가 바뀌면 다시 읽는다.
+let BG = "255,255,255";
+const readBG = () => { const m = getComputedStyle(document.body).backgroundColor.match(/\d+/g); if (m) BG = m.slice(0, 3).join(","); };
+readBG(); matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", () => { readBG(); draw(true); });
 // 팔레트 [색, 비율, 밝은 색인가]. 양은 밝은 색이, 음은 어두운 색이 조금 더 자주 나온다.
 const INK = [["#d8452e", .15, 0], ["#eea195", .11, 1], ["#e2a93b", .11, 1], ["#8fd3c1", .1, 1], ["#a9c4d8", .07, 1],
              ["#fbf6ea", .08, 1], ["#3f8f86", .1, 0], ["#23395b", .12, 0], ["#1f4a3c", .07, 0], ["#2b2724", .09, 0]];
 const LEAN = 1.8;                                                 // 기울기 (1이면 양·음 구분 없음)
-const QUOTES = [
-  "이는 정제된 시스템 안으로 압축시켜 규칙을 만드는 일본의 ‘응축의 문화’와 닿아있다.",
-  "음과 양이 서로를 밀어내고 끌어당기며 끊임없이 순환하는 태극의 ‘역동성’처럼, 유저의 시선과 동선은 인터페이스 위를 유연하게 흘러가야 한다.",
-  "이것은 문화사적으로 음과 양의 에너지가 태극처럼 끊임없이 충돌하는 역동성을 나타낸다.",
-];
+// 슬라이더 양 끝의 원칙 (data.js)
+const LAWS = [2, 3].map(no => (window.TRACE?.laws || []).find(l => l.no === no)).filter(Boolean);
 const lerp = (a, b, k) => a + (b - a) * k, clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 function rng(seed){ let s = seed >>> 0; return () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296); }
 function isWhite(x, y){ const c = Math.cos(TILT), s = Math.sin(TILT), u = x*c - y*s, v = x*s + y*c;
@@ -67,8 +69,10 @@ function draw(clear){
       for (let k = 0; k < dots; k++){ const px = x - vx*gap*k, py = y - vy*gap*k; g.moveTo(px + r, py); g.arc(px, py, r, 0, 6.2832); } }
     g.fill();
   }
-  const q = st.mix < .34 ? 0 : st.mix > .66 ? 2 : 1;
-  if (q !== lastQ && quoteEl){ quoteEl.textContent = QUOTES[q]; lastQ = q; }
+  const q = st.mix < .5 ? 0 : 1, l = LAWS[q];
+  if (q !== lastQ && nowEl && l){ const id = String(l.no).padStart(2, "0"); nowEl.href = `#law-${id}`;
+    nowEl.querySelector(".dot").textContent = `${id} · ${l.en}`; nowEl.querySelector(".ko").textContent = l.ko;
+    nowEl.querySelector(".def").textContent = l.def; lastQ = q; }
   if (st.auto && mixEl) mixEl.value = Math.round(st.mix*100);
 }
 

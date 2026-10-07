@@ -18,12 +18,13 @@
 <main id="home">
   <div class="stage">
     <div class="laws" id="groups"></div>
-    <aside class="plate" aria-label="태극">
+    <aside class="plate" aria-label="응축과 흐름">
       <div class="pin">
-      <canvas id="taegeuk" width="1080" height="1080" tabindex="0" aria-label="흰 입자와 검은 입자가 태극 모양으로 도는 그림. 끌어서 저을 수 있다."></canvas>
+      <canvas id="taegeuk" width="1080" height="1080" tabindex="0" aria-label="여러 색의 점이 모였다가 흐름을 따라 흩어지는 그림. 끌어서 저을 수 있다."></canvas>
       <div class="plate-ui">
-        <label class="mix" for="mix"><span>응축</span><input id="mix" type="range" min="0" max="100" value="50"><span>역동</span></label>
-        <p class="quote" id="quote" aria-live="polite"></p>
+        <p class="plate-cap">응축과 흐름, 두 원칙이 서로를 밀고 당긴다.</p>
+        <div class="mix"><a href="#law-02">02 Condense</a><input id="mix" type="range" min="0" max="100" value="50" aria-label="02 Condense에서 03 Flow까지"><a href="#law-03">03 Flow</a></div>
+        <a class="now" id="now" href="#law-02" aria-live="polite"><p class="dot"></p><p class="ko"></p><p class="def"></p></a>
         <p class="credit">Flow field inspired by <a href="https://www.tylerxhobbs.com" target="_blank" rel="noopener">Tyler Hobbs</a></p>
       </div>
       </div>
