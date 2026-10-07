@@ -13,15 +13,15 @@
    "kind": "hookreels",
    "cards": [
     {"type": "big", "label": "Tracé Principles · UX", "h": "화면 위의 건축\n[[UX 원칙 6가지]]", "sub": "공간에서 배운 원칙"},
-    {"type": "big", "label": "The Principles of Tracé", "h": "14개 원칙\n[[전부 보기]]", "sub": "프로필 링크 · 원칙 사이트"}
+    {"type": "big", "label": "The Principles of Tracé", "h": "15개 원칙\n[[전부 보기]]", "sub": "프로필 링크 · 원칙 사이트"}
    ]
   },
   "principles_walk": {
-   "title": "원칙 릴스 · 산책 4개 (처음/끝 카드)",
+   "title": "원칙 릴스 · 산책 5개 (처음/끝 카드)",
    "kind": "hookreels",
    "cards": [
-    {"type": "big", "label": "Tracé Principles · Walk", "h": "목적지 없는 걸음\n[[산책의 원칙 4가지]]", "sub": "도시를 걷는 방식"},
-    {"type": "big", "label": "The Principles of Tracé", "h": "14개 원칙\n[[전부 보기]]", "sub": "프로필 링크 · 원칙 사이트"}
+    {"type": "big", "label": "Tracé Principles · Walk", "h": "목적지 없는 걸음\n[[산책의 원칙 5가지]]", "sub": "도시를 걷는 방식"},
+    {"type": "big", "label": "The Principles of Tracé", "h": "15개 원칙\n[[전부 보기]]", "sub": "프로필 링크 · 원칙 사이트"}
    ]
   },
   "principles_map": {
@@ -29,7 +29,7 @@
    "kind": "hookreels",
    "cards": [
     {"type": "big", "label": "Tracé Principles · Map", "h": "지도의 약속\n[[지도의 원칙 4가지]]", "sub": "Tracé가 만드는 지도"},
-    {"type": "big", "label": "The Principles of Tracé", "h": "14개 원칙\n[[전부 보기]]", "sub": "프로필 링크 · 원칙 사이트"}
+    {"type": "big", "label": "The Principles of Tracé", "h": "15개 원칙\n[[전부 보기]]", "sub": "프로필 링크 · 원칙 사이트"}
    ]
   }
  }

@@ -52,7 +52,9 @@ function showLaw(no){
   const h1 = el("h1", null, l.law); h1.tabIndex = -1;
   view.append(crumbs, html("div", "icon", ICON(l.no, l.en)), lab, h1, el("p", "def", l.def_en));
   if (l.original.length){
-    const cite = el("p", "cite"); const a = el("a", null, g.source.title); a.href = g.source.url; a.target = "_blank"; a.rel = "noopener";
+    const src = l.source || g.source, cite = el("p", "cite");
+    let a = el("span", null, src.title);
+    if (src.url){ a = el("a", null, src.title); a.href = src.url; a.target = "_blank"; a.rel = "noopener"; }
     cite.append("> From the essay · ", a); view.append(cite);
   }
   view.append(motion(l.video, l.poster, `${l.en} motion`));

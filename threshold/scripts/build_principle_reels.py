@@ -17,7 +17,7 @@ FF = imageio_ffmpeg.get_ffmpeg_exe()
 BG = "0x0c0b0e"                 # 원칙 모션 바탕색
 REELS = {                       # 이름: (원칙 영상 접두어, 원칙 하나당 초)
     "principles_ux": ("ux", 3.5),
-    "principles_walk": ("walk", 4.0),
+    "principles_walk": ("walk", 3.5),
     "principles_map": ("map", 4.0),
 }
 INTRO, OUTRO, FADE = 1.8, 2.4, .25

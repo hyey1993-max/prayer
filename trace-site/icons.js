@@ -46,16 +46,18 @@ const DRAW = {
   // 10 지금 이 순간: 빛이 퍼지는 한 점
   10: g => { g.fill(10, 10, 4, 4); g.circle(12, 12, 6, 1.6);
     for (let i = 0; i < 12; i++){ const a = i / 12 * Math.PI * 2; g.dot(12 + Math.cos(a) * 9, 12 + Math.sin(a) * 9).dot(12 + Math.cos(a) * 11, 12 + Math.sin(a) * 11); } },
-  // 11 평점이 없다: 지워진 별
-  11: g => { const P = []; for (let i = 0; i < 10; i++){ const r = i % 2 ? 4.4 : 10, a = -Math.PI / 2 + i * Math.PI / 5; P.push([12 + Math.cos(a) * r, 12.5 + Math.sin(a) * r]); }
+  // 11 미로가 아니라 라비린스: 틈이 하나씩 난 동심원과 중심의 점
+  11: g => { [10, 7, 4].forEach((r, i) => { const gap = i % 2 ? -.5 : .5; g.path(u => { const a = Math.PI / 2 + gap + .55 + u * (Math.PI * 2 - 1.1); return [12 + Math.cos(a) * r, 12 + Math.sin(a) * r]; }, Math.round(r * 5)); }); g.fill(11, 11, 1, 1); },
+  // 12 평점이 없다: 지워진 별
+  12: g => { const P = []; for (let i = 0; i < 10; i++){ const r = i % 2 ? 4.4 : 10, a = -Math.PI / 2 + i * Math.PI / 5; P.push([12 + Math.cos(a) * r, 12.5 + Math.sin(a) * r]); }
     for (let i = 0; i < 10; i++) g.line(...P[i], ...P[(i + 1) % 10]); g.line(2, 22, 22, 2); },
-  // 12 알고리즘이 고르지 않는다: 많은 점 가운데 하나에 동그라미
-  12: g => { const r = rng(9); for (let i = 0; i < 22; i++) g.dot(2 + r() * 20, 2 + r() * 20); g.fill(15, 7, 1, 1); g.circle(15.5, 7.5, 4); },
-  // 13 맥락을 남긴다: 한 점과 네 모서리의 정보
-  13: g => { g.fill(11, 11, 2, 2); [[2, 2, 1, 1], [22, 2, -1, 1], [2, 22, 1, -1], [22, 22, -1, -1]].forEach(([x, y, sx, sy]) => g.line(x, y, x + sx * 4, y).line(x, y, x, y + sy * 4));
+  // 13 알고리즘이 고르지 않는다: 많은 점 가운데 하나에 동그라미
+  13: g => { const r = rng(9); for (let i = 0; i < 22; i++) g.dot(2 + r() * 20, 2 + r() * 20); g.fill(15, 7, 1, 1); g.circle(15.5, 7.5, 4); },
+  // 14 맥락을 남긴다: 한 점과 네 모서리의 정보
+  14: g => { g.fill(11, 11, 2, 2); [[2, 2, 1, 1], [22, 2, -1, 1], [2, 22, 1, -1], [22, 22, -1, -1]].forEach(([x, y, sx, sy]) => g.line(x, y, x + sx * 4, y).line(x, y, x, y + sy * 4));
     g.line(9, 9, 6, 6).line(15, 9, 18, 6).line(9, 15, 6, 18).line(15, 15, 18, 18); },
-  // 14 검은 선으로 그린다: 최단 경로(점선) 옆으로 걸은 선
-  14: g => { g.line(2, 22, 2, 2, 3).line(2, 2, 22, 2, 3);
+  // 15 검은 선으로 그린다: 최단 경로(점선) 옆으로 걸은 선
+  15: g => { g.line(2, 22, 2, 2, 3).line(2, 2, 22, 2, 3);
     [[2, 22], [8, 22], [8, 17], [13, 17], [13, 12], [17, 12], [17, 7], [22, 7], [22, 3]].reduce((a, b) => (g.line(...a, ...b), b)); },
 };
 function svg(no, label){

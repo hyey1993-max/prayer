@@ -1,6 +1,6 @@
 # The Principles of Tracé
 
-공간에서 배운 14개의 원칙을 모은 정적 사이트. 빌드 도구 없이 HTML/CSS/JS만 쓴다.
+공간에서 배운 15개의 원칙을 모은 정적 사이트. 빌드 도구 없이 HTML/CSS/JS만 쓴다.
 
 - `index.html` — 첫 화면(태극 인터랙션) + 원칙 목록, `#law-01` 같은 해시로 상세 화면
 - `data.js` — 원칙 데이터. **직접 고치지 말고** `python3 threshold/scripts/build_site.py`로 다시 만든다 (원문은 카드 데이터에서 그대로 가져온다)

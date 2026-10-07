@@ -55,7 +55,8 @@ window.TRACE = {
    ],
    "video": "media/01_ux_human_scale.mp4",
    "poster": "media/posters/01_ux_human_scale.jpg",
-   "extra": []
+   "extra": [],
+   "source": null
   },
   {
    "no": 2,
@@ -70,7 +71,8 @@ window.TRACE = {
    ],
    "video": "media/02_ux_condense.mp4",
    "poster": "media/posters/02_ux_condense.jpg",
-   "extra": []
+   "extra": [],
+   "source": null
   },
   {
    "no": 3,
@@ -91,7 +93,8 @@ window.TRACE = {
      "poster": "media/posters/15_taegeuk_yin_yang_web.jpg",
      "caption": "Yin and yang · the taegeuk interaction"
     }
-   ]
+   ],
+   "source": null
   },
   {
    "no": 4,
@@ -106,7 +109,8 @@ window.TRACE = {
    ],
    "video": "media/04_ux_sequence.mp4",
    "poster": "media/posters/04_ux_sequence.jpg",
-   "extra": []
+   "extra": [],
+   "source": null
   },
   {
    "no": 5,
@@ -123,7 +127,8 @@ window.TRACE = {
    ],
    "video": "media/05_ux_low_threshold.mp4",
    "poster": "media/posters/05_ux_low_threshold.jpg",
-   "extra": []
+   "extra": [],
+   "source": null
   },
   {
    "no": 6,
@@ -140,7 +145,8 @@ window.TRACE = {
    ],
    "video": "media/06_ux_participation.mp4",
    "poster": "media/posters/06_ux_participation.jpg",
-   "extra": []
+   "extra": [],
+   "source": null
   },
   {
    "no": 7,
@@ -157,13 +163,8 @@ window.TRACE = {
    ],
    "video": "media/07_walk_no_destination.mp4",
    "poster": "media/posters/07_walk_no_destination.jpg",
-   "extra": [
-    {
-     "video": "media/16_story_labyrinth_vs_maze.mp4",
-     "poster": "media/posters/16_story_labyrinth_vs_maze.jpg",
-     "caption": "Labyrinth vs maze · Tracé Story, Chapter 2"
-    }
-   ]
+   "extra": [],
+   "source": null
   },
   {
    "no": 8,
@@ -179,7 +180,8 @@ window.TRACE = {
    ],
    "video": "media/08_walk_inner_map.mp4",
    "poster": "media/posters/08_walk_inner_map.jpg",
-   "extra": []
+   "extra": [],
+   "source": null
   },
   {
    "no": 9,
@@ -195,7 +197,8 @@ window.TRACE = {
    ],
    "video": "media/09_walk_own_rhythm.mp4",
    "poster": "media/posters/09_walk_own_rhythm.jpg",
-   "extra": []
+   "extra": [],
+   "source": null
   },
   {
    "no": 10,
@@ -211,10 +214,38 @@ window.TRACE = {
    ],
    "video": "media/10_walk_aura.mp4",
    "poster": "media/posters/10_walk_aura.jpg",
-   "extra": []
+   "extra": [],
+   "source": null
   },
   {
    "no": 11,
+   "group": "walk",
+   "en": "Labyrinth",
+   "law": "Walk a labyrinth, not a maze.",
+   "def_en": "A maze, where every fork demands an anxious choice, is made by our own mind. Let go of control and the path becomes one, leading your steps to the place already prepared for them.",
+   "ko": "미로가 아니라 라비린스",
+   "def": "갈림길마다 고르며 불안해하는 미로는 우리의 의식이 만든 것이다. 통제의 손을 내려놓으면 길은 하나가 되고, 발걸음은 이미 준비된 장소에 닿는다.",
+   "original": [
+    "우리는 늘 선택의 갈림길 위에 서 있다. 하지만 이 미로는 사실 외부 세계가 아닌, 우리의 유한한 인식과 의식이 만들어낸 세계다. 우리의 의식은 매 순간 수많은 가능성을 펼쳐놓는다. ‘이곳으로 갈까, 저곳으로 갈까’, ‘이것을 선택하는 것이 내 삶의 최선일까’. 하나의 선택이 다른 수많은 가능성의 포기를 의미하기에, 계산과 비교에 익숙해진 현대인은 끊임없이 불안해한다.",
+    "우리는 ‘완벽한 계획’보다 ’뜻밖의 우연성’에서 삶의 선물을 발견한다. 머릿속의 기대를 끄고, 특정한 방향성만을 품은 채 무목적하게 흘러갈 때, 눈앞의 미로는 더 이상 나를 가두는 감옥이 아니라 ’경이로운 우연들이 숨겨진 보물찾기의 경험으로 변할 수 있다.",
+    "수많은 갈래길을 거치며 느꼈던 그 골목길 끝, 마침내 도달한 조용한 찻집과 따뜻한 조명의 가게. 그것은 우연의 산물이 아니다. 유한한 시간 속에서 헤매며 수많은 선택지를 거쳤다고 생각하지만, 통제의 손을 내려놓은 당신의 발걸음은 처음부터 당신을 위해 준비되어 있던 장소로 인도된 것이다."
+   ],
+   "video": "media/11_walk_labyrinth.mp4",
+   "poster": "media/posters/11_walk_labyrinth.jpg",
+   "extra": [
+    {
+     "video": "media/16_story_labyrinth_vs_maze.mp4",
+     "poster": "media/posters/16_story_labyrinth_vs_maze.jpg",
+     "caption": "Labyrinth vs maze · Tracé Story, Chapter 2"
+    }
+   ],
+   "source": {
+    "title": "Tracé Story · Chapter 2",
+    "url": null
+   }
+  },
+  {
+   "no": 12,
    "group": "map",
    "en": "No Ratings",
    "law": "No stars, no review counts. One sentence on why this place.",
@@ -222,12 +253,13 @@ window.TRACE = {
    "ko": "평점이 없다",
    "def": "별점과 리뷰 수를 싣지 않는다. 대신 왜 이 장소인지를 한 문장으로 남긴다.",
    "original": [],
-   "video": "media/11_map_no_ratings.mp4",
-   "poster": "media/posters/11_map_no_ratings.jpg",
-   "extra": []
+   "video": "media/12_map_no_ratings.mp4",
+   "poster": "media/posters/12_map_no_ratings.jpg",
+   "extra": [],
+   "source": null
   },
   {
-   "no": 12,
+   "no": 13,
    "group": "map",
    "en": "No Algorithm",
    "law": "No algorithm decides. One person's sensibility chooses.",
@@ -235,12 +267,13 @@ window.TRACE = {
    "ko": "알고리즘이 고르지 않는다",
    "def": "많이 저장된 곳이 다시 위로 올라오는 추천 대신, 한 사람이 자기 감도로 고른 장소만 올린다.",
    "original": [],
-   "video": "media/12_map_no_algorithm.mp4",
-   "poster": "media/posters/12_map_no_algorithm.jpg",
-   "extra": []
+   "video": "media/13_map_no_algorithm.mp4",
+   "poster": "media/posters/13_map_no_algorithm.jpg",
+   "extra": [],
+   "source": null
   },
   {
-   "no": 13,
+   "no": 14,
    "group": "map",
    "en": "Context",
    "law": "Leave the context: the place, the hour, the distance, the reason.",
@@ -248,12 +281,13 @@ window.TRACE = {
    "ko": "맥락을 남긴다",
    "def": "좌표, 가면 좋은 시간, 기준점에서의 거리. 그리고 그 장소를 고른 이유.",
    "original": [],
-   "video": "media/13_map_context.mp4",
-   "poster": "media/posters/13_map_context.jpg",
-   "extra": []
+   "video": "media/14_map_context.mp4",
+   "poster": "media/posters/14_map_context.jpg",
+   "extra": [],
+   "source": null
   },
   {
-   "no": 14,
+   "no": 15,
    "group": "map",
    "en": "Black Line",
    "law": "Draw how you walked, not just where you went.",
@@ -261,9 +295,10 @@ window.TRACE = {
    "ko": "검은 선으로 그린다",
    "def": "어디로 갔는지보다 어떻게 걸었는지가 보이는 지도. 타인의 궤도가 아닌 나만의 속도의 궤적.",
    "original": [],
-   "video": "media/14_map_black_line.mp4",
-   "poster": "media/posters/14_map_black_line.jpg",
-   "extra": []
+   "video": "media/15_map_black_line.mp4",
+   "poster": "media/posters/15_map_black_line.jpg",
+   "extra": [],
+   "source": null
   }
  ],
  "closing": [

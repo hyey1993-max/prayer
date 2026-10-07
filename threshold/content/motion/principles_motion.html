@@ -198,7 +198,7 @@ const add = (group, no, title, en, period, draw) => SCENES.push({group, no, titl
 { const straight=[[140,420],[940,420]];
   const wind=curve(200,u=>[140+u*800, 760+Math.sin(u*Math.PI*4)*90 - Math.sin(u*Math.PI)*40]);
   const stops=[.18,.43,.66,.88];
-  add("WALK","01/04","목적지를 지운다","No Destination",9,(g,t,p)=>{
+  add("WALK","01/05","목적지를 지운다","No Destination",9,(g,t,p)=>{
     line(g,straight,C.fg,3,.3); dot(g,140,420,8,C.fg,.6); dot(g,940,420,8,C.fg,.6);
     const k1=seg(p,0,.18); dot(g,lerp(140,940,k1),420,14,C.fg);
     text(g,"FASTEST",140,370,{size:22,align:"left",a:.55,track:5}); text(g,"0 STOPS",940,370,{size:22,align:"right",a:.55,track:3});
@@ -216,7 +216,7 @@ const add = (group, no, title, en, period, draw) => SCENES.push({group, no, titl
 }
 // WALK 02 · 내면의 지도: 걸은 자리만 선으로 남아 지도가 된다 (곡선으로 맴돌며 넓어지는 궤적)
 { const pts=curve(260,u=>{ const a=u*Math.PI*5.2, R=40+u*300+Math.sin(u*31)*22; return [W/2+Math.cos(a)*R*1.05, 610+Math.sin(a)*R*.82]; });
-  add("WALK","02/04","내면의 지도를 그린다","Inner Map",9,(g,t,p)=>{
+  add("WALK","02/05","내면의 지도를 그린다","Inner Map",9,(g,t,p)=>{
     const gridA=.18*(1-seg(p,.62,.8));
     for(let i=0;i<9;i++){ line(g,[[180+i*90,300],[180+i*90,920]],C.fg,1.5,gridA); line(g,[[180,300+i*77],[900,300+i*77]],C.fg,1.5,gridA); }
     const k=seg(p,.05,.62), fade=1-seg(p,.92,1);
@@ -226,7 +226,7 @@ const add = (group, no, title, en, period, draw) => SCENES.push({group, no, titl
   });
 }
 // WALK 03 · 나만의 북소리: 같은 박자로 행진하는 줄과, 자기 박자로 걷는 점 하나
-{ add("WALK","03/04","나만의 북소리를 듣는다","Own Rhythm",6,(g,t,p)=>{
+{ add("WALK","03/05","나만의 북소리를 듣는다","Own Rhythm",6,(g,t,p)=>{
     const beat=Math.floor(t*2), ph=(t*2)%1, step=ease(clamp(ph*2.2));
     for(let i=0;i<9;i++){ const x=170+i*90+ (step-0)*0 , y=470; const pulse=ph<.15?1:0;
       dot(g,170+i*85+((beat%2)?step*16:16-step*16),y,pulse?17:14,C.fg,.45); }
@@ -238,12 +238,32 @@ const add = (group, no, title, en, period, draw) => SCENES.push({group, no, titl
   });
 }
 // WALK 04 · 지금 이 순간: '나중에'가 줄지어 있고, 마지막 하나만 '지금'
-{ add("WALK","04/04","지금 이 순간을 기록한다","Aura",7,(g,t,p)=>{
+{ add("WALK","04/05","지금 이 순간을 기록한다","Aura",7,(g,t,p)=>{
     const cols=3, rows=8, n=cols*rows, k=seg(p,.05,.6), lit=Math.floor(k*(n-1));
     for(let i=0;i<n;i++){ const c=i%cols, r=Math.floor(i/cols), x=250+c*290, y=330+r*72; const last=i===n-1;
       const a = last? lerp(.25,1,seg(p,.58,.68)) : (i===lit && k<1 ? .9 : .22);
       text(g, last? "지금" : "나중에", x, y, {size:44, font:SANS, weight:900, a, color: last && p>.6 ? C.fg : C.fg}); }
     const pr=seg(p,.66,.98); if(pr>0) ring(g,250+2*290,330+7*72-16,40+pr*90,C.warm,(1-pr)*.9,3);
+  });
+}
+// WALK 05 · 미로가 아니라 라비린스: 갈림길이 없는 동심원 길, 점 하나가 끝까지 따라 들어가 중심에 닿는다
+{ const CX=W/2, CY=580, R=310, N=7, r0=R*.16, w=(R-r0)/N, B=Math.PI/2;
+  const holes=[]; for(let k=N;k>=0;k--){ const r=r0+k*w, i=N-k; holes[k]={a:B+(i%2===0?1:-1)*.95*w/r, half:.42*w/r}; }
+  const P=(r,a)=>[CX+Math.cos(a)*r, CY+Math.sin(a)*r];
+  const path=[P(R+w*1.4,holes[N].a), P(R,holes[N].a)];
+  for(let j=N-1;j>=0;j--){ const cw=((N-1-j)%2===0); let a0=holes[j+1].a, a1=holes[j].a;
+    if(cw && a1<=a0) a1+=Math.PI*2; if(!cw && a1>=a0) a1-=Math.PI*2;
+    for(let s=0;s<=90;s++) path.push(P(r0+(j+.5)*w, a0+(a1-a0)*s/90)); path.push(P(r0+j*w, holes[j].a)); }
+  path.push([CX,CY]);
+  add("WALK","05/05","미로가 아니라 라비린스","Labyrinth",10,(g,t,p)=>{
+    g.lineCap="round"; g.strokeStyle=C.fg; g.lineWidth=4; g.globalAlpha=.7;
+    for(let k=0;k<=N;k++){ const r=r0+k*w, h=holes[k]; g.beginPath(); g.arc(CX,CY,r,h.a+h.half,h.a-h.half+Math.PI*2); g.stroke(); }
+    g.beginPath(); g.moveTo(...P(r0,B)); g.lineTo(...P(r0+N*w,B)); g.stroke(); g.globalAlpha=1;
+    const k=seg(p,.04,.84), fade=1-seg(p,.94,1);
+    line(g,partial(path,k),C.warm,6,.9*fade);
+    const [x,y]=along(path,k); dot(g,x,y,12,C.fg,fade);
+    const pr=seg(p,.84,.96); if(pr>0) ring(g,CX,CY,20+pr*70,C.warm,(1-pr)*.9,3);
+    text(g,"ONE PATH, NO WRONG TURNS",W/2,1010,{size:22,a:.55*fade,track:3});
   });
 }
 // MAP 01 · 평점이 없다: 별점이 흩어지고 한 문장이 남는다

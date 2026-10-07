@@ -10,8 +10,14 @@ ROOT = Path(__file__).resolve().parent.parent          # threshold/
 SITE = ROOT.parent / "trace-site"
 ux = json.loads((ROOT / "content/essay_seoul_tokyo/series.json").read_text(encoding="utf-8"))["sets"]["series2_apply"]["cards"]
 ch1 = json.loads((ROOT / "content/essay_ch1_walk/series.json").read_text(encoding="utf-8"))["sets"]["ch1_walk"]["cards"]
+ch2 = json.loads((ROOT / "content/essay_ch2_labyrinth/series.json").read_text(encoding="utf-8"))["sets"]["ch2_labyrinth"]["cards"]
 man = json.loads((ROOT / "content/manifesto/series.json").read_text(encoding="utf-8"))["sets"]
 defs = {it["en"]: it for s in man.values() for c in s["cards"] for it in c["items"]}
+# 선언문 카드에 없는 원칙 (Tracé Story Ch.2에서 나온 것)
+defs["Labyrinth"] = {"h": "미로가 아니라 라비린스",
+  "t": "갈림길마다 고르며 불안해하는 미로는 우리의 의식이 만든 것이다. 통제의 손을 내려놓으면 길은 하나가 되고, 발걸음은 이미 준비된 장소에 닿는다."}
+SRC_CH2 = {"title": "Tracé Story · Chapter 2", "url": None}
+LAW_SRC = {"Labyrinth": SRC_CH2}
 T = lambda cards, *idx: [cards[i]["t"] for i in idx]
 
 SRC_UX = {"title": "The Essence of Spatial Design", "url": "https://medium.com/@hyey1993/%EC%84%9C%EC%9A%B8%EA%B3%BC-%EB%8F%84%EC%BF%84%EC%9D%98-%EC%A7%80%EC%97%AD-%EA%B0%9C%EB%B0%9C%EC%9D%98-%EB%B0%A9%EC%8B%9D%EC%97%90%EC%84%9C-%EB%B3%B4%EB%8A%94-%EA%B3%B5%EA%B0%84-%EC%84%A4%EA%B3%84-474cee0b79f9"}
@@ -22,7 +28,8 @@ groups = [
     ("Human Scale", T(ux, 7)), ("Condense", T(ux, 8)), ("Flow", T(ux, 9)), ("Sequence", T(ux, 10)),
     ("Low Threshold", T(ux, 4, 5, 11)), ("Participation", T(ux, 13, 14, 15))], "outro": T(ux, 16)},
   {"key": "walk", "name": "WALK", "title": "목적지 없는 걸음", "intro": T(ch1, 1), "source": SRC_WALK, "laws": [
-    ("No Destination", T(ch1, 4, 5, 6)), ("Inner Map", T(ch1, 8, 9)), ("Own Rhythm", T(ch1, 11, 12)), ("Aura", T(ch1, 14, 15))], "outro": []},
+    ("No Destination", T(ch1, 4, 5, 6)), ("Inner Map", T(ch1, 8, 9)), ("Own Rhythm", T(ch1, 11, 12)), ("Aura", T(ch1, 14, 15)),
+    ("Labyrinth", T(ch2, 3, 9, 12))], "outro": []},
   {"key": "map", "name": "MAP", "title": "지도의 약속", "intro": [], "source": None, "laws": [
     ("No Ratings", []), ("No Algorithm", []), ("Context", []), ("Black Line", [])], "outro": []},
 ]
@@ -54,6 +61,8 @@ EN = {
     "Instead of recommendations that push the most-saved places back to the top, only places one person chose with their own sensibility."),
   "Context": ("Leave the context: the place, the hour, the distance, the reason.",
     "Coordinates, the best hour to go, the distance from a landmark. And the reason this place was chosen."),
+  "Labyrinth": ("Walk a labyrinth, not a maze.",
+    "A maze, where every fork demands an anxious choice, is made by our own mind. Let go of control and the path becomes one, leading your steps to the place already prepared for them."),
   "Black Line": ("Draw how you walked, not just where you went.",
     "A map that shows how you walked rather than where you went. The trail of your own pace, not someone else's orbit."),
 }
@@ -61,7 +70,7 @@ GROUP_EN = {"ux": "Architecture on the Screen", "walk": "Walking Without a Desti
 # 인스타용으로 만든 모션을 관련 원칙 상세에 함께 둔다 (파일, 설명)
 EXTRA = {
   "Flow": [("15_taegeuk_yin_yang_web.mp4", "Yin and yang · the taegeuk interaction")],
-  "No Destination": [("16_story_labyrinth_vs_maze.mp4", "Labyrinth vs maze · Tracé Story, Chapter 2")],
+  "Labyrinth": [("16_story_labyrinth_vs_maze.mp4", "Labyrinth vs maze · Tracé Story, Chapter 2")],
 }
 FF = imageio_ffmpeg.get_ffmpeg_exe()
 (SITE / "media" / "posters").mkdir(parents=True, exist_ok=True)
@@ -81,7 +90,8 @@ for g in groups:
             shutil.copy(ROOT / "content/motion/mp4" / f, SITE / "media" / f)
             extra.append({"video": f"media/{f}", "poster": poster(SITE / "media" / f), "caption": cap})
         laws.append({"no": n, "group": g["key"], "en": en, "law": EN[en][0], "def_en": EN[en][1], "ko": d["h"], "def": d["t"],
-                     "original": original, "video": f"media/{src.name}", "poster": poster(src), "extra": extra})
+                     "original": original, "video": f"media/{src.name}", "poster": poster(src), "extra": extra,
+                     "source": LAW_SRC.get(en)})
 data = {"groups": [{**{k: g[k] for k in ("key", "name", "title", "intro", "source", "outro")}, "title_en": GROUP_EN[g["key"]]} for g in groups], "laws": laws,
         # 'Tracé의 제안'(Ch.1 원문)을 영어로 옮긴 문장
         "closing": ["Rather than pointing to a destination someone else has chosen, the quiet record of discovering the aura of your own life should go on.",
