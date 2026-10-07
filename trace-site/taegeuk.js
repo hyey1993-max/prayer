@@ -71,8 +71,8 @@ function draw(clear){
   }
   const q = st.mix < .5 ? 0 : 1, l = LAWS[q];
   if (q !== lastQ && nowEl && l){ const id = String(l.no).padStart(2, "0"); nowEl.href = `#law-${id}`;
-    nowEl.querySelector(".dot").textContent = `${id} · ${l.en}`; nowEl.querySelector(".ko").textContent = l.ko;
-    nowEl.querySelector(".def").textContent = l.def; lastQ = q; }
+    nowEl.querySelector(".dot").textContent = `${id} · ${l.en}`; nowEl.querySelector(".ko").textContent = l.law;
+    nowEl.querySelector(".def").textContent = l.def_en; lastQ = q; }
   if (st.auto && mixEl) mixEl.value = Math.round(st.mix*100);
 }
 

@@ -41,7 +41,6 @@ a:focus-visible,input:focus-visible,canvas:focus-visible{outline:2px solid var(-
   -webkit-mask-image:radial-gradient(circle,#000 58%,transparent 71%);mask-image:radial-gradient(circle,#000 58%,transparent 71%)}
 .plate canvas:active{cursor:grabbing}
 .plate-ui{max-width:340px;margin-top:20px}
-.plate-cap{font-size:16px;margin:0 0 16px}
 .mix{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;font:500 12px var(--dot);letter-spacing:.06em}
 .mix a{color:var(--muted);text-decoration:none} .mix a:hover{color:var(--ink)}
 .mix input{width:100%;accent-color:var(--ink)}
@@ -80,6 +79,7 @@ a:focus-visible,input:focus-visible,canvas:focus-visible{outline:2px solid var(-
 #law .cite{margin:0 0 28px}
 #law .cite a{color:var(--link);text-decoration:none} #law .cite a:hover{text-decoration:underline}
 #law .body p{margin:0 0 26px;font-size:17px;line-height:1.85}
+#law .extra{margin:0 0 36px} #law .extra video{margin-bottom:10px} #law .extra figcaption{color:var(--muted)}
 #law video{width:100%;max-width:360px;aspect-ratio:4/5;display:block;background:#0d0d10;margin:8px 0 36px}
 .next{display:grid;grid-template-columns:56px 1fr;gap:20px;align-items:center;border:1px solid var(--rule);padding:18px 22px;max-width:420px;text-decoration:none;margin-top:12px}
 .next svg{width:56px;height:56px}

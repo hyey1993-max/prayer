@@ -14,11 +14,11 @@ const groupOf = l => D.groups.find(g => g.key === l.group);
 const host = $("#groups");
 D.groups.forEach(g => {
   const sec = el("section", "group"); sec.id = g.key;
-  const head = el("div", "group-head"); head.append(el("h2", "dot", g.name), el("span", "ko", g.title)); sec.append(head);
+  const head = el("div", "group-head"); head.append(el("h2", "dot", g.name), el("span", "ko", g.title_en)); sec.append(head);
   const ul = el("ul", "grid");
   D.laws.filter(l => l.group === g.key).forEach(l => {
     const li = el("li"), a = el("a", "law"); a.href = `#law-${String(l.no).padStart(2, "0")}`;
-    const text = el("div"); text.append(el("p", "dot", label(l)), el("p", "ko", l.ko));
+    const text = el("div"); text.append(el("p", "dot", label(l)), el("p", "ko", l.law));
     a.append(html("span", "icon", ICON(l.no, "")), text); li.append(a); ul.append(li);
   });
   sec.append(ul); host.append(sec);
@@ -33,24 +33,32 @@ function showLaw(no){
   const l = D.laws.find(x => x.no === no); if (!l){ showHome(); return; }
   const g = groupOf(l);
   view.replaceChildren();
-  const crumbs = el("p", "crumbs"); const h = el("a", null, "Home"); h.href = "#"; const gl = el("a", null, `${g.name} · ${g.title}`); gl.href = `#${g.key}`;
+  const crumbs = el("p", "crumbs"); const h = el("a", null, "Home"); h.href = "#"; const gl = el("a", null, `${g.name} · ${g.title_en}`); gl.href = `#${g.key}`;
   crumbs.append(h, " / ", gl);
   const lab = el("div", "label"); lab.append(el("p", "dot", label(l)));
-  const h1 = el("h1", null, l.ko); h1.tabIndex = -1;
-  view.append(crumbs, html("div", "icon", ICON(l.no, l.en)), lab, h1, el("p", "def", l.def));
+  const h1 = el("h1", null, l.law); h1.tabIndex = -1;
+  view.append(crumbs, html("div", "icon", ICON(l.no, l.en)), lab, h1, el("p", "def", l.def_en));
   if (l.original.length){
     const cite = el("p", "cite"); const a = el("a", null, g.source.title); a.href = g.source.url; a.target = "_blank"; a.rel = "noopener";
-    cite.append("> 원문에서 · ", a); view.append(cite);
+    cite.append("> From the essay · ", a); view.append(cite);
   }
   const v = document.createElement("video");
   Object.assign(v, { src: l.video, muted: true, loop: true, playsInline: true, preload: "metadata" });
-  v.setAttribute("muted", ""); v.setAttribute("playsinline", ""); v.setAttribute("aria-label", `${l.ko} 모션`);
+  v.setAttribute("muted", ""); v.setAttribute("playsinline", ""); v.setAttribute("aria-label", `${l.en} motion`);
   if (reduce) v.controls = true; else v.autoplay = true;
   view.append(v);
-  if (l.original.length){ const body = el("div", "body"); paras(body, l.original); view.append(body); }
+  // 인스타용으로 만든 모션 중 이 원칙과 닿는 것
+  for (const x of l.extra || []){
+    const fig = el("figure", "extra"), ev = document.createElement("video");
+    Object.assign(ev, { src: x.video, muted: true, loop: true, playsInline: true, preload: "metadata" });
+    ev.setAttribute("muted", ""); ev.setAttribute("playsinline", ""); ev.setAttribute("aria-label", x.caption);
+    if (reduce) ev.controls = true; else ev.autoplay = true;
+    fig.append(ev, el("figcaption", "dot", x.caption)); view.append(fig);
+  }
+  if (l.original.length){ const body = el("div", "body"); body.lang = "ko"; paras(body, l.original); view.append(body); }
   const nx = D.laws.find(x => x.no === l.no + 1) || D.laws[0];
   const next = el("a", "next"); next.href = `#law-${String(nx.no).padStart(2, "0")}`;
-  const t = el("div"); t.append(el("p", "dot", label(nx)), el("span", null, nx.no === 1 ? "처음으로 →" : "다음 원칙 →"));
+  const t = el("div"); t.append(el("p", "dot", label(nx)), el("span", null, nx.no === 1 ? "Back to the first →" : "Next →"));
   next.append(html("span", "icon", ICON(nx.no, "")), t); view.append(next);
   home.hidden = true; view.hidden = false; window.TAEGEUK_PAUSE?.(true);
   document.title = `${label(l)} — The Principles of Tracé`;
