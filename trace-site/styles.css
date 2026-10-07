@@ -16,10 +16,11 @@ a:focus-visible,input:focus-visible,canvas:focus-visible{outline:2px solid var(-
 .dot{font:500 13px/1.4 var(--dot);letter-spacing:.08em;margin:0}
 
 /* 상단 */
-.top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;max-width:1480px;margin:0 auto;padding-block:24px 56px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;max-width:1480px;margin:0 auto;padding-block:24px 56px}
 .brand{font:600 24px var(--serif);text-decoration:none;letter-spacing:-.01em}
 .brand span{font-weight:400;color:var(--muted)}
-.top nav{display:flex;gap:20px;font:500 13px var(--dot)}
+.top nav{display:flex;align-items:center;gap:20px;font:500 13px var(--dot);white-space:nowrap}
+.brand{white-space:nowrap}
 .top nav a{text-decoration:none;color:var(--muted)} .top nav a:hover{color:var(--ink)}
 .theme{font:500 13px var(--dot);color:var(--muted);background:none;border:1px solid var(--rule);border-radius:999px;padding:2px 12px;cursor:pointer}
 .theme:hover{color:var(--ink);border-color:var(--ink)}
@@ -101,6 +102,10 @@ a:focus-visible,input:focus-visible,canvas:focus-visible{outline:2px solid var(-
 }
 @media (max-width:700px){
   body{padding-inline:18px;font-size:17px}
+  .top{align-items:center;padding-block:18px 40px}
+  .brand{font-size:20px}
+  .top nav{gap:12px;font-size:12px}
+  .theme{padding:2px 9px;font-size:12px}
   .foot{margin-inline:-18px;padding-inline:18px}
   .grid{grid-template-columns:1fr;gap:40px}
   .law{grid-template-columns:72px minmax(0,1fr);gap:18px}
