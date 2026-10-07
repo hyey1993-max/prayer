@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Principles of Tracé</title>
+<meta name="description" content="공간에서 배운 14개의 원칙. 화면 위의 건축, 목적지 없는 걸음, 지도의 약속.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif&family=Noto+Sans+KR:wght@400;700;900&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#">Tracé</a>
+  <nav aria-label="섹션">
+    <a href="#ux">UX</a><a href="#walk">WALK</a><a href="#map">MAP</a>
+  </nav>
+</header>
+
+<main id="home">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-text">
+      <p class="eyebrow">14 principles · learned from space</p>
+      <h1 id="hero-title">The Principles<br>of <em>Tracé</em></h1>
+      <p class="hero-sub">공간에서 배운 14개의 원칙. 화면 위의 건축, 목적지 없는 걸음, 지도의 약속.</p>
+    </div>
+    <figure class="plate">
+      <canvas id="taegeuk" width="1080" height="1080" tabindex="0" aria-label="흰 입자와 검은 입자가 태극 모양으로 도는 그림. 끌어서 저을 수 있다."></canvas>
+      <figcaption>
+        <label class="mix" for="mix"><span>응축</span><input id="mix" type="range" min="0" max="100" value="50"><span>역동</span></label>
+        <p class="quote" id="quote" aria-live="polite"></p>
+      </figcaption>
+    </figure>
+  </section>
+
+  <div id="groups"></div>
+
+  <footer class="closing">
+    <p class="eyebrow">Tracé의 제안</p>
+    <div id="closing"></div>
+    <p class="sources">원문 · <a id="src-ux" href="#">The Essence of Spatial Design</a> · <a id="src-walk" href="#">Tracé Story · Chapter 1</a></p>
+  </footer>
+</main>
+
+<article id="law" hidden aria-live="polite"></article>
+
+<script src="data.js"></script>
+<script src="taegeuk.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
