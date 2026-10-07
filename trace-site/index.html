@@ -6,45 +6,46 @@
 <title>The Principles of Tracé</title>
 <meta name="description" content="공간에서 배운 14개의 원칙. 화면 위의 건축, 목적지 없는 걸음, 지도의 약속.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif&family=Noto+Sans+KR:wght@400;700;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Doto:wght@500;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Noto+Serif+KR:wght@400;700&display=swap">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header class="top">
-  <a class="brand" href="#">Tracé</a>
-  <nav aria-label="섹션">
-    <a href="#ux">UX</a><a href="#walk">WALK</a><a href="#map">MAP</a>
-  </nav>
+<header class="masthead">
+  <a href="#" class="title" aria-label="The Principles of Tracé, 처음으로">
+    <span class="the">THE PRINCIPLES OF</span>
+    <span class="word">TRACÉ</span>
+  </a>
+  <span class="band">SPACE, SCREEN, WALK, MAP</span>
 </header>
 
 <main id="home">
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="hero-text">
-      <p class="eyebrow">14 principles · learned from space</p>
-      <h1 id="hero-title">The Principles<br>of <em>Tracé</em></h1>
-      <p class="hero-sub">공간에서 배운 14개의 원칙. 화면 위의 건축, 목적지 없는 걸음, 지도의 약속.</p>
-    </div>
-    <figure class="plate">
+  <div class="stage">
+    <div class="laws" id="groups"></div>
+    <aside class="plate" aria-label="태극">
+      <div class="pin">
       <canvas id="taegeuk" width="1080" height="1080" tabindex="0" aria-label="흰 입자와 검은 입자가 태극 모양으로 도는 그림. 끌어서 저을 수 있다."></canvas>
-      <figcaption>
+      <div class="plate-ui">
         <label class="mix" for="mix"><span>응축</span><input id="mix" type="range" min="0" max="100" value="50"><span>역동</span></label>
         <p class="quote" id="quote" aria-live="polite"></p>
-      </figcaption>
-    </figure>
-  </section>
-
-  <div id="groups"></div>
-
-  <footer class="closing">
-    <p class="eyebrow">Tracé의 제안</p>
+      </div>
+      </div>
+    </aside>
+  </div>
+  <section class="closing" aria-labelledby="closing-h">
+    <h2 class="dot" id="closing-h">TRACÉ / 제안</h2>
     <div id="closing"></div>
-    <p class="sources">원문 · <a id="src-ux" href="#">The Essence of Spatial Design</a> · <a id="src-walk" href="#">Tracé Story · Chapter 1</a></p>
-  </footer>
+  </section>
 </main>
 
-<article id="law" hidden aria-live="polite"></article>
+<article id="law" hidden></article>
+
+<footer class="foot">
+  <span class="dot">TRACÉ · 2026</span>
+  <span class="src">원문 <a id="src-ux" href="#">The Essence of Spatial Design</a> · <a id="src-walk" href="#">Tracé Story · Chapter 1</a></span>
+</footer>
 
 <script src="data.js"></script>
+<script src="icons.js"></script>
 <script src="taegeuk.js"></script>
 <script src="app.js"></script>
 </body>
