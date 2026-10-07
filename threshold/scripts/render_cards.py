@@ -137,7 +137,8 @@ def page_hook(card, idx, total, brand, part, bg, kind="hook"):
 <div class=low><p class=label>{esc(card.get("label"))}</p><h1 class="{big}">{hl(card["h"])}</h1>
 <p class=sub>{esc(card.get("sub"))}</p><p class=foot>{foot}</p></div>"""
     elif typ == "big":
-        inner = f'<div class="pad mid"><p class=label>{esc(card.get("label"))}</p><h1 class=big>{hl(card["h"])}</h1><p class=sub>{esc(card.get("sub"))}</p></div>'
+        big_style = f' style="font-size:{card["size"]}px"' if card.get("size") else ""
+        inner = f'<div class="pad mid"><p class=label>{esc(card.get("label"))}</p><h1 class=big{big_style}>{hl(card["h"])}</h1><p class=sub>{esc(card.get("sub"))}</p></div>'
     elif typ == "list":
         rows = "".join(f'<li><b>{i + 1:02d}</b><span>{hl(x)}</span></li>' for i, x in enumerate(card["items"]))
         inner = f'<div class=pad><p class=label>{esc(card.get("label"))}</p><h1>{hl(card["h"])}</h1><ol>{rows}</ol><p class=foot>{esc(card.get("sub"))}</p></div>'
