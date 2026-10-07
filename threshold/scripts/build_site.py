@@ -62,7 +62,7 @@ EXTRA = {
   "Flow": [("15_taegeuk_yin_yang_web.mp4", "Yin and yang · the taegeuk interaction")],
   "No Destination": [("16_story_labyrinth_vs_maze.mp4", "Labyrinth vs maze · Tracé Story, Chapter 2")],
 }
-media = sorted((ROOT / "content/motion/mp4").glob("[01][0-9]_*.mp4"))[:14]
+media = sorted((ROOT / "content/motion/mp4_site").glob("[01][0-9]_*.mp4"))   # 사이트용: 영어 한 문장 + 한글 원칙 (LAW_EN=trace-site/data.js 로 capture_motion.js)
 laws, n = [], 0
 for g in groups:
     for en, original in g["laws"]:

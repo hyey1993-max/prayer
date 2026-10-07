@@ -8,13 +8,18 @@ const b64 = f => fs.readFileSync(f).toString("base64");
 const face = (fam, w, f) => `@font-face{font-family:"${fam}";font-weight:${w};src:url(data:font/woff2;base64,${b64(f)}) format("woff2")}`;
 const fonts = [
   face("Noto Sans KR", 400, `${fontDir}/noto-sans-kr-korean-400-normal.woff2`),
+  face("Noto Sans KR", 400, `${fontDir}/noto-sans-kr-latin-400-normal.woff2`).replace("}", ";unicode-range:U+0000-00FF,U+2000-206F}"),
   face("Noto Sans KR", 700, `${fontDir}/noto-sans-kr-korean-900-normal.woff2`),
   face("Noto Sans KR", 900, `${fontDir}/noto-sans-kr-korean-900-normal.woff2`),
   face("IBM Plex Mono", 400, `${plexDir}/ibm-plex-mono-latin-400-normal.woff2`),
   face("IBM Plex Mono", 500, `${plexDir}/ibm-plex-mono-latin-600-normal.woff2`),
 ].join("");
 const src = fs.readFileSync(htmlPath, "utf8").replace(/<link[^>]+fonts\.googleapis[^>]+>/, "");
-const html = `<!doctype html><meta charset=utf-8><style>${fonts}</style><body>${src}`;
+// LAW_EN=trace-site/data.js 를 주면 원칙마다 영어 한 문장을 한글 원칙과 함께 넣는다 (사이트용)
+let pre = "";
+if (process.env.LAW_EN){ const d = JSON.parse(fs.readFileSync(process.env.LAW_EN, "utf8").replace(/^window\.TRACE = /, "").replace(/;\s*$/, ""));
+  pre = `<script>window.TRACE_LAW_EN = ${JSON.stringify(Object.fromEntries(d.laws.map(l => [l.en, l.law])))}</script>`; }
+const html = `<!doctype html><meta charset=utf-8><style>${fonts}</style>${pre}<body>${src}`;
 (async () => {
   const exe = require("child_process").execSync("ls /opt/pw-browsers/chromium_headless_shell-*/*/headless_shell").toString().trim();
   const browser = await chromium.launch({ executablePath: exe, args: ["--no-sandbox"] });
