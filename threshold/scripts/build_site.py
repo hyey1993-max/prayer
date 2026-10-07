@@ -33,6 +33,8 @@ for g in groups:
         shutil.copy(src, SITE / "media" / src.name)
         laws.append({"no": n, "group": g["key"], "en": en, "ko": d["h"], "def": d["t"], "original": original, "video": f"media/{src.name}"})
 data = {"groups": [{k: g[k] for k in ("key", "name", "title", "intro", "source", "outro")} for g in groups], "laws": laws,
-        "closing": T(ch1, 16)}
+        # 'Tracé의 제안'(Ch.1 원문)을 영어로 옮긴 문장
+        "closing": ["Rather than pointing to a destination someone else has chosen, the quiet record of discovering the aura of your own life should go on.",
+                    "The black-line trails that the map service Tracé proposes record the practice of flâneurs who step out of other people's orbits and think through the city at their own pace."]}
 (SITE / "data.js").write_text("window.TRACE = " + json.dumps(data, ensure_ascii=False, indent=1) + ";\n", encoding="utf-8")
 print(len(laws), "laws ->", SITE)

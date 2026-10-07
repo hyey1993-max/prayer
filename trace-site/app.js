@@ -7,7 +7,7 @@ const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 const html = (tag, cls, markup) => { const e = el(tag, cls); e.innerHTML = markup; return e; };
 const paras = (host, list) => list.forEach(t => t.split("\n").forEach(line => line.trim() && host.append(el("p", null, line))));
-const label = l => `No. ${l.no} / ${l.en}`;
+const label = l => `${String(l.no).padStart(2, "0")} · ${l.en}`;
 const groupOf = l => D.groups.find(g => g.key === l.group);
 
 // ---------- 목록 ----------

@@ -98,7 +98,7 @@ const add = (group, no, title, en, period, draw) => SCENES.push({group, no, titl
 
 // UX 01 · 줄 세우지 않는다: 자유롭게 떠돌던 점들이 1~12 순위로 줄 섰다가 다시 풀린다
 { const r=rng(7); const free=Array.from({length:12},()=>[260+r()*560, 380+r()*440, r()*6.28]);
-  add("UX","01/06","사람을 줄 세우지 않는다","Human Scale",8,(g,t,p)=>{
+  add("UX","01/06","유저를 줄 세우지 않는다","Human Scale",8,(g,t,p)=>{
     const k = seg(p,.15,.38) * (1-seg(p,.62,.86));
     free.forEach(([fx,fy,ph],i)=>{
       const dx=Math.sin(t*.9+ph)*26, dy=Math.cos(t*.7+ph)*20;

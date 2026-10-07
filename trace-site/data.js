@@ -43,7 +43,7 @@ window.TRACE = {
    "no": 1,
    "group": "ux",
    "en": "Human Scale",
-   "ko": "사람을 줄 세우지 않는다",
+   "ko": "유저를 줄 세우지 않는다",
    "def": "자극적인 팝업과 획일적인 랭킹으로 유저를 줄 세우지 않는다. 화면 안에서 길을 잃지 않고 주체성을 지킬 수 있는 인간적 척도를 복원한다.",
    "original": [
     "그렇다면 기능주의 매트릭스 위에서 서비스 기획자는 어떻게 UX를 설계해야 하는가. 단순히 트래픽을 유도하는 자극적인 팝업이나 획일적인 랭킹 으로 유저를 줄 세우는 방식을 넘어, 유저가 화면 안에서 길을 잃지 않고 주체성을 지킬 수 있도록 ‘인간적 척도(Human Scale)’를 복원해야 한다."
@@ -196,6 +196,7 @@ window.TRACE = {
   }
  ],
  "closing": [
-  "타인이 지정한 목적지를 지시하는 것이 아닌, 내 삶의 아우라를 발견하는 고요한 기록은 지속되어야 한다.\n지도 서비스 Tracé가 제안하는 검은 선의 궤적은 타인의 궤도를 탈피해 자신만의 속도로 도시를 사유하는 플라뇌르(Flâneur)들의 아름다운 실천을 기록하는 일이다."
+  "Rather than pointing to a destination someone else has chosen, the quiet record of discovering the aura of your own life should go on.",
+  "The black-line trails that the map service Tracé proposes record the practice of flâneurs who step out of other people's orbits and think through the city at their own pace."
  ]
 };
