@@ -56,5 +56,6 @@
 | 16.5–18.6 | 다시 응축한다 | 응축 문장 |
 | 18.6 | 다시 흩어지며 처음 장면으로 이어진다 | 〃 |
 
+- 검은 바탕(#0d0d10)에 양은 흰 선, 음은 회색 선. 글자는 미색(#f2f0ea).
 - 릴스 화면의 위(약 220px)·아래(약 380px)·오른쪽 버튼 영역은 글자를 피했다.
 - 다시 뽑기: `node scripts/capture_taegeuk.js content/motion/taegeuk_reel.html <출력.mp4> <ffmpeg> assets/fonts`

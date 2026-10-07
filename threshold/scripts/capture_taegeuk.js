@@ -15,12 +15,19 @@ const src = fs.readFileSync(htmlPath, "utf8").replace(/<link[^>]+fonts\.googleap
   const page = await browser.newPage();
   await page.setContent(`<!doctype html><meta charset=utf-8><style>${fonts}</style><body>${src}`);
   await page.evaluate(async () => { await Promise.all(["400 30px 'Noto Sans KR'","700 30px 'Noto Sans KR'","400 20px 'IBM Plex Mono'"].map(f => document.fonts.load(f, "가Aé"))); });
+  // 페이지 자체 재생 루프가 같은 상태를 함께 진행시키지 않도록 먼저 멈춘다
+  await page.evaluate(() => { const b = document.getElementById("play"); if (b && b.getAttribute("aria-pressed") === "true") b.click(); });
   await page.evaluate(() => { const T = window.TAEGEUK; T.reset(7); window.__c = Object.assign(document.createElement("canvas"), { width: T.W, height: T.H });
     window.__g = window.__c.getContext("2d"); T.draw(window.__g, true); window.__sec = 0; });
-  const frameAt = async sec => page.evaluate(sec => { const T = window.TAEGEUK; while (window.__sec < sec - 1e-6){ T.step(); window.__sec += 1/60; }
-    T.draw(window.__g); return window.__c.toDataURL("image/jpeg", .92); }, sec);
+  // 영상처럼 1/30초마다 한 번씩 그린다. 한 번의 evaluate 안에서 여러 장을 몰아 그리면 브라우저가 멈춘다.
+  const frameAt = async (sec, grab = true) => page.evaluate(([sec, grab]) => { const T = window.TAEGEUK;
+    while (window.__sec < sec - 1e-6){ T.step(); window.__sec += 1/60; }
+    T.draw(window.__g); return grab ? window.__c.toDataURL("image/jpeg", .92) : ""; }, [sec, grab]);
   if (flag === "--frames"){
-    for (const s of list.split(",").map(Number)){ fs.writeFileSync(out.replace(/\.mp4$/, `_${s}s.jpg`), Buffer.from((await frameAt(s)).split(",")[1], "base64")); }
+    const want = list.split(",").map(Number).sort((x, y) => x - y);
+    for (let f = 1, k = 0; k < want.length; f++){ const sec = f/30, hit = sec >= want[k] - 1e-6;
+      const url = await frameAt(sec, hit);
+      if (hit){ fs.writeFileSync(out.replace(/\.mp4$/, `_${want[k]}s.jpg`), Buffer.from(url.split(",")[1], "base64")); k++; } }
   } else {
     // 페이지가 정한 만큼(WARM, 기본 2초) 버려 잔상이 자리 잡게 하고, LOOP초 한 바퀴를 담는다
     const { warm, loop } = await page.evaluate(() => ({ warm: window.TAEGEUK.WARM ?? 2, loop: window.TAEGEUK.LOOP ?? 18 }));
