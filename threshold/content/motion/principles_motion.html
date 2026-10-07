@@ -88,15 +88,16 @@ function frame(g, sc){
   g.fillStyle=C.bg; g.fillRect(0,0,W,H);
   text(g, "Tracé", 90, 120, {size:30, font:SANS, weight:700, align:"left"});
   text(g, `${sc.group} ${sc.no}`, W-90, 120, {size:24, align:"right", color:C.fg, a:.55, track:2});
-  const en = (window.TRACE_LAW_EN || {})[sc.en];      // 사이트용: 영어 한 문장 + 한글 원칙을 함께 (capture_motion.js가 넣는다)
+  const en = (window.TRACE_LAW_EN || {})[sc.en];      // 사이트용: 위에 영어 한 문장, 아래 한글 원칙 (capture_motion.js가 넣는다)
   if (en){
-    text(g, sc.title, W/2, 1105, {size:50, font:SANS, weight:900});
-    g.font = `400 31px ${SANS}`; const words = en.split(" "); let lines = [en];
-    if (g.measureText(en).width > W - 220){          // 두 줄로 고르게 나눈다 (한 단어만 넘어가지 않게)
+    g.font = `900 40px ${SANS}`; const words = en.split(" "); let lines = [en];
+    if (g.measureText(en).width > W - 200){          // 두 줄로 고르게 나눈다 (한 단어만 넘어가지 않게)
       let best = Infinity;
       for (let k = 1; k < words.length; k++){ const a = words.slice(0, k).join(" "), b = words.slice(k).join(" ");
         const m = Math.max(g.measureText(a).width, g.measureText(b).width); if (m < best){ best = m; lines = [a, b]; } } }
-    lines.forEach((ln, i) => text(g, ln, W/2, 1170 + i*44, {size:31, font:SANS, a:.78}));
+    const y0 = lines.length > 1 ? 1090 : 1120;
+    lines.forEach((ln, i) => text(g, ln, W/2, y0 + i*54, {size:40, font:SANS, weight:900}));
+    text(g, sc.title, W/2, y0 + lines.length*54 + 14, {size:30, font:SANS, a:.7});
     return;
   }
   text(g, sc.title, W/2, 1150, {size:58, font:SANS, weight:900});

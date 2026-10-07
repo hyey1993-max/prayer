@@ -10,6 +10,7 @@ const fonts = [
   face("Noto Sans KR", 400, `${fontDir}/noto-sans-kr-korean-400-normal.woff2`),
   face("Noto Sans KR", 400, `${fontDir}/noto-sans-kr-latin-400-normal.woff2`).replace("}", ";unicode-range:U+0000-00FF,U+2000-206F}"),
   face("Noto Sans KR", 700, `${fontDir}/noto-sans-kr-korean-900-normal.woff2`),
+  face("Noto Sans KR", 900, `${fontDir}/noto-sans-kr-latin-900-normal.woff2`).replace("}", ";unicode-range:U+0000-00FF,U+2000-206F}"),
   face("Noto Sans KR", 900, `${fontDir}/noto-sans-kr-korean-900-normal.woff2`),
   face("IBM Plex Mono", 400, `${plexDir}/ibm-plex-mono-latin-400-normal.woff2`),
   face("IBM Plex Mono", 500, `${plexDir}/ibm-plex-mono-latin-600-normal.woff2`),
