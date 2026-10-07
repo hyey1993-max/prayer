@@ -82,7 +82,8 @@ a:focus-visible,input:focus-visible,canvas:focus-visible{outline:2px solid var(-
 #law .extra{margin:0 0 36px} #law .extra video{margin-bottom:10px} #law .extra figcaption{color:var(--muted)}
 #law video{width:100%;max-width:360px;aspect-ratio:4/5;display:block;background:#0d0d10;margin:8px 0 36px}
 .next{display:grid;grid-template-columns:56px 1fr;gap:20px;align-items:center;border:1px solid var(--rule);padding:18px 22px;max-width:420px;text-decoration:none;margin-top:12px}
-.next svg,#law .next .icon svg{width:56px;height:56px}   /* #law .icon svg(104px)가 덮어쓰지 않게 */
+.next .icon{display:block;width:56px;height:56px;overflow:hidden}
+.next svg,#law .next .icon svg{width:56px;height:56px;display:block}   /* #law .icon svg(104px)가 덮어쓰지 않게 */
 .next .dot{font-size:13px;margin-bottom:4px}
 .next span{font-size:15px}
 .next:hover{background:var(--soft)}
