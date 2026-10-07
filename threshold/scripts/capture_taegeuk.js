@@ -20,9 +20,11 @@ const src = fs.readFileSync(htmlPath, "utf8").replace(/<link[^>]+fonts\.googleap
   await page.evaluate(() => { const T = window.TAEGEUK; T.reset(7); window.__c = Object.assign(document.createElement("canvas"), { width: T.W, height: T.H });
     window.__g = window.__c.getContext("2d"); T.draw(window.__g, true); window.__sec = 0; });
   // 영상처럼 1/30초마다 한 번씩 그린다. 한 번의 evaluate 안에서 여러 장을 몰아 그리면 브라우저가 멈춘다.
-  const frameAt = async (sec, grab = true) => page.evaluate(([sec, grab]) => { const T = window.TAEGEUK;
-    while (window.__sec < sec - 1e-6){ T.step(); window.__sec += 1/60; }
-    T.draw(window.__g); return grab ? window.__c.toDataURL("image/jpeg", .92) : ""; }, [sec, grab]);
+  // SPEED(환경변수, 기본 1): 1보다 작으면 시뮬레이션을 그만큼 천천히 진행한다 (영상 길이는 LOOP/SPEED)
+  const SPEED = Number(process.env.SPEED || 1);
+  const frameAt = async (sec, grab = true) => page.evaluate(([sec, grab, SPEED]) => { const T = window.TAEGEUK;
+    while (window.__sec < sec*SPEED - 1e-6){ T.step(); window.__sec += 1/60; }
+    T.draw(window.__g); return grab ? window.__c.toDataURL("image/jpeg", .92) : ""; }, [sec, grab, SPEED]);
   if (flag === "--frames"){
     const want = list.split(",").map(Number).sort((x, y) => x - y);
     for (let f = 1, k = 0; k < want.length; f++){ const sec = f/30, hit = sec >= want[k] - 1e-6;
@@ -31,9 +33,9 @@ const src = fs.readFileSync(htmlPath, "utf8").replace(/<link[^>]+fonts\.googleap
   } else {
     // 페이지가 정한 만큼(WARM, 기본 2초) 버려 잔상이 자리 잡게 하고, LOOP초 한 바퀴를 담는다
     const { warm, loop } = await page.evaluate(() => ({ warm: window.TAEGEUK.WARM ?? 2, loop: window.TAEGEUK.LOOP ?? 18 }));
-    if (warm > 0) await frameAt(warm);
+    if (warm > 0) await frameAt(warm/SPEED);
     const ff = spawn(ffmpeg, ["-y","-loglevel","error","-f","image2pipe","-framerate","30","-c:v","mjpeg","-i","-","-c:v","libx264","-pix_fmt","yuv420p","-crf","27","-preset","slow","-movflags","+faststart", out]);
-    for (let f = 1; f <= loop*30; f++){ const url = await frameAt(warm + f/30);
+    for (let f = 1; f <= loop/SPEED*30; f++){ const url = await frameAt(warm/SPEED + f/30);
       if (!ff.stdin.write(Buffer.from(url.split(",")[1], "base64"))) await new Promise(r => ff.stdin.once("drain", r)); }
     ff.stdin.end(); await new Promise(r => ff.on("close", r));
   }

@@ -25,7 +25,8 @@ SRC_WALK = {"title": "Tracé Story · Chapter 1", "url": "https://medium.com/@hy
 
 groups = [
   {"key": "ux", "name": "UX", "title": "화면 위의 건축", "intro": T(ux, 1, 2), "source": SRC_UX, "laws": [
-    ("Human Scale", T(ux, 7)), ("Condense", T(ux, 8)), ("Flow", T(ux, 9)), ("Sequence", T(ux, 10)),
+    # Human Scale 원문 문장은 사이트에서 뺐다 (인스타 2편 08장에는 그대로)
+    ("Human Scale", []), ("Condense", T(ux, 8)), ("Flow", T(ux, 9)), ("Sequence", T(ux, 10)),
     ("Low Threshold", T(ux, 4, 5, 11)), ("Participation", T(ux, 13, 14, 15))], "outro": T(ux, 16)},
   {"key": "walk", "name": "WALK", "title": "목적지 없는 걸음", "intro": T(ch1, 1), "source": SRC_WALK, "laws": [
     ("No Destination", T(ch1, 4, 5, 6)), ("Inner Map", T(ch1, 8, 9)), ("Own Rhythm", T(ch1, 11, 12)), ("Aura", T(ch1, 14, 15)),

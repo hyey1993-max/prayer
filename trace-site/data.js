@@ -50,9 +50,7 @@ window.TRACE = {
    "def_en": "No flashy pop-ups, no uniform rankings that line users up. Restore a human scale where people never get lost on the screen and keep their own agency.",
    "ko": "유저를 줄 세우지 않는다",
    "def": "자극적인 팝업과 획일적인 랭킹으로 유저를 줄 세우지 않는다. 화면 안에서 길을 잃지 않고 주체성을 지킬 수 있는 인간적 척도를 복원한다.",
-   "original": [
-    "그렇다면 기능주의 매트릭스 위에서 서비스 기획자는 어떻게 UX를 설계해야 하는가. 단순히 트래픽을 유도하는 자극적인 팝업이나 획일적인 랭킹 으로 유저를 줄 세우는 방식을 넘어, 유저가 화면 안에서 길을 잃지 않고 주체성을 지킬 수 있도록 ‘인간적 척도(Human Scale)’를 복원해야 한다."
-   ],
+   "original": [],
    "video": "media/01_ux_human_scale.mp4",
    "poster": "media/posters/01_ux_human_scale.jpg",
    "extra": [],
