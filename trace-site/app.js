@@ -20,6 +20,23 @@ themeBtn.addEventListener("click", () => { const t = isDark() ? "light" : "dark"
 sysDark.addEventListener?.("change", paintTheme);
 paintTheme();
 
+// ---------- 홈: 유리 큐브 (02 Condense ↔ 03 Flow) ----------
+{
+  const host = $("#plate"), mixEl = $("#mix"), nowEl = $("#now");
+  const home = window.TRACE_CUBE && host ? window.TRACE_CUBE(host, { theme: isDark() ? "dark" : "light" }) : null;
+  const LAWS = [2, 3].map(no => D.laws.find(l => l.no === no));
+  let lastQ = -1;
+  const show = m => { const q = m < .5 ? 0 : 1, l = LAWS[q]; if (q === lastQ || !l) return; lastQ = q;
+    const id = String(l.no).padStart(2, "0"); nowEl.href = `#law-${id}`;
+    nowEl.querySelector(".dot").textContent = `${id} · ${l.en}`; nowEl.querySelector(".ko").textContent = l.law; nowEl.querySelector(".def").textContent = l.def_en; };
+  show(.5);
+  if (home){
+    mixEl.addEventListener("input", () => { home.setMix(mixEl.value / 100); show(home.mix); });
+    addEventListener("trace-theme", () => home.setTheme(isDark() ? "dark" : "light"));
+    (function sync(){ if (document.activeElement !== mixEl) mixEl.value = Math.round(home.mix * 100); show(home.mix); requestAnimationFrame(sync); })();
+  }
+}
+
 // ---------- 목록 ----------
 const host = $("#groups");
 D.groups.forEach(g => {
@@ -39,7 +56,7 @@ for (const [id, k] of [["#src-ux", "ux"], ["#src-walk", "walk"]]){ const a = $(i
 
 // ---------- 유리 큐브 (02 Condense 상세): three.js와 cube.js는 이 페이지를 열 때만 불러온다 ----------
 let cube = null;
-const load = src => new Promise((ok, no) => { if (document.querySelector(`script[data-src="${src}"]`)) return ok();
+const load = src => new Promise((ok, no) => { if ((src.includes("three") && window.THREE) || (src.includes("cube") && window.TRACE_CUBE) || document.querySelector(`script[data-src="${src}"]`)) return ok();
   const sc = document.createElement("script"); sc.src = src; sc.dataset.src = src; sc.onload = ok; sc.onerror = no; document.head.append(sc); });
 function cubeFigure(){
   const fig = el("figure", "extra cube"), stage = el("div", "cube-stage");
@@ -96,13 +113,13 @@ function showLaw(no){
   const next = el("a", "next"); next.href = `#law-${String(nx.no).padStart(2, "0")}`;
   const t = el("div"); t.append(el("p", "dot", label(nx)), el("span", null, nx.no === 1 ? "Back to the first →" : "Next →"));
   next.append(html("span", "icon", ICON(nx.no, "")), t); view.append(next);
-  home.hidden = true; view.hidden = false; window.TAEGEUK_PAUSE?.(true);
+  home.hidden = true; view.hidden = false;
   document.title = `${label(l)} — The Principles of Tracé`;
   scrollTo(0, 0); h1.focus({ preventScroll: true });
 }
 function showHome(anchor){
   dropCube();
-  view.hidden = true; view.replaceChildren(); home.hidden = false; window.TAEGEUK_PAUSE?.(false);
+  view.hidden = true; view.replaceChildren(); home.hidden = false;
   document.title = "The Principles of Tracé";
   if (anchor){ const t = document.getElementById(anchor); if (t) t.scrollIntoView(); } else scrollTo(0, 0);
 }

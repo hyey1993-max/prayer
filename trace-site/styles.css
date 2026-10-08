@@ -41,9 +41,7 @@ a:focus-visible,input:focus-visible,canvas:focus-visible{outline:2px solid var(-
 
 .plate{position:relative;min-width:0}
 .plate .pin{position:sticky;top:24px}
-.plate canvas{display:block;width:135%;max-width:none;height:auto;aspect-ratio:1;background:var(--paper);touch-action:none;cursor:grab;
-  -webkit-mask-image:radial-gradient(circle,#000 58%,transparent 71%);mask-image:radial-gradient(circle,#000 58%,transparent 71%)}
-.plate canvas:active{cursor:grabbing}
+.plate-stage{width:118%;aspect-ratio:1;margin-left:-6%}
 .plate-ui{max-width:340px;margin-top:20px}
 .mix{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;font:500 12px var(--dot);letter-spacing:.06em}
 .mix a{color:var(--muted);text-decoration:none} .mix a:hover{color:var(--ink)}
@@ -97,7 +95,7 @@ a:focus-visible,input:focus-visible,canvas:focus-visible{outline:2px solid var(-
   .stage{grid-template-columns:1fr}
   .plate{order:-1;max-width:520px;margin:0 auto 56px}
   .plate .pin{position:static}
-  .plate canvas{width:100%}
+  .plate-stage{width:100%;margin-left:0}
   .plate-ui{max-width:none}
   .closing{margin-left:0}
 }

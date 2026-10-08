@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Noto+Serif+KR:wght@400;700&display=swap">
 <script>try{const t=localStorage.getItem("trace-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
-<link rel="stylesheet" href="styles.css?v=20261008b">
+<link rel="stylesheet" href="styles.css?v=20261008c">
 </head>
 <body>
 <header class="top">
@@ -28,11 +28,10 @@
     <div class="laws" id="groups"></div>
     <aside class="plate" aria-label="Condense and Flow">
       <div class="pin">
-      <canvas id="taegeuk" width="1080" height="1080" tabindex="0" aria-label="Dots of many colors gather and scatter along a flow. Drag to stir."></canvas>
+      <div class="plate-stage" id="plate" role="img" aria-label="Glass cubes that hold together when condensed and drift apart as the dots inside connect. Drag to rotate."></div>
       <div class="plate-ui">
         <div class="mix"><a href="#law-02">02 Condense</a><input id="mix" type="range" min="0" max="100" value="50" aria-label="From 02 Condense to 03 Flow"><a href="#law-03">03 Flow</a></div>
         <a class="now" id="now" href="#law-02" aria-live="polite"><p class="dot"></p><p class="ko"></p><p class="def"></p></a>
-        <p class="credit">Flow field inspired by <a href="https://www.tylerxhobbs.com" target="_blank" rel="noopener">Tyler Hobbs</a></p>
       </div>
       </div>
     </aside>
@@ -55,9 +54,10 @@
   <p class="contact">Contact · <a href="mailto:uuuuhw@naver.com">uuuuhw@naver.com</a></p>
 </footer>
 
-<script src="data.js?v=20261008b"></script>
-<script src="icons.js?v=20261008b"></script>
-<script src="taegeuk.js?v=20261008b"></script>
-<script src="app.js?v=20261008b"></script>
+<script src="data.js?v=20261008c"></script>
+<script src="icons.js?v=20261008c"></script>
+<script src="vendor/three.min.js?v=20261008c"></script>
+<script src="cube.js?v=20261008c"></script>
+<script src="app.js?v=20261008c"></script>
 </body>
 </html>

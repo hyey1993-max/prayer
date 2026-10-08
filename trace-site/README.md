@@ -23,4 +23,5 @@ cd trace-site && python3 -m http.server 8000
 
 ## Credit
 
-The taegeuk interaction (`taegeuk.js`) is inspired by the flow-field work of [Tyler Hobbs](https://www.tylerxhobbs.com) (Fidenza): dots of many sizes and colors on cream paper that turn into dotted flow lines as the motion picks up. Yin and yang share one palette, leaning only slightly lighter or darker, so the taegeuk stays a quiet hint. The code and the work are original; only the approach is borrowed.
+- Site layout: inspired by John Maeda's [The Laws of Simplicity](http://lawsofsimplicity.com).
+- Home and 02 Condense: glass cube interaction (`cube.js`, three.js r128 in `vendor/`, MIT). The earlier flow-field taegeuk (`taegeuk.js`, inspired by Tyler Hobbs) is no longer loaded.
