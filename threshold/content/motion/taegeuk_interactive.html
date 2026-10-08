@@ -1,0 +1,190 @@
+<title>Tracé 태극</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;700;900&display=swap">
+<style>
+/* 단일 테마: 레퍼런스의 회색 바탕 + 흰/검은 입자. 4:5 캔버스 하나와 그 아래 조작부. */
+:root{
+  --page:#141416; --fg:#ecebe6; --dim:#8f8d86; --line:#3a3a40; --warm:#c98f66;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --sans:"Noto Sans KR",system-ui,"Apple SD Gothic Neo",sans-serif;
+  color-scheme:dark;
+}
+body{background:var(--page);color:var(--fg);font:15px/1.6 var(--sans);margin:0;padding-inline:16px;padding-block:28px 56px}
+main{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+h1{font:400 24px/1.3 var(--sans);margin:0} h1 b{font-weight:900}
+.lead{color:var(--dim);margin:2px 0 0;font-size:14px}
+canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;background:#c8c8ca;touch-action:none;cursor:grab;border-radius:2px}
+canvas:active{cursor:grabbing}
+.panel{display:flex;flex-direction:column;gap:12px}
+.slider{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;font:500 13px var(--mono)}
+input[type=range]{width:100%;accent-color:var(--fg)}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+button{font:500 13px var(--mono);color:var(--fg);background:none;border:1px solid var(--fg);padding:6px 12px;cursor:pointer}
+button[aria-pressed="true"]{background:var(--fg);color:var(--page)}
+button:focus-visible,input:focus-visible,canvas:focus-visible{outline:2px solid var(--warm);outline-offset:3px}
+.hint{font:400 12px var(--mono);color:var(--dim);margin:0}
+</style>
+<main>
+  <div>
+    <h1>Tracé <b>음과 양</b></h1>
+    <p class="lead">캔버스를 끌어서 저어 보세요. 슬라이더로 응축과 역동 사이를 오갑니다.</p>
+  </div>
+  <canvas id="c" width="1080" height="1350" tabindex="0" aria-label="흰 입자와 검은 입자가 태극 모양으로 도는 인터랙티브 그림"></canvas>
+  <div class="panel">
+    <label class="slider" for="mix"><span>응축</span><input id="mix" type="range" min="0" max="100" value="50"><span>역동</span></label>
+    <div class="row">
+      <button id="auto" type="button" aria-pressed="true">자동 재생</button>
+      <button id="burst" type="button">흩트리기</button>
+    </div>
+    <p class="hint">자동 재생 중에 슬라이더를 움직이거나 저으면 직접 조작으로 바뀝니다.</p>
+  </div>
+</main>
+<script>
+(() => {
+"use strict";
+const W = 1080, H = 1350, CX = W/2, CY = 600, R = 360, N = 12000;
+const BG = [200,200,202];
+const MONO = '"IBM Plex Mono", ui-monospace, monospace', SANS = '"Noto Sans KR", system-ui, sans-serif';
+
+// 에세이 원문 문장 (수정하지 않음)
+const QUOTES = {
+  condense: { label:"응축", text:"이는 정제된 시스템 안으로 압축시켜 규칙을 만드는 일본의 ‘응축의 문화’와 닿아있다." },
+  flow:     { label:"태극의 역동성", text:"음과 양이 서로를 밀어내고 끌어당기며 끊임없이 순환하는 태극의 ‘역동성’처럼, 유저의 시선과 동선은 인터페이스 위를 유연하게 흘러가야 한다." },
+  dynamic:  { label:"음과 양", text:"이것은 문화사적으로 음과 양의 에너지가 태극처럼 끊임없이 충돌하는 역동성을 나타낸다." },
+};
+
+function rng(seed){ let s = seed >>> 0; return () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296); }
+const clamp = (v,a=0,b=1) => Math.max(a, Math.min(b, v));
+const lerp = (a,b,k) => a + (b-a)*k;
+
+// 태극 영역: 원을 대각선으로 기울여 두 개의 물방울로 나눈다. true = 흰색
+const TILT = -0.62;
+function isWhite(x, y){
+  const c = Math.cos(TILT), s = Math.sin(TILT);
+  const u = x*c - y*s, v = x*s + y*c;            // 회전 좌표
+  if (Math.hypot(u, v + R/2) < R/2) return false; // 위쪽 작은 원: 검정
+  if (Math.hypot(u, v - R/2) < R/2) return true;  // 아래쪽 작은 원: 흰색
+  return u < 0;
+}
+
+let P;              // Float32Array: x, y, vx, vy, hx, hy (홈 좌표, 중심 기준)
+let col;            // Uint8Array: 1 = 흰색
+let frame = 0;
+function reset(seed = 7){
+  const r = rng(seed); P = new Float32Array(N*6); col = new Uint8Array(N); frame = 0;
+  for (let i = 0; i < N; i++){
+    let x, y; do { x = (r()*2-1)*R; y = (r()*2-1)*R; } while (x*x + y*y > R*R);
+    const rr = Math.hypot(x, y), edge = 1 + (r()-.5)*.18;      // 바깥 가장자리를 붓질처럼 거칠게
+    if (rr > R*.82){ x *= edge; y *= edge; }
+    col[i] = isWhite(x, y) ? 1 : 0;
+    const o = i*6; P[o] = CX + x + (r()-.5)*20; P[o+1] = CY + y + (r()-.5)*20; P[o+4] = x; P[o+5] = y;
+  }
+}
+
+// 상태
+const state = { mix:.5, auto:true, t:0, ptr:null, pv:[0,0], burst:0 };
+function autoMix(t){ return .5 - .5*Math.cos(2*Math.PI*t/18); }   // 18초에 응축→역동→응축
+function autoPointer(t){                                          // 자동 재생 때 태극의 S 경계를 따라 젓는다
+  const k = (t % 18) / 18; if (k < .30 || k > .62) return null;
+  const u = (k - .30) / .32, a = u * Math.PI * 2.2;
+  const s = Math.sin(a) * R*.55, c = Math.cos(TILT), sn = Math.sin(TILT);
+  const lx = s*Math.cos(a*.5)*.9, ly = (u-.5)*R*1.6;
+  return [CX + lx*c - ly*sn, CY + lx*sn + ly*c];
+}
+
+function step(dt = 1/60){
+  state.t += dt; frame++;
+  if (state.auto){ state.mix = autoMix(state.t); const p = autoPointer(state.t);
+    if (p){ state.pv = state.ptr ? [p[0]-state.ptr[0], p[1]-state.ptr[1]] : [0,0]; } state.ptr = p; }
+  const m = state.mix;
+  const spring = lerp(.022, .0018, m), flow = lerp(.06, 1.25, m), damp = lerp(.86, .94, m);
+  const rot = state.t * lerp(.22, .55, m);                       // 홈 자체가 천천히 돈다
+  const cr = Math.cos(rot), sr = Math.sin(rot), t = state.t, burst = state.burst;
+  const ptr = state.ptr, pvx = state.pv[0], pvy = state.pv[1];
+  for (let i = 0; i < N; i++){
+    const o = i*6; let x = P[o], y = P[o+1], vx = P[o+2], vy = P[o+3];
+    const hx = CX + P[o+4]*cr - P[o+5]*sr, hy = CY + P[o+4]*sr + P[o+5]*cr;
+    vx += (hx - x)*spring; vy += (hy - y)*spring;
+    // 흐름장: 흰 입자와 검은 입자가 서로 반대 방향으로 감긴다 (밀어내고 끌어당김)
+    const sign = col[i] ? 1 : -1;
+    const a = Math.sin(x*.0045 + t*.35) * 2.1 + Math.cos(y*.0052 - t*.28) * 2.1 + sign*.9;
+    vx += Math.cos(a) * flow * .18; vy += Math.sin(a) * flow * .18;
+    // 소용돌이: 중심 둘레로 회전
+    const dx = x - CX, dy = y - CY, d = Math.hypot(dx, dy) + 1;
+    vx += (-dy/d) * .05 * (1 + m) * sign; vy += (dx/d) * .05 * (1 + m) * sign;
+    if (burst > 0){ vx += dx/d * burst * 6; vy += dy/d * burst * 6; }
+    if (ptr){ const ex = x - ptr[0], ey = y - ptr[1], e = Math.hypot(ex, ey);
+      if (e < 190){ const f = 1 - e/190; vx += (-ey/(e+1))*f*2.2 + pvx*f*.22; vy += (ex/(e+1))*f*2.2 + pvy*f*.22; } }
+    vx *= damp; vy *= damp; P[o] = x + vx; P[o+1] = y + vy; P[o+2] = vx; P[o+3] = vy;
+  }
+  state.burst *= .9; if (state.burst < .01) state.burst = 0;
+}
+
+function wrap(g, s, maxW){
+  const words = s.split(" "), lines = []; let cur = "";
+  for (const w of words){ const tryS = cur ? cur + " " + w : w; if (g.measureText(tryS).width > maxW && cur){ lines.push(cur); cur = w; } else cur = tryS; }
+  if (cur) lines.push(cur); return lines;
+}
+function draw(g, clear = false){
+  g.setTransform(g.canvas.width/W, 0, 0, g.canvas.height/H, 0, 0);
+  g.fillStyle = `rgba(${BG},${clear ? 1 : .13})`; g.fillRect(0, 0, W, H);       // 잔상: 붓질처럼 남는다
+  // 입자마다 속도 방향으로 짧은 획을 그어 붓 자국처럼 보이게 한다
+  g.lineCap = "round";
+  for (let pass = 0; pass < 2; pass++){
+    g.strokeStyle = pass ? "rgba(248,248,245,.55)" : "rgba(14,14,16,.72)"; g.lineWidth = 2.3; g.beginPath();
+    for (let i = 0; i < N; i++){ if (col[i] !== pass) continue; const o = i*6;
+      const vx = P[o+2], vy = P[o+3], len = Math.min(4, Math.hypot(vx, vy)) + .6;
+      const k = len / (Math.hypot(vx, vy) + 1e-3);
+      g.moveTo(P[o], P[o+1]); g.lineTo(P[o] - vx*k*2.2, P[o+1] - vy*k*2.2); }
+    g.stroke();
+  }
+  // 글자: 매 프레임 덮어써서 또렷하게
+  g.fillStyle = `rgb(${BG})`; g.fillRect(0, 1035, W, H-1035); g.fillRect(0, 0, W, 150);
+  g.fillStyle = "#141416"; g.textBaseline = "alphabetic";
+  g.font = `700 32px ${SANS}`; g.textAlign = "left"; g.fillText("Tracé", 90, 112);
+  g.font = `400 24px ${MONO}`; g.textAlign = "right"; g.globalAlpha = .6; g.fillText("YIN · YANG", W-90, 110); g.globalAlpha = 1;
+  const q = state.mix < .34 ? QUOTES.condense : state.mix > .66 ? QUOTES.dynamic : QUOTES.flow;
+  g.textAlign = "left"; g.font = `400 24px ${MONO}`; g.globalAlpha = .6; g.fillText(q.label, 90, 1100); g.globalAlpha = 1;
+  g.font = `400 34px ${SANS}`; wrap(g, q.text, W-180).forEach((ln, i) => g.fillText(ln, 90, 1160 + i*52));
+  // 응축 ↔ 역동 눈금
+  g.globalAlpha = .45; g.fillRect(90, 1288, W-180, 2); g.globalAlpha = 1;
+  g.beginPath(); g.arc(90 + (W-180)*state.mix, 1289, 9, 0, Math.PI*2); g.fill();
+  g.font = `400 20px ${MONO}`; g.globalAlpha = .6; g.textAlign = "left"; g.fillText("응축", 90, 1325); g.textAlign = "right"; g.fillText("역동", W-90, 1325); g.globalAlpha = 1;
+}
+
+// 영상 추출용
+window.TAEGEUK = { reset(seed){ reset(seed); state.t = 0; state.auto = true; state.ptr = null; state.burst = 0; },
+  step, draw, W, H, LOOP: 18 };
+
+// ---------- 화면 ----------
+const cv = document.getElementById("c"), g = cv.getContext("2d");
+const mix = document.getElementById("mix"), autoBtn = document.getElementById("auto"), burstBtn = document.getElementById("burst");
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+reset(); draw(g, true);
+function setAuto(v){ state.auto = v; autoBtn.setAttribute("aria-pressed", String(v)); autoBtn.textContent = v ? "자동 재생" : "직접 조작"; if (!v) state.ptr = null; }
+mix.addEventListener("input", () => { setAuto(false); state.mix = mix.value/100; });
+autoBtn.addEventListener("click", () => setAuto(!state.auto));
+burstBtn.addEventListener("click", () => { state.burst = 1.2; });
+function toCanvas(e){ const r = cv.getBoundingClientRect(); return [(e.clientX - r.left)/r.width*W, (e.clientY - r.top)/r.height*H]; }
+let dragging = false;
+cv.addEventListener("pointerdown", e => { dragging = true; setAuto(false); cv.setPointerCapture(e.pointerId); state.ptr = toCanvas(e); state.pv = [0,0]; });
+cv.addEventListener("pointermove", e => { if (!dragging) return; const p = toCanvas(e); state.pv = [p[0]-state.ptr[0], p[1]-state.ptr[1]]; state.ptr = p; });
+const up = () => { dragging = false; state.ptr = null; state.pv = [0,0]; };
+cv.addEventListener("pointerup", up); cv.addEventListener("pointercancel", up);
+cv.addEventListener("keydown", e => { if (e.key === "ArrowLeft" || e.key === "ArrowRight"){ setAuto(false);
+  state.mix = clamp(state.mix + (e.key === "ArrowRight" ? .05 : -.05)); mix.value = Math.round(state.mix*100); e.preventDefault(); }
+  if (e.key === " "){ state.burst = 1.2; e.preventDefault(); } });
+
+let last = performance.now();
+function loop(now){ const dt = Math.min(.05, (now - last)/1000); last = now;
+  const n = Math.max(1, Math.round(dt*60)); for (let i = 0; i < n; i++) step();
+  if (state.auto) mix.value = Math.round(state.mix*100);
+  draw(g); requestAnimationFrame(loop); }
+if (reduce){ setAuto(false); state.mix = .5; for (let i = 0; i < 240; i++) step(); draw(g, true);
+  // 움직임 줄이기 설정: 조작할 때만 그린다
+  const once = () => { for (let i = 0; i < 2; i++) step(); draw(g); };
+  ["input","pointermove","click","keydown"].forEach(ev => document.addEventListener(ev, once));
+} else {
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(() => requestAnimationFrame(loop));
+}
+})();
+</script>

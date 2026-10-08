@@ -1,0 +1,36 @@
+{
+ "brand": "Tracé",
+ "sets": {
+  "taegeuk_cover": {
+   "title": "태극 릴스 표지 (17_taegeuk_reel_9x16.mp4)",
+   "kind": "hookreels",
+   "cards": [
+    {"type": "title", "label": "UX 원칙 · 응축과 흐름", "h": "음과 양처럼\n[[흐르는 인터페이스]]", "sub": "응축의 문화와 태극의 역동성", "photo": "motion_taegeuk_cover.jpg"}
+   ]
+  },
+  "principles_ux": {
+   "title": "원칙 릴스 · UX 6개 (처음/끝 카드)",
+   "kind": "hookreels",
+   "cards": [
+    {"type": "big", "label": "Tracé Principles · UX", "h": "화면 위의 건축\n[[UX 원칙 6가지]]", "sub": "공간에서 배운 원칙"},
+    {"type": "big", "label": "The Principles of Tracé", "h": "15개 원칙\n[[전부 보기]]", "sub": "프로필 링크 · 원칙 사이트"}
+   ]
+  },
+  "principles_walk": {
+   "title": "원칙 릴스 · 산책 5개 (처음/끝 카드)",
+   "kind": "hookreels",
+   "cards": [
+    {"type": "big", "label": "Tracé Principles · Walk", "h": "목적지 없는 걸음\n[[산책의 원칙 5가지]]", "sub": "도시를 걷는 방식"},
+    {"type": "big", "label": "The Principles of Tracé", "h": "15개 원칙\n[[전부 보기]]", "sub": "프로필 링크 · 원칙 사이트"}
+   ]
+  },
+  "principles_map": {
+   "title": "원칙 릴스 · 지도 4개 (처음/끝 카드)",
+   "kind": "hookreels",
+   "cards": [
+    {"type": "big", "label": "Tracé Principles · Map", "h": "지도의 약속\n[[지도의 원칙 4가지]]", "sub": "Tracé가 만드는 지도"},
+    {"type": "big", "label": "The Principles of Tracé", "h": "15개 원칙\n[[전부 보기]]", "sub": "프로필 링크 · 원칙 사이트"}
+   ]
+  }
+ }
+}

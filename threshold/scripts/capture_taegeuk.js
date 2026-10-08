@@ -1,0 +1,43 @@
+// 태극 인터랙션의 자동 재생 18초를 MP4(1080x1350, 30fps)로 뽑는다. 시뮬레이션은 60Hz 고정 스텝이라 매번 같은 영상이 나온다.
+// 사용: node scripts/capture_taegeuk.js <html> <출력.mp4> <ffmpeg 경로> <폰트 폴더> [--frames 1,9,5]  (--frames: 해당 초의 정지 이미지만 출력)
+// 필요: npm i playwright-core, pip install imageio-ffmpeg
+const { chromium } = require("playwright-core");
+const fs = require("fs"), { spawn, execSync } = require("child_process");
+const [,, htmlPath, out, ffmpeg, fontDir, flag, list] = process.argv;
+const b64 = f => fs.readFileSync(f).toString("base64");
+const face = (fam, w, f) => `@font-face{font-family:"${fam}";font-weight:${w};src:url(data:font/woff2;base64,${b64(`${fontDir}/${f}`)}) format("woff2")}`;
+const fonts = face("Noto Sans KR",400,"noto-sans-kr-korean-400-normal.woff2") + face("Noto Sans KR",700,"noto-sans-kr-korean-900-normal.woff2")
+  + face("IBM Plex Mono",400,"ibm-plex-mono-latin-400-normal.woff2");
+const src = fs.readFileSync(htmlPath, "utf8").replace(/<link[^>]+fonts\.googleapis[^>]+>/, "");
+(async () => {
+  const exe = execSync("ls /opt/pw-browsers/chromium_headless_shell-*/*/headless_shell").toString().trim();
+  const browser = await chromium.launch({ executablePath: exe, args: ["--no-sandbox"] });
+  const page = await browser.newPage();
+  await page.setContent(`<!doctype html><meta charset=utf-8><style>${fonts}</style><body>${src}`);
+  await page.evaluate(async () => { await Promise.all(["400 30px 'Noto Sans KR'","700 30px 'Noto Sans KR'","400 20px 'IBM Plex Mono'"].map(f => document.fonts.load(f, "가Aé"))); });
+  // 페이지 자체 재생 루프가 같은 상태를 함께 진행시키지 않도록 먼저 멈춘다
+  await page.evaluate(() => { const b = document.getElementById("play"); if (b && b.getAttribute("aria-pressed") === "true") b.click(); });
+  await page.evaluate(() => { const T = window.TAEGEUK; T.reset(7); window.__c = Object.assign(document.createElement("canvas"), { width: T.W, height: T.H });
+    window.__g = window.__c.getContext("2d"); T.draw(window.__g, true); window.__sec = 0; });
+  // 영상처럼 1/30초마다 한 번씩 그린다. 한 번의 evaluate 안에서 여러 장을 몰아 그리면 브라우저가 멈춘다.
+  // SPEED(환경변수, 기본 1): 1보다 작으면 시뮬레이션을 그만큼 천천히 진행한다 (영상 길이는 LOOP/SPEED)
+  const SPEED = Number(process.env.SPEED || 1);
+  const frameAt = async (sec, grab = true) => page.evaluate(([sec, grab, SPEED]) => { const T = window.TAEGEUK;
+    while (window.__sec < sec*SPEED - 1e-6){ T.step(); window.__sec += 1/60; }
+    T.draw(window.__g); return grab ? window.__c.toDataURL("image/jpeg", .92) : ""; }, [sec, grab, SPEED]);
+  if (flag === "--frames"){
+    const want = list.split(",").map(Number).sort((x, y) => x - y);
+    for (let f = 1, k = 0; k < want.length; f++){ const sec = f/30, hit = sec >= want[k] - 1e-6;
+      const url = await frameAt(sec, hit);
+      if (hit){ fs.writeFileSync(out.replace(/\.mp4$/, `_${want[k]}s.jpg`), Buffer.from(url.split(",")[1], "base64")); k++; } }
+  } else {
+    // 페이지가 정한 만큼(WARM, 기본 2초) 버려 잔상이 자리 잡게 하고, LOOP초 한 바퀴를 담는다
+    const { warm, loop } = await page.evaluate(() => ({ warm: window.TAEGEUK.WARM ?? 2, loop: window.TAEGEUK.LOOP ?? 18 }));
+    if (warm > 0) await frameAt(warm/SPEED);
+    const ff = spawn(ffmpeg, ["-y","-loglevel","error","-f","image2pipe","-framerate","30","-c:v","mjpeg","-i","-","-c:v","libx264","-pix_fmt","yuv420p","-crf","27","-preset","slow","-movflags","+faststart", out]);
+    for (let f = 1; f <= loop/SPEED*30; f++){ const url = await frameAt(warm/SPEED + f/30);
+      if (!ff.stdin.write(Buffer.from(url.split(",")[1], "base64"))) await new Promise(r => ff.stdin.once("drain", r)); }
+    ff.stdin.end(); await new Promise(r => ff.on("close", r));
+  }
+  await browser.close();
+})();
