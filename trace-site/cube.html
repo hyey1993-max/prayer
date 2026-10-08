@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tracé Cube Preview</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,600&display=swap">
+<style>
+/* 시안: 홈 태극 자리에 유리 큐브를 넣었을 때. 사이트에는 아직 연결하지 않았다. */
+:root{ --paper:#0f0f11; --ink:#ececea; --muted:#9a9a9e; --rule:#2a2a2e; color-scheme:dark;
+  --dot:"IBM Plex Mono",ui-monospace,Menlo,monospace; --serif:"Newsreader",Georgia,serif }
+:root[data-theme="light"]{ --paper:#f3eee3; --ink:#1a1916; --muted:#6e6a62; --rule:#ddd6c8; color-scheme:light }
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 var(--serif);padding-inline:16px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;max-width:1100px;margin:0 auto;padding-block:20px}
+.brand{font:600 22px var(--serif);white-space:nowrap} .brand span{font-weight:400;color:var(--muted)}
+.theme{font:500 12px var(--dot);color:var(--muted);background:none;border:1px solid var(--rule);border-radius:999px;padding:3px 12px;cursor:pointer}
+.theme:focus-visible,input:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+main{max-width:1100px;margin:0 auto}
+.label{font:500 12px var(--dot);letter-spacing:.12em;color:var(--muted);margin:8px 0 0}
+.stage{height:min(72vh,620px);margin:8px -16px 0}
+.ui{max-width:420px;margin:12px auto 48px}
+.mix{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;font:500 12px var(--dot);color:var(--muted)}
+.mix input{width:100%;accent-color:var(--ink)}
+.law{margin-top:18px;padding-top:14px;border-top:1px solid var(--rule);min-height:7em}
+.law .dot{font:500 12px var(--dot);color:var(--muted);margin:0 0 6px}
+.law .en{font-size:19px;margin:0 0 4px} .law .ko{font-size:14px;color:var(--muted);margin:0}
+.note{font:400 12px var(--dot);color:var(--muted);text-align:center;margin:0 0 32px}
+</style>
+</head>
+<body>
+<header class="top"><div class="brand">Tracé <span>Principles</span></div><button class="theme" id="theme" type="button">Light</button></header>
+<main>
+  <p class="label">PREVIEW · CONDENSE ↔ FLOW</p>
+  <div class="stage" id="stage" role="img" aria-label="반투명 유리 큐브 27개가 하나로 뭉쳤다가, 몇 개가 빠져나오며 안쪽의 점들이 선으로 이어지는 그림. 끌어서 돌릴 수 있다."></div>
+  <div class="ui">
+    <div class="mix"><span>02 Condense</span><input id="mix" type="range" min="0" max="100" value="50" aria-label="From 02 Condense to 03 Flow"><span>03 Flow</span></div>
+    <div class="law" aria-live="polite"><p class="dot" id="dot"></p><p class="en" id="en"></p><p class="ko" id="ko"></p></div>
+  </div>
+  <p class="note">Drag to rotate · 슬라이더를 움직이면 자동 재생이 멈춘다</p>
+</main>
+<script src="vendor/three.min.js"></script>
+<script src="cube.js"></script>
+<script>
+(() => {
+  const LAWS = [["02 · Condense", "Don't list. Condense what matters into the frame.", "나열 말고 응축한다"],
+                ["03 · Flow", "A condensed screen still lets the eye and the path flow.", "동선은 흐르게 둔다"]];
+  const cube = window.TRACE_CUBE(document.getElementById("stage"), { theme: "dark" });
+  const mix = document.getElementById("mix"), btn = document.getElementById("theme");
+  let last = -1;
+  function show(){ const q = cube.mix < .5 ? 0 : 1; if (q !== last){ const [d, e, k] = LAWS[q];
+      document.getElementById("dot").textContent = d; document.getElementById("en").textContent = e; document.getElementById("ko").textContent = k; last = q; } }
+  (function sync(){ if (document.activeElement !== mix) mix.value = Math.round(cube.mix * 100); show(); requestAnimationFrame(sync); })();
+  mix.addEventListener("input", () => cube.setMix(mix.value / 100));
+  btn.addEventListener("click", () => { const light = document.documentElement.dataset.theme !== "light";
+    document.documentElement.dataset.theme = light ? "light" : "dark"; btn.textContent = light ? "Dark" : "Light"; cube.setTheme(light ? "light" : "dark"); });
+})();
+</script>
+</body>
+</html>

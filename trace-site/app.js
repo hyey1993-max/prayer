@@ -37,6 +37,23 @@ paras($("#closing"), D.closing);
 const src = k => D.groups.find(g => g.key === k).source;
 for (const [id, k] of [["#src-ux", "ux"], ["#src-walk", "walk"]]){ const a = $(id); a.href = src(k).url; a.target = "_blank"; a.rel = "noopener"; }
 
+// ---------- 유리 큐브 (02 Condense 상세): three.js와 cube.js는 이 페이지를 열 때만 불러온다 ----------
+let cube = null;
+const load = src => new Promise((ok, no) => { if (document.querySelector(`script[data-src="${src}"]`)) return ok();
+  const sc = document.createElement("script"); sc.src = src; sc.dataset.src = src; sc.onload = ok; sc.onerror = no; document.head.append(sc); });
+function cubeFigure(){
+  const fig = el("figure", "extra cube"), stage = el("div", "cube-stage");
+  stage.setAttribute("role", "img"); stage.setAttribute("aria-label", "Glass cubes that hold together when condensed and drift apart as the dots inside connect. Drag to rotate.");
+  fig.append(stage, el("figcaption", "dot", "Condense ↔ Flow · drag to rotate"));
+  load("vendor/three.min.js").then(() => load("cube.js")).then(() => {
+    if (!stage.isConnected) return;
+    cube = window.TRACE_CUBE(stage, { theme: isDark() ? "dark" : "light" });
+  }).catch(() => fig.remove());
+  return fig;
+}
+addEventListener("trace-theme", () => cube && cube.setTheme(isDark() ? "dark" : "light"));
+const dropCube = () => { if (cube){ cube.destroy(); cube = null; } };
+
 // ---------- 상세 ----------
 // 모션 영상: 속성을 먼저 달고 src를 넣는다 (iOS 자동재생 조건). 정지 화면(poster)을 깔고,
 // 자동재생이 막히면(저전력 모드 등) 재생 버튼을 보여준다.
@@ -53,6 +70,7 @@ function motion(src, poster, label){
 }
 const view = $("#law"), home = $("#home");
 function showLaw(no){
+  dropCube();
   const l = D.laws.find(x => x.no === no); if (!l){ showHome(); return; }
   const g = groupOf(l);
   view.replaceChildren();
@@ -68,6 +86,7 @@ function showLaw(no){
     cite.append("> From the essay · ", a); view.append(cite);
   }
   view.append(motion(l.video, l.poster, `${l.en} motion`));
+  if (l.en === "Condense") view.append(cubeFigure());
   // 인스타용으로 만든 모션 중 이 원칙과 닿는 것
   for (const x of l.extra || []){
     const fig = el("figure", "extra"); fig.append(motion(x.video, x.poster, x.caption), el("figcaption", "dot", x.caption)); view.append(fig);
@@ -82,6 +101,7 @@ function showLaw(no){
   scrollTo(0, 0); h1.focus({ preventScroll: true });
 }
 function showHome(anchor){
+  dropCube();
   view.hidden = true; view.replaceChildren(); home.hidden = false; window.TAEGEUK_PAUSE?.(false);
   document.title = "The Principles of Tracé";
   if (anchor){ const t = document.getElementById(anchor); if (t) t.scrollIntoView(); } else scrollTo(0, 0);
