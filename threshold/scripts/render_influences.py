@@ -49,6 +49,31 @@ h1{{position:absolute;left:68px;right:60px;bottom:430px;font:900 168px/.9 "Heavy
 </body>"""
 
 
+def page_photo(p, i, n, photo):
+    """사진이 있는 사람의 표지: 위에 흑백 사진, 아래에 굵은 이름, 사진 출처는 작게 (자유 라이선스 사진만)"""
+    name = html.escape(p["name"]).replace("\n", "<br>")
+    src = "data:image/jpeg;base64," + base64.b64encode(photo.read_bytes()).decode()
+    credit = html.escape(p.get("photo_credit", ""))
+    return f"""<!doctype html><meta charset=utf-8><style>{CSS}
+*{{margin:0;padding:0;box-sizing:border-box}}
+html,body{{width:{W}px;height:{H}px;background:#f3eee3;color:#1a1916;overflow:hidden}}
+body{{position:relative;padding:72px 76px}}
+.bar{{display:flex;justify-content:space-between;font:400 24px "Mono";letter-spacing:.14em;text-transform:uppercase}}
+.bar b{{font:900 30px "Heavy";letter-spacing:0;text-transform:none}}
+.ph{{position:absolute;left:76px;right:76px;top:130px;height:640px;background:#ddd5c4 center/cover no-repeat;filter:grayscale(1) contrast(1.05);mix-blend-mode:multiply}}
+.cr{{position:absolute;left:76px;right:76px;top:782px;font:400 17px "Mono";color:#6e6a62}}
+h1{{position:absolute;left:68px;right:60px;top:840px;font:900 128px/.9 "Heavy";letter-spacing:-.045em;text-transform:uppercase}}
+.ko{{position:absolute;left:76px;bottom:150px;font:400 30px "Sans";color:#4a463f}}
+.key{{position:absolute;left:76px;bottom:104px;font:400 34px "Serif";font-style:italic}}
+.foot{{position:absolute;left:76px;right:76px;bottom:52px;display:flex;justify-content:space-between;font:400 22px "Mono";letter-spacing:.1em;color:#6e6a62}}
+</style><body>
+<div class=bar><b>Tracé</b><span>Influences {i:02d}/{n:02d}</span></div>
+<div class=ph style="background-image:url({src})"></div><p class=cr>{credit}</p>
+<h1>{name}</h1><p class=ko>{html.escape(p["ko"])} · {html.escape(p["role"])}</p><p class=key>{html.escape(p["key"])}</p>
+<div class=foot><span>@radiant_walks</span><span>INSPIRED BY</span></div>
+</body>"""
+
+
 def page_quote(p, i, n):
     """2장: 직접 쓴 에세이 원문 그대로"""
     paras = "".join(f"<p>{html.escape(x)}</p>" for x in p["quote"].split("\n"))
@@ -109,11 +134,14 @@ def main():
     out = src.parent / "cards"; out.mkdir(exist_ok=True)
     exe = (glob.glob("/opt/pw-browsers/chromium_headless_shell-*/*/headless_shell") or [os.environ.get("CHROME", "")])[0]
     people = data["people"]
+    photos = src.parent / "photos"            # photos/<slug>.jpg 가 있으면 사진 표지 (출처는 series.json의 photo_credit)
     for i, p in enumerate(people, 1):
-        shot(exe, page(p, i, len(people)), out / f"{i:02d}.jpg")
+        ph = photos / f"{p.get('slug', '')}.jpg"
+        cover = page_photo(p, i, len(people), ph) if p.get("slug") and ph.exists() else page(p, i, len(people))
+        shot(exe, cover, out / f"{i:02d}.jpg")
         if p.get("quote"):                     # 원문이 있는 사람은 캐러셀 3장: 표지 / 원문 / 사실
             d = out / f"{i:02d}_{p['slug']}"; d.mkdir(exist_ok=True)
-            shot(exe, page(p, i, len(people)), d / "01.jpg")
+            shot(exe, cover, d / "01.jpg")
             shot(exe, page_quote(p, i, len(people)), d / "02.jpg")
             shot(exe, page_facts(p, i, len(people)), d / "03.jpg")
     print(len(people), "장 →", out)
