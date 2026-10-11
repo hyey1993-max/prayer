@@ -68,7 +68,7 @@ h1{{position:absolute;left:68px;right:60px;top:840px;font:900 128px/.9 "Heavy";l
 .foot{{position:absolute;left:76px;right:76px;bottom:52px;display:flex;justify-content:space-between;font:400 22px "Mono";letter-spacing:.1em;color:#6e6a62}}
 </style><body>
 <div class=bar><b>Tracé</b><span>Influences {i:02d}/{n:02d}</span></div>
-<div class=ph style="background-image:url({src})"></div><p class=cr>{credit}</p>
+<div class=ph style="background-image:url({src});background-position:{p.get('photo_pos', 'center')}"></div><p class=cr>{credit}</p>
 <h1>{name}</h1><p class=ko>{html.escape(p["ko"])} · {html.escape(p["role"])}</p><p class=key>{html.escape(p["key"])}</p>
 <div class=foot><span>@radiant_walks</span><span>INSPIRED BY</span></div>
 </body>"""

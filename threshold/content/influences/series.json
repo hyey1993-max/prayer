@@ -44,7 +44,8 @@
     "https://en.wikipedia.org/wiki/Walter_Benjamin",
     "https://britannica.com/print/article/60952",
     "https://en.haberarts.com/arcades.htm"
-   ]
+   ],
+   "photo_credit": ""
   },
   {
    "name": "YAMAMOTO\nRIKEN",
@@ -177,7 +178,8 @@
     "https://dac.dk/en/press-releases/jan-gehl-turns-90-the-architect-who-taught-the-world-to-build-cities-for-people",
     "https://monocle.com/design/jan-gehl-architect-cities-for-people/",
     "https://urbanland.uli.org/public-spaces/in-print-jan-gehl"
-   ]
+   ],
+   "photo_credit": ""
   },
   {
    "name": "GUY\nDEBORD",
@@ -214,7 +216,9 @@
    "sources": [
     "https://en.wikipedia.org/wiki/Guy_Debord",
     "https://perlego.com/knowledge/study-guides/what-is-situationist-theory/"
-   ]
+   ],
+   "photo_pos": "center 15%",
+   "photo_credit": ""
   },
   {
    "name": "NAKAMURA\nYUJIRO",
@@ -281,7 +285,8 @@
     "https://en.wikipedia.org/wiki/Pierre_Bourdieu",
     "https://www.britannica.com/print/article/860434",
     "https://snl.no/Pierre_Bourdieu"
-   ]
+   ],
+   "photo_credit": ""
   },
   {
    "name": "DENIS\nWOOD",
