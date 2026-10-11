@@ -144,6 +144,216 @@
    "role": "제너러티브 아티스트",
    "key": "Fidenza · Flow Field",
    "link": "Tracé의 점과 흐름"
+  },
+  {
+   "name": "JAN\nGEHL",
+   "ko": "얀 겔",
+   "role": "건축가·도시계획가",
+   "key": "Life Between Buildings · Human Scale",
+   "link": "01 유저를 줄 세우지 않는다",
+   "slug": "gehl",
+   "label": "FROM THE PLAN",
+   "source": "Tracé 기획 문서",
+   "quote": "지도가 사용자를 압도하지 않게 한다.\n한 번에 한 장소에만 집중하는 싱글 카드 화면과 넓은 여백.",
+   "facts": [
+    [
+     "출생",
+     "1936 덴마크"
+    ],
+    [
+     "건물 사이의 삶",
+     "「Life Between Buildings」 1971 (영어판 1987)"
+    ],
+    [
+     "사람을 위한 도시",
+     "「Cities for People」 2010"
+    ],
+    [
+     "사무소",
+     "2000 Gehl Architects 공동 설립"
+    ]
+   ],
+   "sources": [
+    "https://dac.dk/en/press-releases/jan-gehl-turns-90-the-architect-who-taught-the-world-to-build-cities-for-people",
+    "https://monocle.com/design/jan-gehl-architect-cities-for-people/",
+    "https://urbanland.uli.org/public-spaces/in-print-jan-gehl"
+   ]
+  },
+  {
+   "name": "GUY\nDEBORD",
+   "ko": "기 드보르",
+   "role": "이론가·영화감독",
+   "key": "Dérive · Psychogeography",
+   "link": "07 목적지를 지운다 · 15 검은 선으로 그린다",
+   "slug": "debord",
+   "label": "FROM THE PLAN",
+   "source": "Tracé 기획 문서",
+   "quote": "최단 경로(A → B) 대신 A → ? → ? → B로 걷는다.\n걸은 궤적은 도시의 분위기에 반응한 내 심리적 리듬의 흔적이다. “왜 이 골목에서 자꾸 멈췄을까?”를 기록하는 지도.",
+   "facts": [
+    [
+     "생몰",
+     "1931 파리 — 1994"
+    ],
+    [
+     "상황주의 인터내셔널",
+     "1957년 창립 멤버"
+    ],
+    [
+     "심리지리학",
+     "1955 「도시 지리학 비판 서설」. 지리적 환경이 개인의 감정과 행동에 미치는 영향을 다룬다"
+    ],
+    [
+     "데리브",
+     "평소의 이동 습관을 내려놓고 도시를 떠도는 걷기"
+    ],
+    [
+     "스펙터클의 사회",
+     "「La Société du spectacle」 1967"
+    ]
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/Guy_Debord",
+    "https://perlego.com/knowledge/study-guides/what-is-situationist-theory/"
+   ]
+  },
+  {
+   "name": "NAKAMURA\nYUJIRO",
+   "ko": "나카무라 유지로",
+   "role": "철학자",
+   "key": "Topos · 토포스",
+   "link": "커뮤니티 방향의 근거",
+   "slug": "nakamura",
+   "label": "FROM THE PLAN",
+   "source": "Tracé 기획 문서",
+   "quote": "토포스는 개인의 경험이 쌓여 의미가 생긴 장소다.\n여러 사람의 이미지 지도가 겹친 ‘디지털 토포스’. 다른 사람의 기록과 겹쳐 보며 “이 거리를 이렇게도 보는구나”를 발견한다.",
+   "facts": [
+    [
+     "생몰",
+     "1925 도쿄 — 2017"
+    ],
+    [
+     "학력",
+     "1950 도쿄대학 문학부 졸업"
+    ],
+    [
+     "교수",
+     "메이지대학 교수, 명예교수"
+    ],
+    [
+     "연구",
+     "프랑스 철학을 바탕으로 종교·언어·문화를 넓게 논했다"
+    ]
+   ],
+   "sources": [
+    "https://kotobank.jp/word/%E4%B8%AD%E6%9D%91%E9%9B%84%E4%BA%8C%E9%83%8E-1097798",
+    "https://booklive.jp/focus/author/a_id/13345"
+   ]
+  },
+  {
+   "name": "PIERRE\nBOURDIEU",
+   "ko": "피에르 부르디외",
+   "role": "사회학자",
+   "key": "Habitus · 아비투스",
+   "link": "12 평점이 없다 · 14 맥락을 남긴다",
+   "slug": "bourdieu",
+   "label": "FROM THE PLAN",
+   "source": "Tracé 기획 문서 · 석사 논문 인터뷰",
+   "quote": "낯선 장소를 추천받을수록 사용자는 평점과 리뷰 수 같은 사회적 근거를 더 찾았다.\n문제는 추천의 다양성이 아니라, 추천의 맥락을 스스로 해석할 구조가 없다는 것. 그래서 평점을 빼고 “왜 이 장소인지”를 남긴다.",
+   "facts": [
+    [
+     "생몰",
+     "1930 당갱(프랑스) — 2002 파리"
+    ],
+    [
+     "구별짓기",
+     "「La Distinction」 1979. 취향이 사회적 위치를 반영한다고 보았다"
+    ],
+    [
+     "콜레주 드 프랑스",
+     "1981 사회학 교수"
+    ],
+    [
+     "아비투스",
+     "사회 구조 속에서 몸에 밴, 세계를 살아가는 방식"
+    ]
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/Pierre_Bourdieu",
+    "https://www.britannica.com/print/article/860434",
+    "https://snl.no/Pierre_Bourdieu"
+   ]
+  },
+  {
+   "name": "DENIS\nWOOD",
+   "ko": "데니스 우드",
+   "role": "지도 연구자",
+   "key": "Everything Sings",
+   "link": "13 알고리즘이 고르지 않는다 · 15 검은 선으로 그린다",
+   "slug": "wood",
+   "label": "FROM THE PLAN",
+   "source": "Tracé 기획 문서",
+   "quote": "모든 지도는 주관적 해석이다. 누구나 지도 제작자가 될 수 있다.\n행정 경계선만 검은 선으로 둔 바탕 위에, 개인의 기록을 점과 선으로 쌓는다.",
+   "facts": [
+    [
+     "출생",
+     "1945 미국"
+    ],
+    [
+     "학력",
+     "1973 클라크대학 지리학 박사"
+    ],
+    [
+     "교수",
+     "1974–1996 노스캐롤라이나 주립대에서 가르쳤다"
+    ],
+    [
+     "지도의 힘",
+     "「The Power of Maps」 1992. 쿠퍼휴잇 디자인 미술관 전시 도록"
+    ],
+    [
+     "Everything Sings",
+     "2010. 롤리의 동네 보일런 하이츠를 그린 지도 모음"
+    ]
+   ],
+   "caution": "1996년 미성년자 대상 범죄로 유죄 판결을 받고 2년 넘게 복역했다는 기록이 있다. 공개 게시 전에 포함 여부를 판단할 것.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Denis_Wood",
+    "https://www.themarginalian.org/2011/09/06/everything-sings-david-wood/"
+   ]
+  },
+  {
+   "name": "GRANT\nMORRISON",
+   "ko": "그랜트 모리슨",
+   "role": "만화 작가",
+   "key": "The Invisibles",
+   "link": "아이디어 단계 (원칙에는 없음)",
+   "slug": "morrison",
+   "label": "FROM THE PLAN",
+   "source": "Tracé 기획 문서 · 도시의 신탁 아이디어",
+   "quote": "Algorithmic Serendipity · 사람들의 기록에서만 “누군가도 이곳을 봤다”를 발견한다\nSynchronicity Map · 같은 시간, 다른 장소에서 같은 주제를 본 기록\nHaunting Traces · 몇 달 전 기록이 있는 장소에 다시 갔을 때\nVoice of the City · 모든 기록을 합친 지금 도시의 기분",
+   "facts": [
+    [
+     "출생",
+     "1960 스코틀랜드 글래스고"
+    ],
+    [
+     "직업",
+     "만화 작가·각본가"
+    ],
+    [
+     "The Invisibles",
+     "DC Vertigo에서 낸 세 권짜리 시리즈. 작가 스스로 가장 중요한 작업으로 꼽는다"
+    ],
+    [
+     "Supergods",
+     "2011. 슈퍼히어로를 문화사로 다룬 책, 뉴욕타임스 베스트셀러"
+    ]
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/Grant_Morrison",
+    "https://www.britannica.com/print/article/1880915",
+    "https://grantmorrison.com/works"
+   ]
   }
  ]
 }

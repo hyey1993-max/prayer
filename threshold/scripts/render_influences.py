@@ -61,12 +61,12 @@ body{{position:relative;padding:72px 76px}}
 .bar b{{font:900 30px "Heavy";letter-spacing:0;text-transform:none}}
 .rule{{height:3px;background:#1a1916;margin-top:22px}}
 .lab{{margin-top:120px;font:400 24px "Mono";letter-spacing:.08em;color:#6e6a62}}
-.q{{margin-top:34px;font:400 44px/1.6 "Sans";word-break:keep-all}} .q p+p{{margin-top:28px}}
+.q{{margin-top:34px;font:400 {38 if len(p["quote"]) > 150 else 44}px/1.6 "Sans";word-break:keep-all}} .q p+p{{margin-top:28px}}
 .link{{position:absolute;left:76px;bottom:140px;font:400 26px "Mono";color:#4a463f}}
 .foot{{position:absolute;left:76px;right:76px;bottom:64px;display:flex;justify-content:space-between;font:400 22px "Mono";letter-spacing:.1em;color:#6e6a62}}
 </style><body>
 <div class=bar><b>Tracé</b><span>Influences {i:02d}/{n:02d}</span></div><div class=rule></div>
-<p class=lab>FROM THE ESSAY · {html.escape(p["source"])}</p><div class=q>{paras}</div>{link}
+<p class=lab>{html.escape(p.get("label", "FROM THE ESSAY"))} · {html.escape(p["source"])}</p><div class=q>{paras}</div>{link}
 <div class=foot><span>{html.escape(p["name"].replace(chr(10), " "))}</span><span>02 / 03</span></div>
 </body>"""
 
