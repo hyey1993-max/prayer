@@ -7,7 +7,7 @@
    "color": "#2a33cf",
    "cards": [
     {
-     "handle": "@trace.map",
+     "handle": "@radiant_walks",
      "sign": "",
      "date": "October 6th, 2026",
      "title": "Tracé: UX Principles",
@@ -30,7 +30,7 @@
      ]
     },
     {
-     "handle": "@trace.map",
+     "handle": "@radiant_walks",
      "sign": "",
      "date": "October 6th, 2026",
      "title": "Tracé: UX Principles",
@@ -61,7 +61,7 @@
    "color": "#2a33cf",
    "cards": [
     {
-     "handle": "@trace.map",
+     "handle": "@radiant_walks",
      "sign": "",
      "date": "October 6th, 2026",
      "title": "Tracé: Walking Principles",
@@ -85,6 +85,11 @@
        "h": "지금 이 순간을 기록한다",
        "en": "Aura",
        "t": "이 각도, 이 시간의 빛, 이 자리의 고요함은 나만 본다. 그 현존을 기록한다."
+      },
+      {
+       "h": "미로가 아니라 라비린스",
+       "en": "Labyrinth",
+       "t": "갈림길마다 고르며 불안해하는 미로는 우리의 의식이 만든 것이다. 통제의 손을 내려놓으면 길은 하나가 되고, 발걸음은 이미 준비된 장소에 닿는다."
       }
      ]
     }
@@ -97,7 +102,7 @@
    "color": "#2a33cf",
    "cards": [
     {
-     "handle": "@trace.map",
+     "handle": "@radiant_walks",
      "sign": "",
      "date": "October 6th, 2026",
      "title": "Tracé: Map Principles",
