@@ -1,0 +1,354 @@
+<title>Tracé 원칙 모션</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;700;900&display=swap">
+<style>
+/* 단일 다크 테마: The Path의 밤 팔레트를 그대로 쓴다. 4:5 캔버스를 격자로 늘어놓은 쇼릴. */
+:root{
+  --bg:#0d0d10; --fg:#f2f0ea; --dim:#8f8d86; --line:#2a2a30; --warm:#c98f66;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --sans:"Noto Sans KR",system-ui,"Apple SD Gothic Neo",sans-serif;
+  color-scheme:dark;
+}
+body{background:var(--bg);color:var(--fg);font:15px/1.6 var(--sans);margin:0;padding-inline:16px;padding-block:32px 64px}
+main{max-width:1180px;margin:0 auto}
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:28px}
+h1{font:400 30px/1.2 var(--sans);margin:0;letter-spacing:-.01em}
+h1 b{font-weight:900}
+.lead{color:var(--dim);margin:6px 0 0;max-width:60ch}
+.controls{display:flex;gap:8px;flex-wrap:wrap}
+button{font:500 13px var(--mono);color:var(--fg);background:none;border:1px solid var(--fg);padding:6px 12px;cursor:pointer}
+button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+button:focus-visible,canvas:focus-visible{outline:2px solid var(--warm);outline-offset:3px}
+h2{font:500 12px var(--mono);letter-spacing:.14em;color:var(--dim);margin:36px 0 12px;text-transform:uppercase}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+figure{margin:0;min-width:0}
+canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;background:var(--bg);border:1px solid var(--line);cursor:zoom-in}
+figcaption{font:400 12px var(--mono);color:var(--dim);margin-top:6px}
+.zoom{position:fixed;inset:0;background:rgba(13,13,16,.96);display:grid;place-items:center;padding:16px;z-index:5}
+.zoom canvas{width:min(92vw,calc(88vh*0.8));cursor:zoom-out;border-color:#3a3a40}
+</style>
+<main>
+<header>
+  <div>
+    <h1>Tracé <b>Principles</b> in Motion</h1>
+    <p class="lead">UX 원칙 6 · 산책 원칙 4 · 지도 원칙 4. 장면마다 6~9초로 반복된다. 카드를 누르면 크게 본다.</p>
+  </div>
+  <div class="controls">
+    <button id="play" type="button" aria-pressed="true">재생 중</button>
+  </div>
+</header>
+<div id="sections"></div>
+</main>
+<div class="zoom" id="zoom" hidden></div>
+<script>
+(() => {
+"use strict";
+const W = 1080, H = 1350;
+const C = { bg:"#0d0d10", fg:"#f2f0ea", dim:"rgba(242,240,234,0.26)", faint:"rgba(242,240,234,0.10)", warm:"#c98f66" };
+const MONO = '"IBM Plex Mono", ui-monospace, monospace';
+const SANS = '"Noto Sans KR", system-ui, sans-serif';
+
+// ---------- 도구 ----------
+const clamp = (v, a=0, b=1) => Math.max(a, Math.min(b, v));
+const lerp = (a, b, k) => a + (b - a) * k;
+const ease = k => k < .5 ? 4*k*k*k : 1 - Math.pow(-2*k + 2, 3) / 2;      // easeInOutCubic
+const seg = (p, a, b) => ease(clamp((p - a) / (b - a)));                // 구간 진행률
+function rng(seed){ let s = seed >>> 0; return () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296); }
+function dot(g, x, y, r, fill=C.fg, a=1){ g.globalAlpha=a; g.fillStyle=fill; g.beginPath(); g.arc(x,y,r,0,Math.PI*2); g.fill(); g.globalAlpha=1; }
+function ring(g, x, y, r, stroke=C.fg, a=1, w=3){ g.globalAlpha=a; g.strokeStyle=stroke; g.lineWidth=w; g.beginPath(); g.arc(x,y,r,0,Math.PI*2); g.stroke(); g.globalAlpha=1; }
+function line(g, pts, stroke=C.fg, w=3, a=1, dash=null){
+  g.globalAlpha=a; g.strokeStyle=stroke; g.lineWidth=w; g.lineCap="round"; g.lineJoin="round";
+  g.setLineDash(dash||[]); g.beginPath(); pts.forEach(([x,y],i)=> i? g.lineTo(x,y) : g.moveTo(x,y)); g.stroke(); g.setLineDash([]); g.globalAlpha=1;
+}
+function rect(g, x, y, w, h, stroke=C.fg, a=1, lw=3, fill=null){
+  g.globalAlpha=a; if(fill){ g.fillStyle=fill; g.fillRect(x,y,w,h); }
+  g.strokeStyle=stroke; g.lineWidth=lw; g.strokeRect(x,y,w,h); g.globalAlpha=1;
+}
+function text(g, s, x, y, {size=28, font=MONO, weight=400, align="center", color=C.fg, a=1, track=0}={}){
+  g.globalAlpha=a; g.fillStyle=color; g.font=`${weight} ${size}px ${font}`; g.textAlign=align; g.textBaseline="alphabetic";
+  if (track && "letterSpacing" in g) g.letterSpacing = track + "px";
+  g.fillText(s, x, y); if ("letterSpacing" in g) g.letterSpacing = "0px"; g.globalAlpha=1;
+}
+// 경로 길이 기준으로 k(0~1) 지점 좌표
+function along(pts, k){
+  const L=[0]; for(let i=1;i<pts.length;i++) L.push(L[i-1]+Math.hypot(pts[i][0]-pts[i-1][0], pts[i][1]-pts[i-1][1]));
+  const d=clamp(k)*L[L.length-1];
+  for(let i=1;i<pts.length;i++) if(d<=L[i]){ const u=(d-L[i-1])/((L[i]-L[i-1])||1); return [lerp(pts[i-1][0],pts[i][0],u), lerp(pts[i-1][1],pts[i][1],u)]; }
+  return pts[pts.length-1];
+}
+function partial(pts, k){ // 경로의 앞부분 k만
+  const out=[pts[0]]; const L=[0]; for(let i=1;i<pts.length;i++) L.push(L[i-1]+Math.hypot(pts[i][0]-pts[i-1][0], pts[i][1]-pts[i-1][1]));
+  const d=clamp(k)*L[L.length-1];
+  for(let i=1;i<pts.length;i++){ if(d>=L[i]) out.push(pts[i]); else { const u=(d-L[i-1])/((L[i]-L[i-1])||1); out.push([lerp(pts[i-1][0],pts[i][0],u), lerp(pts[i-1][1],pts[i][1],u)]); break; } }
+  return out;
+}
+const curve = (n, f) => Array.from({length:n+1}, (_,i) => f(i/n));
+
+// 모든 카드 공통 틀: 상단 라벨, 하단 한글 원칙 + 영문
+function frame(g, sc){
+  g.fillStyle=C.bg; g.fillRect(0,0,W,H);
+  text(g, "Tracé", 90, 120, {size:30, font:SANS, weight:700, align:"left"});
+  text(g, `${sc.group} ${sc.no}`, W-90, 120, {size:24, align:"right", color:C.fg, a:.55, track:2});
+  const en = (window.TRACE_LAW_EN || {})[sc.en];      // 사이트용: 위에 영어 한 문장, 아래 한글 원칙 (capture_motion.js가 넣는다)
+  if (en){
+    g.font = `900 40px ${SANS}`; const words = en.split(" "); let lines = [en];
+    if (g.measureText(en).width > W - 200){          // 두 줄로 고르게 나눈다 (한 단어만 넘어가지 않게)
+      let best = Infinity;
+      for (let k = 1; k < words.length; k++){ const a = words.slice(0, k).join(" "), b = words.slice(k).join(" ");
+        const m = Math.max(g.measureText(a).width, g.measureText(b).width); if (m < best){ best = m; lines = [a, b]; } } }
+    const y0 = lines.length > 1 ? 1090 : 1120;
+    lines.forEach((ln, i) => text(g, ln, W/2, y0 + i*54, {size:40, font:SANS, weight:900}));
+    text(g, sc.title, W/2, y0 + lines.length*54 + 14, {size:30, font:SANS, a:.7});
+    return;
+  }
+  text(g, sc.title, W/2, 1150, {size:58, font:SANS, weight:900});
+  text(g, sc.en.toUpperCase(), W/2, 1212, {size:24, a:.55, track:4});
+}
+
+// ---------- 장면 ----------
+const SCENES = [];
+const add = (group, no, title, en, period, draw) => SCENES.push({group, no, title, en, period, draw});
+
+// UX 01 · 줄 세우지 않는다: 자유롭게 떠돌던 점들이 1~12 순위로 줄 섰다가 다시 풀린다
+{ const r=rng(7); const free=Array.from({length:12},()=>[260+r()*560, 380+r()*440, r()*6.28]);
+  add("UX","01/06","유저를 줄 세우지 않는다","Human Scale",8,(g,t,p)=>{
+    const k = seg(p,.15,.38) * (1-seg(p,.62,.86));
+    free.forEach(([fx,fy,ph],i)=>{
+      const dx=Math.sin(t*.9+ph)*26, dy=Math.cos(t*.7+ph)*20;
+      const rx=150+i*(780/11), ry=600;
+      dot(g, lerp(fx+dx,rx,k), lerp(fy+dy,ry,k), 14, i===0&&k>.5? C.warm : C.fg);
+      text(g, String(i+1), rx, 664, {size:22, a:k*.7});
+    });
+    text(g, "RANKED", W/2, 300, {size:24, a:k*.8, track:6});
+    text(g, "FREE", W/2, 300, {size:24, a:(1-k)*.5, track:6});
+  });
+}
+// UX 02 · 응축: 흩어진 16개 사각형이 하나의 꽉 찬 사각형으로
+{ const cells=[]; for(let r=0;r<4;r++) for(let c=0;c<4;c++) cells.push([c,r]);
+  add("UX","02/06","나열 말고 응축한다","Condense",6.5,(g,t,p)=>{
+    const k = seg(p,.18,.5) * (1-seg(p,.84,.98));
+    cells.forEach(([c,r],i)=>{
+      const sx=270+c*150, sy=340+r*150, s0=96;
+      const s=lerp(s0,250/4,k), x=lerp(sx, W/2-125+c*s, k), y=lerp(sy, 515+r*s, k);
+      rect(g, x, y, s, s, C.fg, 1, 3, k>.92? C.fg : null);
+    });
+    text(g, "LIST", W/2, 300, {size:24, a:(1-k)*.55, track:6});
+    text(g, "ESSENCE", W/2, 860, {size:24, a:seg(p,.5,.6)*(1-seg(p,.84,.9))*.8, track:6});
+  });
+}
+// UX 03 · 흐름: 고정된 모듈 사이로 점이 태극처럼 휘어 흐른다
+{ const mods=[[170,380],[470,380],[770,380],[320,700],[620,700]];
+  const path=curve(160,u=>[110+u*860, 615+Math.sin(u*Math.PI*3)*190]);
+  add("UX","03/06","동선은 흐르게 둔다","Flow",7,(g,t,p)=>{
+    mods.forEach(([x,y])=>rect(g,x,y,140,120,C.fg,.22,3));
+    const head=p, tail=Math.max(0,p-.32);
+    const pts=partial(path,head).filter((_,i,a)=>true);
+    const L=pts.length; for(let i=1;i<L;i++){ const u=i/L; if(u< tail/head) continue; line(g,[pts[i-1],pts[i]],C.warm,5,clamp((u-tail/head)/(1-tail/head))); }
+    const [x,y]=along(path,head); dot(g,x,y,14,C.fg);
+  });
+}
+// UX 04 · 퍼널 대신 시퀀스: 왼쪽은 깔때기로 떨어지고, 오른쪽은 노드를 골라 걷는다
+{ const nodes=[[600,380],[700,460],[860,400],[640,600],[800,620],[920,560],[700,780],[880,800]];
+  const edges=[[0,1],[1,2],[1,3],[2,5],[3,4],[4,5],[3,6],[4,7],[6,7],[5,7]];
+  const route=[0,1,3,4,5,7];
+  add("UX","04/06","퍼널 대신 시퀀스","Sequence",8,(g,t,p)=>{
+    line(g,[[110,360],[300,700],[300,830]],C.fg,3,.5); line(g,[[490,360],[380,700],[380,830]],C.fg,3,.5);
+    for(let i=0;i<6;i++){ const q=((p*2+i/6)%1); const x0=150+i*60, y=lerp(380,840,q);
+      const x=y<700? lerp(x0, 340, (y-380)/320) : 340; dot(g,x,y,9,C.fg,1-q*.4); }
+    text(g,"FUNNEL",300,320,{size:22,a:.55,track:5}); text(g,"SEQUENCE",760,320,{size:22,a:.55,track:5});
+    edges.forEach(([a,b])=>line(g,[nodes[a],nodes[b]],C.fg,2.5,.25));
+    const pos=p*(route.length-1), seg_i=Math.min(route.length-2,Math.floor(pos)), u=ease(pos-seg_i);
+    for(let i=0;i<seg_i;i++) line(g,[nodes[route[i]],nodes[route[i+1]]],C.warm,5);
+    const A=nodes[route[seg_i]], B=nodes[route[seg_i+1]], cur=[lerp(A[0],B[0],u),lerp(A[1],B[1],u)];
+    line(g,[A,cur],C.warm,5);
+    nodes.forEach(n=>dot(g,n[0],n[1],10,C.fg,.6)); dot(g,cur[0],cur[1],15,C.fg);
+  });
+}
+// UX 05 · 문턱은 낮게: 높은 벽 앞에서 튕겨 나오고, 낮은 턱은 넘어간다
+{ add("UX","05/06","문턱은 낮게","Low Threshold",7,(g,t,p)=>{
+    // 위: 높은 문턱
+    line(g,[[120,560],[960,560]],C.fg,3,.6); line(g,[[600,560],[600,330]],C.fg,6,1);
+    const q=(p*1.0)%1, go=seg(q,.05,.45), back=seg(q,.45,.75);
+    const x1=lerp(lerp(180,575,go),180,back); dot(g,x1,540,18,C.fg);
+    text(g,"HIGH",120,320,{size:22,align:"left",a:.55,track:5});
+    // 아래: 낮은 문턱
+    line(g,[[120,880],[600,880],[600,862],[960,862]],C.fg,3,.6);
+    const k=seg(q,.05,.8); const x2=lerp(180,900,k); const y2= x2<585? 860 : x2<615? lerp(860,842,(x2-585)/30) : 842;
+    for(let i=1;i<14;i++){ const kk=clamp(k-i*.025); const xx=lerp(180,900,kk); dot(g,xx,(xx<600?860:842)+0,4,C.warm,.5*(1-i/14)); }
+    dot(g,x2,y2,18,C.fg);
+    text(g,"LOW",120,700,{size:22,align:"left",a:.55,track:5});
+  });
+}
+// UX 06 · 함께 짓는다: 비어 있는 격자를 사방에서 온 점들이 하나씩 채운다
+{ const cols=6, rows=4, cs=110, ox=W/2-cols*cs/2, oy=380; const r=rng(11);
+  const order=Array.from({length:cols*rows},(_,i)=>i).sort(()=>r()-.5);
+  const from=order.map(()=>{ const s=Math.floor(r()*4); return s===0?[r()*W,250]:s===1?[r()*W,1000]:s===2?[40,250+r()*750]:[W-40,250+r()*750]; });
+  add("UX","06/06","완성하지 말고 함께 짓는다","Participation",9,(g,t,p)=>{
+    const fade=1-seg(p,.9,1);
+    for(let i=0;i<cols*rows;i++) rect(g,ox+(i%cols)*cs,oy+Math.floor(i/cols)*cs,cs,cs,C.fg,.25,2);
+    order.forEach((cell,j)=>{
+      const st=.04+j*.032, k=seg(p,st,st+.08);
+      const cx=ox+(cell%cols)*cs+cs/2, cy=oy+Math.floor(cell/cols)*cs+cs/2;
+      if(k<=0) return;
+      if(k<1){ dot(g,lerp(from[j][0],cx,k),lerp(from[j][1],cy,k),10,j%5===0?C.warm:C.fg); }
+      else rect(g,cx-cs/2+8,cy-cs/2+8,cs-16,cs-16,C.fg,fade,2,j%5===0?C.warm:C.fg);
+    });
+  });
+}
+// WALK 01 · 목적지를 지운다: 가장 빠른 직선 vs 멈춰 서며 걷는 곡선
+{ const straight=[[140,420],[940,420]];
+  const wind=curve(200,u=>[140+u*800, 760+Math.sin(u*Math.PI*4)*90 - Math.sin(u*Math.PI)*40]);
+  const stops=[.18,.43,.66,.88];
+  add("WALK","01/05","목적지를 지운다","No Destination",9,(g,t,p)=>{
+    line(g,straight,C.fg,3,.3); dot(g,140,420,8,C.fg,.6); dot(g,940,420,8,C.fg,.6);
+    const k1=seg(p,0,.18); dot(g,lerp(140,940,k1),420,14,C.fg);
+    text(g,"FASTEST",140,370,{size:22,align:"left",a:.55,track:5}); text(g,"0 STOPS",940,370,{size:22,align:"right",a:.55,track:3});
+    line(g,wind,C.fg,3,.3);
+    // 멈춤: 각 정지점에서 진행이 잠시 멈춘다
+    let k=0, acc=0; const walk=.85, pause=.035, total=walk+pause*stops.length; let tt=clamp(p/ .95)*total, n=0;
+    for(const s of stops){ const need=(s-acc)*walk/1; if(tt<=need){ k=acc+tt/walk; break; } tt-=need; acc=s; if(tt<=pause){ k=s; n++; break; } tt-=pause; n++; k=s; }
+    if(n===stops.length && tt>0) k=Math.min(1,acc+tt/walk);
+    const passed=stops.filter(s=>s<=k+1e-6);
+    line(g,partial(wind,k),C.warm,5);
+    passed.forEach(s=>{ const [x,y]=along(wind,s); ring(g,x,y,26,C.warm,.9,3); });
+    const [x,y]=along(wind,k); dot(g,x,y,14,C.fg);
+    text(g,"NOTICED",140,630,{size:22,align:"left",a:.55,track:5}); text(g,`${passed.length} STOPS`,940,630,{size:22,align:"right",a:.55,track:3});
+  });
+}
+// WALK 02 · 내면의 지도: 걸은 자리만 선으로 남아 지도가 된다 (곡선으로 맴돌며 넓어지는 궤적)
+{ const pts=curve(260,u=>{ const a=u*Math.PI*5.2, R=40+u*300+Math.sin(u*31)*22; return [W/2+Math.cos(a)*R*1.05, 610+Math.sin(a)*R*.82]; });
+  add("WALK","02/05","내면의 지도를 그린다","Inner Map",9,(g,t,p)=>{
+    const gridA=.18*(1-seg(p,.62,.8));
+    for(let i=0;i<9;i++){ line(g,[[180+i*90,300],[180+i*90,920]],C.fg,1.5,gridA); line(g,[[180,300+i*77],[900,300+i*77]],C.fg,1.5,gridA); }
+    const k=seg(p,.05,.62), fade=1-seg(p,.92,1);
+    line(g,partial(pts,k),C.fg,5,fade);
+    const [cx,cy]=along(pts,k); dot(g,cx,cy,13,C.warm,fade);
+    text(g,"THE MAP IS WHERE YOU WALKED",W/2,1010,{size:22,a:seg(p,.66,.76)*fade*.6,track:3});
+  });
+}
+// WALK 03 · 나만의 북소리: 같은 박자로 행진하는 줄과, 자기 박자로 걷는 점 하나
+{ add("WALK","03/05","나만의 북소리를 듣는다","Own Rhythm",6,(g,t,p)=>{
+    const beat=Math.floor(t*2), ph=(t*2)%1, step=ease(clamp(ph*2.2));
+    for(let i=0;i<9;i++){ const x=170+i*90+ (step-0)*0 , y=470; const pulse=ph<.15?1:0;
+      dot(g,170+i*85+((beat%2)?step*16:16-step*16),y,pulse?17:14,C.fg,.45); }
+    text(g,"THEIR BEAT",W/2,400,{size:22,a:.5,track:5});
+    const u=(t/6)%1; const x=150+u*780, y=760+Math.sin(u*Math.PI*2*1.5)*70;
+    for(let i=1;i<24;i++){ const uu=u-i*.008; if(uu<0) break; dot(g,150+uu*780,760+Math.sin(uu*Math.PI*2*1.5)*70,4,C.warm,.6*(1-i/24)); }
+    const own=(t*.7)%1; dot(g,x,y,own<.2?20:15,C.warm);
+    text(g,"YOUR BEAT",W/2,930,{size:22,a:.5,track:5});
+  });
+}
+// WALK 04 · 지금 이 순간: '나중에'가 줄지어 있고, 마지막 하나만 '지금'
+{ add("WALK","04/05","지금 이 순간을 기록한다","Aura",7,(g,t,p)=>{
+    const cols=3, rows=8, n=cols*rows, k=seg(p,.05,.6), lit=Math.floor(k*(n-1));
+    for(let i=0;i<n;i++){ const c=i%cols, r=Math.floor(i/cols), x=250+c*290, y=330+r*72; const last=i===n-1;
+      const a = last? lerp(.25,1,seg(p,.58,.68)) : (i===lit && k<1 ? .9 : .22);
+      text(g, last? "지금" : "나중에", x, y, {size:44, font:SANS, weight:900, a, color: last && p>.6 ? C.fg : C.fg}); }
+    const pr=seg(p,.66,.98); if(pr>0) ring(g,250+2*290,330+7*72-16,40+pr*90,C.warm,(1-pr)*.9,3);
+  });
+}
+// WALK 05 · 미로가 아니라 라비린스: 갈림길이 없는 동심원 길, 점 하나가 끝까지 따라 들어가 중심에 닿는다
+{ const CX=W/2, CY=580, R=310, N=7, r0=R*.16, w=(R-r0)/N, B=Math.PI/2;
+  const holes=[]; for(let k=N;k>=0;k--){ const r=r0+k*w, i=N-k; holes[k]={a:B+(i%2===0?1:-1)*.95*w/r, half:.42*w/r}; }
+  const P=(r,a)=>[CX+Math.cos(a)*r, CY+Math.sin(a)*r];
+  const path=[P(R+w*1.4,holes[N].a), P(R,holes[N].a)];
+  for(let j=N-1;j>=0;j--){ const cw=((N-1-j)%2===0); let a0=holes[j+1].a, a1=holes[j].a;
+    if(cw && a1<=a0) a1+=Math.PI*2; if(!cw && a1>=a0) a1-=Math.PI*2;
+    for(let s=0;s<=90;s++) path.push(P(r0+(j+.5)*w, a0+(a1-a0)*s/90)); path.push(P(r0+j*w, holes[j].a)); }
+  path.push([CX,CY]);
+  add("WALK","05/05","미로가 아니라 라비린스","Labyrinth",10,(g,t,p)=>{
+    g.lineCap="round"; g.strokeStyle=C.fg; g.lineWidth=4; g.globalAlpha=.7;
+    for(let k=0;k<=N;k++){ const r=r0+k*w, h=holes[k]; g.beginPath(); g.arc(CX,CY,r,h.a+h.half,h.a-h.half+Math.PI*2); g.stroke(); }
+    g.beginPath(); g.moveTo(...P(r0,B)); g.lineTo(...P(r0+N*w,B)); g.stroke(); g.globalAlpha=1;
+    const k=seg(p,.04,.84), fade=1-seg(p,.94,1);
+    line(g,partial(path,k),C.warm,6,.9*fade);
+    const [x,y]=along(path,k); dot(g,x,y,12,C.fg,fade);
+    const pr=seg(p,.84,.96); if(pr>0) ring(g,CX,CY,20+pr*70,C.warm,(1-pr)*.9,3);
+    text(g,"ONE PATH, NO WRONG TURNS",W/2,1010,{size:22,a:.55*fade,track:3});
+  });
+}
+// MAP 01 · 평점이 없다: 별점이 흩어지고 한 문장이 남는다
+{ const star=(g,x,y,r,a,fill)=>{ g.globalAlpha=a; g.beginPath(); for(let i=0;i<10;i++){ const R=i%2?r*.45:r, an=-Math.PI/2+i*Math.PI/5; g[i?"lineTo":"moveTo"](x+Math.cos(an)*R,y+Math.sin(an)*R);} g.closePath(); g.strokeStyle=C.fg; g.lineWidth=3; if(fill){g.fillStyle=C.fg; g.fill();} g.stroke(); g.globalAlpha=1; };
+  const msg="왜 이 장소인가";
+  add("MAP","01/04","평점이 없다","No Ratings",7,(g,t,p)=>{
+    const k=seg(p,.22,.45), back=seg(p,.9,1);
+    for(let i=0;i<5;i++){ const x0=300+i*120, y0=560; const x=lerp(x0, 260+i*140, k), y=lerp(y0,700,k);
+      if(k<1) star(g,x,y,lerp(44,6,k),1-k*.3,i<4); }
+    text(g,"4.5",W/2,470,{size:64,font:SANS,weight:900,a:(1-k)});
+    if(k>=1){ line(g,[[260,700],[lerp(260,820,seg(p,.45,.55)),700]],C.fg,3,.6*(1-back));
+      const n=Math.floor(seg(p,.5,.75)*msg.length); text(g,msg.slice(0,n)+(n<msg.length && Math.floor(t*3)%2?"|":""),W/2,660,{size:56,font:SANS,weight:700,a:1-back}); }
+  });
+}
+// MAP 02 · 알고리즘이 고르지 않는다: 큰 점이 더 커지는 추천 vs 한 사람이 고른 작은 점
+{ const r=rng(33); const pts=Array.from({length:30},()=>[180+r()*720, 330+r()*560, r()]);
+  add("MAP","02/04","알고리즘이 고르지 않는다","No Algorithm",8,(g,t,p)=>{
+    const alg=seg(p,.05,.45)*(1-seg(p,.5,.62)), pick=seg(p,.62,.75)*(1-seg(p,.93,1));
+    pts.forEach(([x,y,w],i)=>{ const top=w>.82; const rr=10+(top? alg*30 : -alg*5);
+      dot(g,x,y,Math.max(4,rr),C.fg,top?1:lerp(.8,.3,alg)); });
+    const c=pts[7]; dot(g,c[0],c[1],10,C.warm,pick); ring(g,c[0],c[1],34,C.warm,pick,3);
+    text(g,"MOST SAVED",W/2,290,{size:22,a:alg*.6,track:5}); text(g,"CHOSEN BY ONE",W/2,290,{size:22,a:pick*.6,track:5});
+  });
+}
+// MAP 03 · 맥락을 남긴다: 점 하나에 좌표·시간·거리·이유가 차례로 붙는다
+{ const items=[["LAT / LNG",-1,-1],["BEST TIME",1,-1],["DISTANCE",-1,1],["WHY",1,1]];
+  add("MAP","03/04","맥락을 남긴다","Context",8,(g,t,p)=>{
+    const cx=W/2, cy=620, back=1-seg(p,.9,1);
+    dot(g,cx,cy,16,C.warm,back); ring(g,cx,cy,30+Math.sin(t*2)*4,C.warm,.4*back,2);
+    items.forEach(([lab,sx,sy],i)=>{ const k=seg(p,.08+i*.16,.2+i*.16);
+      const ex=cx+sx*300, ey=cy+sy*190; const mx=cx+sx*120, my=cy+sy*120;
+      line(g,partial([[cx+sx*22,cy+sy*22],[mx,my],[ex,ey]],k),C.fg,2.5,.8*back);
+      if(k>=1){ text(g,lab,ex,ey+(sy<0?-22:44),{size:26,align:sx<0?"left":"right",a:back,track:3}); line(g,[[ex,ey],[ex+(sx<0?190:-190),ey]],C.fg,2.5,.8*back); }
+    });
+  });
+}
+// MAP 04 · 검은 선으로 그린다: 내비의 최단 경로(점선) vs 실제로 걸은 선
+{ const nav=[[170,880],[170,420],[910,420]];
+  const walk=[[170,880],[310,880],[310,770],[440,770],[440,830],[560,830],[560,650],[650,650],[650,580],[790,580],[790,500],[860,500],[860,420],[910,420]];
+  add("MAP","04/04","검은 선으로 그린다","Black Line",9,(g,t,p)=>{
+    for(let i=0;i<10;i++){ line(g,[[120+i*95,360],[120+i*95,940]],C.fg,1.5,.08); line(g,[[120,360+i*64],[980,360+i*64]],C.fg,1.5,.08); }
+    const back=1-seg(p,.9,1);
+    line(g,nav,C.fg,3,.45*back,[6,16]); text(g,"SHORTEST",170,395,{size:22,align:"left",a:.45*back,track:4});
+    const k=seg(p,.08,.78); line(g,partial(walk,k),C.fg,6,back);
+    const [wx,wy]=along(walk,k); dot(g,wx,wy,13,C.warm,back);
+    text(g,"HOW YOU WALKED",W/2,1010,{size:22,a:seg(p,.8,.86)*back*.6,track:3});
+  });
+}
+
+// ---------- 그리기 ----------
+const GROUPS = [["UX","UX Principles"],["WALK","Walking Principles"],["MAP","Map Principles"]];
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let playing = !reduce, start = performance.now(), pausedAt = 0;
+const canvases = [];
+function render(i, ctx, t){ const sc=SCENES[i]; ctx.setTransform(ctx.canvas.width/W,0,0,ctx.canvas.height/H,0,0);
+  frame(ctx, sc); sc.draw(ctx, t, (t % sc.period)/sc.period); }
+window.TRACE_SCENES = { list: SCENES.map(s=>({group:s.group,no:s.no,title:s.title,en:s.en,period:s.period})), W, H,
+  renderAt(i, t, ctx){ render(i, ctx, t); } };   // 영상 추출용
+
+const host=document.getElementById("sections");
+GROUPS.forEach(([key,label])=>{
+  const h=document.createElement("h2"); h.textContent=label; host.append(h);
+  const grid=document.createElement("div"); grid.className="grid"; host.append(grid);
+  SCENES.forEach((sc,i)=>{ if(sc.group!==key) return;
+    const fig=document.createElement("figure"), cv=document.createElement("canvas");
+    cv.width=540; cv.height=675; cv.tabIndex=0; cv.setAttribute("role","img"); cv.setAttribute("aria-label",`${sc.title} (${sc.en}) 애니메이션`);
+    const cap=document.createElement("figcaption"); cap.textContent=`${sc.group} ${sc.no} · ${sc.period}s loop`;
+    fig.append(cv,cap); grid.append(fig); canvases.push([i,cv.getContext("2d")]);
+    const open=()=>openZoom(i); cv.addEventListener("click",open); cv.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){e.preventDefault();open();} });
+  });
+});
+const zoom=document.getElementById("zoom"); let zoomCtx=null, zoomI=-1;
+function openZoom(i){ zoom.replaceChildren(); const cv=document.createElement("canvas"); cv.width=1080; cv.height=1350; cv.tabIndex=0;
+  cv.setAttribute("aria-label",SCENES[i].title); zoom.append(cv); zoom.hidden=false; zoomCtx=cv.getContext("2d"); zoomI=i; cv.focus();
+  const close=()=>{ zoom.hidden=true; zoomCtx=null; }; cv.addEventListener("click",close); cv.addEventListener("keydown",e=>{ if(e.key==="Escape"||e.key==="Enter") close(); }); }
+document.addEventListener("keydown",e=>{ if(e.key==="Escape" && !zoom.hidden){ zoom.hidden=true; zoomCtx=null; }});
+
+const now=()=> playing ? (performance.now()-start)/1000 : pausedAt;
+function tick(){ const t=now(); canvases.forEach(([i,ctx])=>render(i,ctx,t)); if(zoomCtx) render(zoomI,zoomCtx,t); if(playing) requestAnimationFrame(tick); }
+const btn=document.getElementById("play");
+function setPlaying(v){ if(v===playing) return; if(v){ start=performance.now()-pausedAt*1000; } else { pausedAt=now(); } playing=v;
+  btn.setAttribute("aria-pressed",String(v)); btn.textContent=v?"재생 중":"멈춤"; if(v) requestAnimationFrame(tick); else tick(); }
+btn.addEventListener("click",()=>setPlaying(!playing));
+if(reduce){ pausedAt=4.2; btn.setAttribute("aria-pressed","false"); btn.textContent="멈춤"; }
+(document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(()=>{ tick(); if(playing) requestAnimationFrame(tick); });
+tick();
+})();
+</script>
