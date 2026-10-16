@@ -1,179 +1,353 @@
 # Tracé Influences 캡션 (복사해서 붙여넣기)
 
-캐러셀 3장: 표지 / 원문 / 확인된 사실. 원문은 에세이(FROM THE ESSAY) 또는 Tracé 기획 문서(FROM THE PLAN) 그대로. 사실 줄은 아래 출처에서 확인한 것만.
-인물 사진·작품 이미지는 쓰지 않았다. '×' 표기 없음 (협업이 아니므로). 원칙 번호는 지금 사이트 기준(15개).
+사람마다 캐러셀: 표지 / (원문) / 생애 / 작업과 개념 / Tracé에서. 원문은 에세이(FROM THE ESSAY) 또는 기획 문서(FROM THE PLAN) 그대로, 나머지는 아래 출처에서 확인한 사실만.
+인물 사진은 직접 보낸 것만 사용. '×' 표기 없음 (협업이 아니므로). 원칙 번호는 지금 사이트 기준(15개).
 
-## 02 발터 벤야민 (`cards/02_benjamin/01~03.jpg`) · 401자
+## 01 존 마에다 (`cards/01_maeda/`) · 567자
+
+```
+[생애와 직책]
+· 직업: 그래픽 디자이너. MIT 미디어랩 교수
+· RISD: 로드아일랜드 디자인스쿨 제16대 총장
+
+[The Laws of Simplicity]
+· 책: 2006, MIT Press, 100쪽. 비즈니스·기술·디자인에서 단순함과 복잡함의 균형을 다룬다
+· 열 가지 법칙: Reduce · Organize · Time · Learn · Differences · Context · Emotion · Trust · Failure · The One
+· Law 1: 가능하다는 이유만으로 기능을 더하는 것이 곧 이로운 것은 아니다
+· Law 9 · 10: 어떤 것은 결코 단순해질 수 없다. 마지막 법칙은 ‘명백한 것은 빼고 의미 있는 것을 더한다’
+
+[Tracé에서]
+· 원칙 사이트: 번호, 이름, 짧은 글로 이어지는 구성을 이 책에서 참고했다
+· 푸터 크레딧: The site design is inspired by John Maeda's The Laws of Simplicity.
+
+#Trace #TraceInfluences #존마에다 #JohnMaeda #LawsOfSimplicity #디자인
+```
+
+출처: https://www.designersandbooks.com/book/laws-simplicity · https://www.abebooks.com/9780262134729/Laws-Simplicity-Design-Technology-Business-0262134721/plp · https://cca.qc.ca/en/search/details/library/publication/65205172
+
+## 02 발터 벤야민 (`cards/02_benjamin/`) · 837자
 
 ```
 발터 벤야민이 말한 ‘산책자(Flâneur)’는 목적지에 가장 빠르게 도달하려는 자가 아니다. 그는 도시의 아케이드와 골목길에 자신을 내던지고, 특정한 목적 없이 흐름에 몸을 맡기는 자다.
-
 — Tracé Story · Chapter 2
 
-· 생몰: 1892 베를린 — 1940 포르부(스페인)
+[생애]
+· 출생·사망: 1892 베를린 — 1940 포르부(스페인 국경)
 · 직업: 독일의 철학자·문예비평가
-· 기술복제시대의 예술작품: 1935–36년. 복제 기술이 예술작품의 ‘아우라’를 무너뜨린다고 썼다
-· 파사주 프로젝트: 파리의 아케이드를 다룬 미완의 저작. 산책자(Flâneur)에 한 장을 할애했고, 사후 1982년에 출간됐다
-· 산책자라는 말: 벤야민이 처음 만든 말은 아니다
+· 1929: 프란츠 헤셀의 「베를린 산책」 서평을 「산책자의 귀환」이라는 제목으로 썼다
+· 1933: 고향 베를린을 떠나 파리로 옮겼다
+
+[작업과 개념]
+· 파사주 프로젝트: 1927년 신문 기사로 구상하며 쓰기 시작. 36개 묶음(콘볼루트)에 메모와 인용을 모은 미완의 저작. 1982년에야 출간됐다
+· 파리, 19세기의 수도: 사회연구소에 제출하려고 쓴 두 편의 개요(엑스포제)
+· 산책자: 콘볼루트 M이 중심. 보들레르에게서 많이 끌어왔고, 신비화와 해방이 함께 깃든 인물로 그렸다
+· 아우라: 「기술복제시대의 예술작품」(1935–36). 복제 기술이 예술을 장소와 의례에서 풀어놓으며 아우라가 무너진다고 썼다
+
+[Tracé에서]
+· 10 지금 이 순간을 기록한다: 원칙 사이트 원문에 “벤야민이 말한 ‘아우라(Aura)’가 바로 이것이다”라고 적었다
+· Chapter 2: 플라뇌르는 목적지에 가장 빠르게 도달하려는 자가 아니라고 썼다
+· 계정 소개문: Chronicles of a flâneur walking the radiant city
+· 산책자라는 말: 벤야민이 처음 만든 말은 아니다. 그는 여기에 콘볼루트 한 장을 할애했다
 
 #Trace #TraceInfluences #발터벤야민 #WalterBenjamin #플라뇌르 #아우라
 ```
 
-출처: https://en.wikipedia.org/wiki/Walter_Benjamin · https://britannica.com/print/article/60952 · https://en.haberarts.com/arcades.htm
+출처: https://en.wikipedia.org/wiki/Walter_Benjamin · https://britannica.com/print/article/60952 · https://supersummary.com/the-arcades-project/summary · https://wiki.ubc.ca/Course:MDIA300/Walter_Benjamin · https://en.haberarts.com/arcades.htm
 
-## 03 야마모토 리켄 (`cards/03_yamamoto/01~03.jpg`) · 543자
+## 03 야마모토 리켄 (`cards/03_yamamoto/`) · 921자
 
 ```
 건축가 야마모토 리켄(Yamamoto Riken)가 지향하는 건축은 함께하는 세계를 지향한다. 사적 공간과 공적 공간 사이에 ‘낮은 문턱’을 두는 방식이다.
 주택의 1층을 지역 사회에 열어두어 이웃과 느슨하게 부딪히게 만들고, 굳이 문을 열고 들어가지 않아도 서로의 존재를 승인하는 환대의 인터페이스. 그는 건축을 통해 ‘함께 사는 세계’의 관계성을 설계했다.
-
 — The Essence of Spatial Design
 
+[생애와 수상]
 · 출생: 1945 중국 베이징. 1947년 가족과 일본으로 돌아와 요코하마에서 자랐다
 · 학력: 니혼대학 건축학과 졸업, 1971 도쿄예술대학 석사
-· 사무소: 1973 Riken Yamamoto & Field Shop 설립
-· 프리츠커상: 2024. 일본 건축가로는 아홉 번째
-· 문턱: 여행과 조사 끝에 공과 사 사이의 ‘문턱’이 보편적인 개념이라고 보았다
+· 사무소: 1973 Riken Yamamoto & Field Shop 설립. 지금도 요코하마에서 이웃과 함께 일하며 산다
+· 프리츠커상: 2024. 53번째 수상자이자 일본인으로는 아홉 번째. 심사위원장은 알레한드로 아라베나
+
+[작업과 문턱]
+· 야마카와 별장: 1977, 나가노. 첫 프로젝트로 꼽힌다
 · 판교 하우징: 경기도 성남. 9개 동을 공용 데크로 이어 이웃이 마주치게 했다
+· 히로시마 니시 소방서: 로비와 테라스를 시민이 쓸 수 있도록 열어 두었다
+· 문턱: 여러 곳을 다니며 공과 사 사이의 ‘문턱’이 어디서나 통하는 개념이라고 보았다
+· 작품이 있는 곳: 일본, 중국, 한국, 스위스
+
+[심사평과 Tracé]
+· 심사위원단: 공과 사의 경계를 흐리고 사람들이 자연스럽게 만날 기회를 늘렸다. 어린이부터 노인까지 삶과 사회적 관계를 풍요롭게 하려 했다
+· 심사평의 끝: 건축 속 공간은 민주주의처럼 사람들의 의지에서 나온다
+· 05 문턱은 낮게: 원칙 사이트 원문: 언제든 나만의 템포로 머물고 움직일 수 있는 ‘낮은 문턱의 내비게이션’
 
 #Trace #TraceInfluences #야마모토리켄 #RikenYamamoto #프리츠커상 #건축
 ```
 
-출처: https://www.pritzkerprize.com/laureates/riken-yamamoto · https://www.metalocus.es/en/news/know-who-riken-yamamoto-biography-new-pritzker-2024-ii · https://www.michiganpublic.org/2024-03-05/riken-yamamoto-who-designs-dignity-and-elegance-into-daily-life-wins-pritzker-prize
+출처: https://www.pritzkerprize.com/laureates/riken-yamamoto · https://www.metalocus.es/en/news/know-who-riken-yamamoto-biography-new-pritzker-2024-ii · https://www.michiganpublic.org/2024-03-05/riken-yamamoto-who-designs-dignity-and-elegance-into-daily-life-wins-pritzker-prize · https://www.dezeen.com/?p=2040532 · https://architecturetoday.co.uk/?p=264373
 
-## 04 장카를로 데 카를로 (`cards/04_de_carlo/01~03.jpg`) · 519자
+## 04 장카를로 데 카를로 (`cards/04_de_carlo/`) · 974자
 
 ```
 이탈리아의 건축가 장카를로 데 카를로(Giancarlo De Carlo)가 주창한 참여의 건축(Architecture of Participation)에서는 건축가가 일방적으로 권위를 가지고 완성된 공간을 하향식으로 주입하는 것에 반대했다.
 대신 공간을 실제로 사용할 사람들의 목소리와 삶의 맥락을 설계 과정에 적극적으로 개입시켜, 건축을 공급자의 독점이 아닌 ‘사용자와의 공동 창작’으로 되돌려놓고자 했다.
-
 — The Essence of Spatial Design
 
-· 생몰: 1919 제노바 — 2005 밀라노
-· 팀 텐: 근대건축국제회의(CIAM) 이후의 건축가 모임 Team 10의 일원
-· 우르비노: 도시계획가로 우르비노의 마스터플랜을 맡았다
-· 마테오티 마을: 테르니, 1969–1975. 철강 노동자들의 주택을 거주자의 의견을 들으며 설계했다
-· ILAUD: 국제 건축·도시 연구소 ILAUD를 세웠다
+[생애]
+· 출생·사망: 1919 제노바 — 2005 밀라노
+· 모임: 근대건축국제회의(CIAM) 회원, 이후 Team 10의 일원
+· 우르비노: 1958년 도시 마스터플랜에 착수. 그의 건축 상당수가 우르비노에 있다
+· 잡지·연구소: 잡지 Spazio e Società 편집(1978–2001), 국제 건축·도시 연구소 ILAUD(1974–2004)
+
+[작업과 참여]
+· 콜레조 델 콜레: 우르비노 학생 기숙사, 1962–66
+· 마지스테로: 우르비노 대학 건물, 1968–76
+· 마테오티 마을: 테르니, 1969–74. 철강 회사 노동자 약 3,000명을 위한 주택. 설계 과정에서 주민의 역할이 컸던 참여 설계의 대표 사례
+· 평가: 건축가가 전체 설계를 정해 두었다는 지적도 있어, 참여가 어느 정도였는지는 지금도 논쟁 중이다
+· 저작: 에세이는 MIT Press 『The Architecture of Participation』에 묶여 있다
+
+[Tracé에서]
+· 06 완성하지 말고 함께 짓는다: 원칙 사이트 원문: 건축을 공급자의 독점이 아닌 ‘사용자와의 공동 창작’으로 되돌려놓고자 했다
+· 화면도 과정이다: 진정한 아키텍처는 기획자가 단번에 찍어내는 완성형 결과물이 아니라, 시간이 흐르며 유저와 상호작용하는 ‘과정(Process)’ 그 자체다
 
 #Trace #TraceInfluences #장카를로데카를로 #GiancarloDeCarlo #참여의건축 #건축
 ```
 
-출처: https://en.wikipedia.org/wiki/Giancarlo_De_Carlo · https://www.cca.qc.ca/en/events/63753/the-nuovo-villaggio-matteotti-in-terni-by-giancarlo-de-carlo-1969-1975 · https://snl.no/Giancarlo_De_Carlo
+출처: https://en.wikipedia.org/wiki/Giancarlo_De_Carlo · https://en.wikipedia.org/wiki/Nuovo_Villaggio_Matteotti · https://www.cca.qc.ca/en/events/63753/the-nuovo-villaggio-matteotti-in-terni-by-giancarlo-de-carlo-1969-1975 · https://snl.no/Giancarlo_De_Carlo · https://philarchive.org/rec/CHARGD
 
-## 08 얀 겔 (`cards/08_gehl/01~03.jpg`) · 261자
+## 05 르 코르뷔지에 (`cards/05_corbusier/`) · 428자
+
+```
+[생애]
+· 생몰: 1887 — 1965년 8월 27일
+· 직업: 스위스에서 태어난 건축가·화가·도시계획가
+
+[계획과 개념]
+· 부아쟁 계획: 1925. 파리 중심 3·4구를 허물겠다는 안. 실현되지 않았다
+· 빛나는 도시: 1930년 구상(브뤼셀 CIAM 전시), 1935 출판. 선형도시 개념의 영향을 받은 미실현 계획
+· 모듈러: 1940년대. 건물을 사람에게 맞추기 위한 치수 체계. 황금비와 피보나치 수열에서 만들었다
+· 위니테 다비타시옹: 마르세유, 1947–52. 모듈러를 처음 적용한 건물. 필로티 위에 올린 직육면체 아파트
+
+[Tracé에서]
+· 계정 소개문: Chronicles of a flâneur walking the radiant city
+
+#Trace #TraceInfluences #르코르뷔지에 #LeCorbusier #빛나는도시 #건축
+```
+
+출처: https://en.wikipedia.org/wiki/Ville_Radieuse · https://99percentinvisible.org/article/ville-radieuse-le-corbusiers-functionalist-plan-utopian-radiant-city/ · https://www.mori.art.museum/english/contents/lc/section/main.html · https://www.herodote.net/L_architecte_de_l_utopie_sociale-synthese-1904-82.php?resume=1
+
+## 06 쿠마 겐고 (`cards/06_kuma/`) · 502자
+
+```
+[생애]
+· 출생: 1954 요코하마
+· 학력: 1979 도쿄대학 석사
+· 사무소: 1990 설립
+
+[『負ける建築』]
+· 책: 2004년 3월 이와나미쇼텐. 1995년 이후 쓴 글을 건축론으로 묶었다
+· 이기는 건축: 20세기형 고층 건물과 교외 주택. 주변을 압도한다
+· 지는 건축: 상징성, 시각성, 소유욕에 기대지 않고 외부의 힘을 받아들인다
+· 맥락: 한신 대지진, 옴진리교 사건, 9·11이 ‘이기는 건축’의 취약함을 드러냈다는 배경이 거론된다
+
+[일본 국립경기장]
+· 수주: 도쿄 2020 주경기장. 자하 하디드의 안이 폐기된 뒤 쿠마의 사무소가 설계 공모에서 선정됐다
+· 규모: 2019년 완공, 6만 8천 석
+· 재료: 삼나무로 감싼 처마, 목재와 강철을 섞은 지붕
+· 『점·선·면』: 2020. 20세기 콘크리트 건축을 ‘볼륨의 건축’으로 보고, 자신이 하는 일은 ‘볼륨의 해체’라고 썼다
+
+#Trace #TraceInfluences #쿠마겐고 #KengoKuma #건축 #지는건축
+```
+
+출처: https://www.architecturelab.net/architect/famous/kengo-kuma/ · https://www.u-tokyo.ac.jp/focus/en/features/z1304_00098.html · https://www.dezeen.com/?p=1678267 · https://realsound.jp/book/2020/05/post-551281.html · https://artscape.jp/artword/6789/
+
+## 07 타일러 홉스 (`cards/07_hobbs/`) · 564자
+
+```
+[생애]
+· 이력: 컴퓨터 엔지니어로 일하다 직장을 그만두고 전업 작가가 되었다
+· 작업 방식: 코드로 이미지를 만드는 제너러티브 아티스트
+
+[Fidenza]
+· 출시: 2021년 6월, Art Blocks. 총 999점
+· 이름: 이탈리아 북부의 도시 이름. 지명은 의미의 짐이 적어서 즐겨 쓴다
+· 원리: 구매자의 거래 해시를 입력으로 삼고, 생성 코드는 블록체인에 저장해 작품이 그 코드에서 나왔음을 확인할 수 있다
+· 흐름장: 자연스러운 움직임을 흉내 내는 수학 체계. 곡선이 매끄럽고 겹치지 않는다
+
+[작업의 태도]
+· 통제와 예측 불가: “흐름장은 통제된 것과 예측 불가능한 것이 섞여 있어 흥미롭다. 질서와 무질서가 섞인 자리다”
+· 과정: 단계마다 변형을 시도하고 마음에 들지 않으면 되돌린다. 이 방식이 “상상의 한계를 우회하게 해 준다”고 말한다
+
+[Tracé에서]
+· 태극 인터랙션: 점의 크기와 색, 흐름장을 따라 점이 이어지는 표현을 참고했다 (지금 홈은 유리 큐브로 교체)
+
+#Trace #TraceInfluences #타일러홉스 #TylerHobbs #Fidenza #제너러티브아트
+```
+
+출처: https://cointelegraph.com/magazine/fidenza-tyler-hobbs-wrote-a-program-to-make-art-that-is-now-worth-millions/ · https://infiniteimages.toledomuseum.org/artwork/fidenza-370 · https://unframed.lacma.org/node/3685 · https://opensea.io/blog/articles/in-conversation-with-tyler-hobbs · https://www.sothebys.com/en/artists/tyler-hobbs
+
+## 08 얀 겔 (`cards/08_gehl/`) · 563자
 
 ```
 지도가 사용자를 압도하지 않게 한다.
 한 번에 한 장소에만 집중하는 싱글 카드 화면과 넓은 여백.
-
 — Tracé 기획 문서
 
+[생애와 저작]
 · 출생: 1936 덴마크
-· 건물 사이의 삶: 「Life Between Buildings」 1971 (영어판 1987)
-· 사람을 위한 도시: 「Cities for People」 2010
-· 사무소: 2000 Gehl Architects 공동 설립
+· Gehl Architects: 2000년 설립. 약 70개 도시와 일했다
+· Life Between Buildings: 1971. 영어판은 1987
+· Cities for People: 2010, Island Press, 283쪽
+
+[세 가지 야외 활동]
+· 필수 활동: 통학·출근, 쇼핑, 기다리기, 심부름처럼 해야 해서 하는 일
+· 선택 활동: 하고 싶은 마음이 있고 시간과 장소가 알맞을 때 하는 일
+· 사회 활동: 같은 장소에 사람이 있기 때문에 생기는 부산물
+
+[Tracé에서]
+· 01 유저를 줄 세우지 않는다: 화면 안에서 길을 잃지 않고 주체성을 지킬 수 있도록 ‘인간적 척도(Human Scale)’를 복원한다
+· 초기 사업계획서: 지도가 사용자를 압도하지 않게 한다. 한 번에 한 장소에만 집중하는 싱글 카드 화면과 넓은 여백
 
 #Trace #TraceInfluences #얀겔 #JanGehl #휴먼스케일 #도시계획
 ```
 
-출처: https://dac.dk/en/press-releases/jan-gehl-turns-90-the-architect-who-taught-the-world-to-build-cities-for-people · https://monocle.com/design/jan-gehl-architect-cities-for-people/ · https://urbanland.uli.org/public-spaces/in-print-jan-gehl
+출처: https://dac.dk/en/press-releases/jan-gehl-turns-90-the-architect-who-taught-the-world-to-build-cities-for-people · https://monocle.com/design/jan-gehl-architect-cities-for-people/ · https://urbanland.uli.org/public-spaces/in-print-jan-gehl · https://publicspaces.guide/gehls-three-types-of-activities/
 
-## 09 기 드보르 (`cards/09_debord/01~03.jpg`) · 357자
+## 09 기 드보르 (`cards/09_debord/`) · 796자
 
 ```
 최단 경로(A → B) 대신 A → ? → ? → B로 걷는다.
 걸은 궤적은 도시의 분위기에 반응한 내 심리적 리듬의 흔적이다. “왜 이 골목에서 자꾸 멈췄을까?”를 기록하는 지도.
-
 — Tracé 기획 문서
 
-· 생몰: 1931 파리 — 1994
-· 상황주의 인터내셔널: 1957년 창립 멤버
-· 심리지리학: 1955 「도시 지리학 비판 서설」. 지리적 환경이 개인의 감정과 행동에 미치는 영향을 다룬다
-· 데리브: 평소의 이동 습관을 내려놓고 도시를 떠도는 걷기
-· 스펙터클의 사회: 「La Société du spectacle」 1967
+[생애]
+· 출생·사망: 1931 파리 — 1994
+· 직업: 프랑스의 마르크스주의 이론가·작가·영화감독
+· 레트리스트 인터내셔널: 1952–57. 드보르와 질 월먼 등이 만든 파리의 급진적 예술가·이론가 모임
+· 상황주의 인터내셔널: 1957 이탈리아 모임에서 창립. 창립 멤버였다
+
+[심리지리학과 데리브]
+· 도시 지리학 비판 서설: 1955. 심리지리학은 지리적 환경이 개인의 감정과 행동에 미치는 정확한 법칙과 효과를 다룬다
+· 데리브 이론: 1956년 11월, 벨기에 잡지 Les Lèvres Nues. 평소의 이동 습관을 내려놓고 다양한 도시 환경을 빠르게 지나가는 기법
+· 도시의 지형: 도시에는 끊임없는 흐름, 고정점, 소용돌이가 있어 걷는 사람을 어느 방향으로 끈다
+· 함께 걷기: 혼자보다 두세 명이 함께 걸으며 인상을 견주는 편이 낫다고 썼다
+
+[지도와 Tracé]
+· The Naked City: 1957, 아스게르 요른과 함께. 『파리 지도』 19조각을 오려 다시 배열한 콜라주
+· 스펙터클의 사회: 1967. 가장 널리 알려진 저작
+· 07 목적지를 지운다 · 15 검은 선으로 그린다: 최단 경로 대신 A → ? → ? → B로 걷고, 걸은 궤적을 심리적 리듬의 흔적으로 본다 (기획 문서)
 
 #Trace #TraceInfluences #기드보르 #GuyDebord #데리브 #심리지리학
 ```
 
-출처: https://en.wikipedia.org/wiki/Guy_Debord · https://perlego.com/knowledge/study-guides/what-is-situationist-theory/
+출처: https://en.wikipedia.org/wiki/Guy_Debord · https://en.wikipedia.org/wiki/D%C3%A9rive · https://theanarchistlibrary.org/library/guy-debord-theory-of-the-derive · https://en.wikipedia.org/wiki/Letterist_International · https://jacket2.org/commentary/avant-garde-iii-situationist-maps-take-two
 
-## 10 나카무라 유지로 (`cards/10_nakamura/01~03.jpg`) · 258자
+## 10 나카무라 유지로 (`cards/10_nakamura/`) · 676자
 
 ```
 토포스는 개인의 경험이 쌓여 의미가 생긴 장소다.
 여러 사람의 이미지 지도가 겹친 ‘디지털 토포스’. 다른 사람의 기록과 겹쳐 보며 “이 거리를 이렇게도 보는구나”를 발견한다.
-
 — Tracé 기획 문서
 
-· 생몰: 1925 도쿄 — 2017
-· 학력: 1950 도쿄대학 문학부 졸업
-· 교수: 메이지대학 교수, 명예교수
-· 연구: 프랑스 철학을 바탕으로 종교·언어·문화를 넓게 논했다
+[생애]
+· 출생·사망: 1925 도쿄 — 2017
+· 학력·직책: 1950 도쿄대학 문학부 졸업. 메이지대학 교수를 지냈다
+· 연구: 프랑스 철학을 바탕으로 종교·언어·문화를 폭넓게 논했다
+
+[공통감각]
+· 『공통감각론』: 1979. 아리스토텔레스의 공통감각을 토대로, 지식을 ‘이성과 논리’ 중심에서 ‘공통감각과 언어’ 중심으로 다시 짜려 했다
+· 두 가지 뜻: 오감을 하나로 엮는 근원적 감각(아리스토텔레스), 사회적인 상식(키케로)
+· 영향: 1976년 기무라 빈의 논문이 공통감각을 사유의 축으로 삼게 한 계기로 꼽힌다. ‘자아는 장소적’이라는 논점도 있다
+· 임상의 지: ‘임상의 지(臨床の知)’도 그의 중요한 개념으로 다뤄진다
+
+[Tracé에서]
+· 기획 문서: 토포스를 ‘개인의 경험이 쌓여 의미가 생긴 장소’로 읽었다
+· 디지털 토포스: 여러 사람의 이미지 지도가 겹친 모습을 지도의 목표로 삼았다
+· 계보: 린치(정신 지도) → 우드(주관적 지도) → 나카무라(내면화와 연결) → 야마모토 리켄(문턱과 공동체)
 
 #Trace #TraceInfluences #나카무라유지로 #토포스 #철학
 ```
 
-출처: https://kotobank.jp/word/%E4%B8%AD%E6%9D%91%E9%9B%84%E4%BA%8C%E9%83%8E-1097798 · https://booklive.jp/focus/author/a_id/13345
+출처: https://kotobank.jp/word/%E4%B8%AD%E6%9D%91%E9%9B%84%E4%BA%8C%E9%83%8E-1097798 · https://booklive.jp/focus/author/a_id/13345 · https://ir.lib.hiroshima-u.ac.jp/00048944 · https://homepage.ntu.edu.tw/~bcla/e_book/75/7507.pdf
 
-## 11 피에르 부르디외 (`cards/11_bourdieu/01~03.jpg`) · 350자
+## 11 피에르 부르디외 (`cards/11_bourdieu/`) · 728자
 
 ```
 낯선 장소를 추천받을수록 사용자는 평점과 리뷰 수 같은 사회적 근거를 더 찾았다.
 문제는 추천의 다양성이 아니라, 추천의 맥락을 스스로 해석할 구조가 없다는 것. 그래서 평점을 빼고 “왜 이 장소인지”를 남긴다.
-
 — Tracé 기획 문서 · 석사 논문 인터뷰
 
-· 생몰: 1930 당갱(프랑스) — 2002 파리
-· 구별짓기: 「La Distinction」 1979. 취향이 사회적 위치를 반영한다고 보았다
+[생애]
+· 출생·사망: 1930 프랑스 당갱 — 2002 파리
+· 현지조사: 1958–60 알제리 카빌 사람들 사이에서
 · 콜레주 드 프랑스: 1981 사회학 교수
-· 아비투스: 사회 구조 속에서 몸에 밴, 세계를 살아가는 방식
+
+[핵심 개념]
+· 『실천이론 개요』: 1972(영어판 1977). 아비투스, 독사, 경제·문화·사회 자본 같은 용어가 여기서 나온다
+· 아비투스: 객관적 구조와 개인의 실천을 잇는 원리. 몸에 밴, 세계를 살아가는 방식
+· 장(場): 자본을 쌓고 겨루는 행위자들의 무대
+· 문화자본: 소장한 책과 작품, 몸에 밴 아비투스, 학위의 세 형태
+· 『구별짓기』: 1979(영어판 1984). 취향은 사회적 위치를 반영한다
+
+[Tracé에서]
+· 석사 논문 인터뷰: 낯선 장소를 추천받을수록 사용자는 평점과 리뷰 수 같은 사회적 근거를 더 찾았다. 플랫폼이 만든 선택 패턴이 아비투스처럼 몸에 밴 것으로 읽었다
+· 12 평점이 없다 · 14 맥락을 남긴다: 문제는 추천의 다양성이 아니라 추천의 맥락을 스스로 해석할 구조가 없다는 것. 그래서 “왜 이 장소인지”를 남긴다
 
 #Trace #TraceInfluences #피에르부르디외 #PierreBourdieu #아비투스 #사회학
 ```
 
-출처: https://en.wikipedia.org/wiki/Pierre_Bourdieu · https://www.britannica.com/print/article/860434 · https://snl.no/Pierre_Bourdieu
+출처: https://en.wikipedia.org/wiki/Pierre_Bourdieu · https://www.britannica.com/print/article/860434 · https://snl.no/Pierre_Bourdieu · https://anthrobase.com/Dic/eng/pers/bourdieu_pierre.htm
 
-## 12 데니스 우드 (`cards/12_wood/01~03.jpg`) · 338자
+## 12 데니스 우드 (`cards/12_wood/`) · 706자
 
 > 주의: 1996년 미성년자 대상 범죄로 유죄 판결을 받고 2년 넘게 복역했다는 기록이 있다. 공개 게시 전에 포함 여부를 판단할 것.
 
 ```
 모든 지도는 주관적 해석이다. 누구나 지도 제작자가 될 수 있다.
 행정 경계선만 검은 선으로 둔 바탕 위에, 개인의 기록을 점과 선으로 쌓는다.
-
 — Tracé 기획 문서
 
-· 출생: 1945 미국
-· 학력: 1973 클라크대학 지리학 박사
-· 교수: 1974–1996 노스캐롤라이나 주립대에서 가르쳤다
-· 지도의 힘: 「The Power of Maps」 1992. 쿠퍼휴잇 디자인 미술관 전시 도록
-· Everything Sings: 2010. 롤리의 동네 보일런 하이츠를 그린 지도 모음
+[생애]
+· 출생: 1945 미국. 클리블랜드에서 자랐다
+· 학력: 1967 영어학 학사, 1971 석사·1973 박사(지리학, 클라크대학)
+· 교수: 1974–96 노스캐롤라이나 주립대에서 환경심리·조경사·디자인을 가르쳤다
+· 동네: 롤리의 보일런 하이츠에서 23년간 가족과 살았다
+
+[지도 작업]
+· The Power of Maps: 1992. 쿠퍼휴잇 국립디자인박물관 전시 도록. 1994 스미소니언 전시로 이어졌다
+· Everything Sings: 2010. 1982년부터 그린 보일런 하이츠 지도 모음. 이라 글래스가 서문을 썼다
+· 어떤 지도들: 핼러윈 잭오랜턴을 검은 바탕에 얼굴로 찍은 지도, 보도 낙서, 가로수 크기
+· 이라 글래스: “전혀 필요 없는 지도들이다. 세상이 요청하지 않았다. 길 찾기에도 쓸모없다. 그저 즐거움을 위한 것”
+
+[Tracé에서]
+· 기획 문서: 모든 지도는 주관적 해석이며 누구나 지도 제작자가 될 수 있다는 생각을 가져왔다
+· 15 검은 선으로 그린다: 행정 경계선만 검은 선으로 둔 바탕 위에 개인의 기록을 점과 선으로 쌓는다
 
 #Trace #TraceInfluences #데니스우드 #DenisWood #지도 #EverythingSings
 ```
 
-출처: https://en.wikipedia.org/wiki/Denis_Wood · https://www.themarginalian.org/2011/09/06/everything-sings-david-wood/
+출처: https://en.wikipedia.org/wiki/Denis_Wood · https://www.themarginalian.org/2011/09/06/everything-sings-david-wood/ · https://www.thisamericanlife.org/110/mapping/act-one-1 · https://mapdesign.icaci.org/tag/narrative/ · https://www.pdxmonthly.com/arts-and-culture/2011/06/poetry-in-maps-june-2011
 
-## 13 그랜트 모리슨 (`cards/13_morrison/01~03.jpg`) · 433자
+## 13 그랜트 모리슨 (`cards/13_morrison/`) · 637자
 
 ```
 Algorithmic Serendipity · 사람들의 기록에서만 “누군가도 이곳을 봤다”를 발견한다
 Synchronicity Map · 같은 시간, 다른 장소에서 같은 주제를 본 기록
 Haunting Traces · 몇 달 전 기록이 있는 장소에 다시 갔을 때
 Voice of the City · 모든 기록을 합친 지금 도시의 기분
-
 — Tracé 기획 문서 · 도시의 신탁 아이디어
 
-· 출생: 1960 스코틀랜드 글래스고
-· 직업: 만화 작가·각본가
-· The Invisibles: DC Vertigo에서 낸 세 권짜리 시리즈. 작가 스스로 가장 중요한 작업으로 꼽는다
-· Supergods: 2011. 슈퍼히어로를 문화사로 다룬 책, 뉴욕타임스 베스트셀러
+[생애와 작업]
+· 출생: 1960년 1월 31일, 스코틀랜드 글래스고
+· 직업: 만화 작가·각본가·프로듀서
+· The Invisibles: DC 버티고에서 낸 세 권짜리 시리즈. 작가 스스로 가장 큰, 어쩌면 가장 중요한 작업으로 본다
+· Supergods: 2011. 슈퍼히어로를 하나의 문화적 유기체로 다룬 책. 뉴욕타임스 베스트셀러
+· 작품의 결: 비선형 서사, 인본주의, 대항문화적 성향
+
+[Tracé에서]
+· 위치: 원칙에는 들어가지 않았고, 기획 문서의 계보에만 남아 있다
+· 도시의 신탁: 도시는 읽을 수 있는 사람에게만 말한다는 아이디어에서 기능 네 가지를 구상했다
+· 메모: 마법적 표류 같은 개념의 출처는 확인하지 못했다
 
 #Trace #TraceInfluences #그랜트모리슨 #GrantMorrison #TheInvisibles
 ```
 
 출처: https://en.wikipedia.org/wiki/Grant_Morrison · https://www.britannica.com/print/article/1880915 · https://grantmorrison.com/works
-
-## 표지만 있는 사람 (원문 주면 2·3장 추가)
-
-01 존 마에다 · 05 르 코르뷔지에 · 06 쿠마 겐고 · 07 타일러 홉스

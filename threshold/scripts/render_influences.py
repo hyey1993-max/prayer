@@ -96,9 +96,10 @@ body{{position:relative;padding:72px 76px}}
 </body>"""
 
 
-def page_facts(p, i, n):
-    """3장: 확인된 사실만"""
-    rows = "".join(f"<li><b>{html.escape(k)}</b><span>{html.escape(v)}</span></li>" for k, v in p["facts"])
+def page_rows(p, i, n, pg, k, total):
+    """생애 / 작업과 개념 / Tracé에서: 확인된 사실 또는 우리 문서에서 가져온 문장만"""
+    rows = "".join(f"<li><b>{html.escape(a)}</b><span>{html.escape(b)}</span></li>" for a, b in pg["rows"])
+    m = sum(len(b) for _, b in pg["rows"]) + 55 * len(pg["rows"]); size = 40 if m < 330 else 36 if m < 420 else 32 if m < 470 else 29; pad = 30 if m < 430 else 22
     return f"""<!doctype html><meta charset=utf-8><style>{CSS}
 *{{margin:0;padding:0;box-sizing:border-box}}
 html,body{{width:{W}px;height:{H}px;background:#f3eee3;color:#1a1916;overflow:hidden}}
@@ -106,18 +107,21 @@ body{{position:relative;padding:72px 76px}}
 .bar{{display:flex;justify-content:space-between;font:400 24px "Mono";letter-spacing:.14em;text-transform:uppercase}}
 .bar b{{font:900 30px "Heavy";letter-spacing:0;text-transform:none}}
 .rule{{height:3px;background:#1a1916;margin-top:22px}}
-h2{{margin-top:96px;font:900 64px/1 "Heavy";letter-spacing:-.03em;text-transform:uppercase}}
-.ko{{margin-top:14px;font:400 28px "Sans";color:#4a463f}}
-ul{{list-style:none;margin-top:48px;border-top:2px solid #1a1916}}
-li{{display:grid;grid-template-columns:260px 1fr;gap:28px;padding:24px 0;border-bottom:1px solid #cfc7b6}}
-li b{{font:400 22px/1.5 "Mono";letter-spacing:.04em;color:#6e6a62;padding-top:4px}}
-li span{{font:400 31px/1.55 "Sans";word-break:keep-all}}
+h2{{margin-top:84px;font:900 66px/1 "Heavy";letter-spacing:-.03em;text-transform:uppercase}}
+.ko{{margin-top:12px;font:400 26px "Sans";color:#4a463f}}
+.sec{{margin-top:56px;display:flex;justify-content:space-between;align-items:baseline;font:900 40px "Heavy"}}
+.sec i{{font:400 22px "Mono";font-style:normal;letter-spacing:.12em;color:#6e6a62}}
+ul{{list-style:none;margin-top:18px;border-top:2px solid #1a1916}}
+li{{display:grid;grid-template-columns:250px 1fr;gap:28px;padding:{pad}px 0;border-bottom:1px solid #cfc7b6}}
+li b{{font:400 23px/1.5 "Mono";letter-spacing:.02em;color:#6e6a62;padding-top:5px;word-break:keep-all}}
+li span{{font:400 {size}px/1.55 "Sans";word-break:keep-all}}
 .foot{{position:absolute;left:76px;right:76px;bottom:64px;display:flex;justify-content:space-between;font:400 22px "Mono";letter-spacing:.1em;color:#6e6a62}}
 </style><body>
 <div class=bar><b>Tracé</b><span>Influences {i:02d}/{n:02d}</span></div><div class=rule></div>
 <h2>{html.escape(p["name"].replace(chr(10), " "))}</h2><p class=ko>{html.escape(p["ko"])} · {html.escape(p["role"])}</p>
+<div class=sec><span>{html.escape(pg["title"])}</span><i>{html.escape(pg["tag"])}</i></div>
 <ul>{rows}</ul>
-<div class=foot><span>FACTS</span><span>03 / 03</span></div>
+<div class=foot><span>@radiant_walks</span><span>{k:02d} / {total:02d}</span></div>
 </body>"""
 
 
@@ -139,11 +143,14 @@ def main():
         ph = photos / f"{p.get('slug', '')}.jpg"
         cover = page_photo(p, i, len(people), ph) if p.get("slug") and ph.exists() else page(p, i, len(people))
         shot(exe, cover, out / f"{i:02d}.jpg")
-        if p.get("quote"):                     # 원문이 있는 사람은 캐러셀 3장: 표지 / 원문 / 사실
-            d = out / f"{i:02d}_{p['slug']}"; d.mkdir(exist_ok=True)
-            shot(exe, cover, d / "01.jpg")
-            shot(exe, page_quote(p, i, len(people)), d / "02.jpg")
-            shot(exe, page_facts(p, i, len(people)), d / "03.jpg")
+        d = out / f"{i:02d}_{p['slug']}"; d.mkdir(exist_ok=True)      # 사람마다 캐러셀 폴더: 표지 / (원문) / 생애 / 작업과 개념 / Tracé에서
+        for old in d.glob("*.jpg"): old.unlink()
+        total = 1 + (1 if p.get("quote") else 0) + len(p["pages"]); k = 1
+        shot(exe, cover, d / f"{k:02d}.jpg")
+        if p.get("quote"):
+            k += 1; shot(exe, page_quote(p, i, len(people)).replace("02 / 03", f"{k:02d} / {total:02d}"), d / f"{k:02d}.jpg")
+        for pg in p["pages"]:
+            k += 1; shot(exe, page_rows(p, i, len(people), pg, k, total), d / f"{k:02d}.jpg")
     print(len(people), "장 →", out)
 
 
