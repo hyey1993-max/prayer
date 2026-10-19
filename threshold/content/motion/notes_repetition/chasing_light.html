@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chasing the Light</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;700;900&display=swap">
+<style>
+/* 빛을 쫓는 인터랙션: 다가가면 멀어지고, 빠를수록 더 멀어지고, 멈추면 빛이 먼저 온다 */
+:root{--bg:#0d0d10;--fg:#ecebe6;--dim:#8f8d86;--warm:#c98f66;--line:#26262b;color-scheme:dark;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;--sans:"Noto Sans KR",system-ui,sans-serif}
+:root[data-theme="light"]{--bg:#f3eee3;--fg:#1a1916;--dim:#6e6a62;--warm:#a8643a;--line:#ddd6c8;color-scheme:light}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font:15px/1.6 var(--sans);overflow:hidden}
+canvas{position:fixed;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair;display:block}
+.top{position:fixed;left:16px;right:16px;top:16px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;pointer-events:none}
+.top b{font:900 20px var(--sans)} .top span{font:500 12px var(--mono);letter-spacing:.12em;color:var(--dim)}
+.stage{position:fixed;left:16px;right:16px;bottom:20px;pointer-events:none;max-width:560px}
+.steps{display:flex;gap:14px;font:500 13px var(--sans);color:var(--dim);margin-bottom:8px}
+.steps i{font-style:normal} .steps i.on{color:var(--fg);font-weight:900}
+.q{font:700 clamp(18px,4.6vw,24px)/1.45 var(--sans);margin:0;min-height:2.9em}
+.hint{font:400 12px var(--mono);color:var(--dim);margin:8px 0 0}
+button{pointer-events:auto;font:500 12px var(--mono);color:var(--dim);background:none;border:1px solid var(--line);border-radius:999px;padding:3px 12px;cursor:pointer}
+button:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
+</style>
+</head>
+<body>
+<canvas id="c" role="img" aria-label="빛을 쫓는 인터랙션. 손가락이나 마우스로 빛에 다가가면 빛이 멀어지고, 가만히 있으면 빛이 다가온다."></canvas>
+<div class="top"><b>Tracé</b><span>NOTES · CHASING THE LIGHT</span></div>
+<div class="stage">
+  <div class="steps" id="steps"><i>접근</i><i>추격</i><i>반복</i><i>정지</i><i>전환</i></div>
+  <p class="q" id="q" aria-live="polite"></p>
+  <p class="hint">손가락이나 마우스로 빛을 쫓아 보세요. 그리고 멈춰 보세요. <button id="theme" type="button">Light</button></p>
+</div>
+<script>
+(() => {
+"use strict";
+const cv = document.getElementById("c"), g = cv.getContext("2d"), qEl = document.getElementById("q"), steps = [...document.querySelectorAll("#steps i")];
+const Q = ["내 행동은 어떤 결과를 만들까?", "더 많은 노력이 항상 더 큰 진전을 만드는가?", "나는 규칙을 이해하는가, 같은 규칙을 반복하는가?",
+  "멈추는 것도 시스템과 관계 맺는 방식인가?", "목표에 다가가는 것 말고 다른 관계가 있을까?"];
+let Wd, Hd, dpr;
+function size(){ dpr = Math.min(2, devicePixelRatio || 1); Wd = innerWidth; Hd = innerHeight; cv.width = Wd*dpr; cv.height = Hd*dpr; g.setTransform(dpr,0,0,dpr,0,0); }
+addEventListener("resize", size); size();
+const col = () => { const s = getComputedStyle(document.documentElement); return { fg: s.getPropertyValue("--fg").trim(), warm: s.getPropertyValue("--warm").trim(), bg: s.getPropertyValue("--bg").trim() }; };
+let C = col();
+const me = { x: Wd*.3, y: Hd*.6, vx: 0, vy: 0, active: false, still: 0 };
+const light = { x: Wd*.68, y: Hd*.4, vx: 0, vy: 0 };
+let chases = 0, stage = 0, tried = 0, near = false, trail = [];
+function setStage(s){ if (s === stage) return; stage = s; steps.forEach((el,i)=> el.classList.toggle("on", i === s)); qEl.textContent = Q[s]; }
+setStage(-1); setStage(0);
+function point(e){ const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; }
+let last = null;
+cv.addEventListener("pointermove", e => { const [x,y] = point(e); if (last){ me.vx = x - last[0]; me.vy = y - last[1]; } last = [x,y]; me.x = x; me.y = y; me.active = true; me.still = 0; });
+cv.addEventListener("pointerdown", e => { const [x,y] = point(e); last = [x,y]; me.x = x; me.y = y; me.active = true; me.still = 0; cv.setPointerCapture(e.pointerId); });
+cv.addEventListener("pointerleave", () => { last = null; });
+document.getElementById("theme").addEventListener("click", e => { const light = document.documentElement.dataset.theme !== "light";
+  document.documentElement.dataset.theme = light ? "light" : "dark"; e.target.textContent = light ? "Dark" : "Light"; C = col(); });
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let t0 = performance.now(), prev = t0;
+function frame(now){
+  const dt = Math.min(.05, (now - prev)/1000); prev = now;
+  const speed = Math.hypot(me.vx, me.vy); me.vx *= .8; me.vy *= .8;
+  if (speed < .6) me.still += dt; else me.still = 0;
+  const dx = light.x - me.x, dy = light.y - me.y, d = Math.hypot(dx, dy) + 1;
+  // 규칙: 가까이 오면 피하고, 빠를수록 더 멀리 피한다. 오래 멈추면 빛이 다가온다
+  if (me.active && me.still < 1.4){
+    const push = clamp((260 - d)/260) * (1.2 + speed*.35);
+    light.vx += dx/d * push * 1.6; light.vy += dy/d * push * 1.6;
+    if (d < 220 && speed > 6) chases++;
+  } else if (me.still >= 1.4){
+    light.vx -= dx/d * .35; light.vy -= dy/d * .35;
+  }
+  // 화면 안에 머물게
+  const m = 60; if (light.x < m) light.vx += .8; if (light.x > Wd-m) light.vx -= .8; if (light.y < m+40) light.vy += .8; if (light.y > Hd-m-140) light.vy -= .8;
+  light.vx *= .9; light.vy *= .9; light.x += light.vx; light.y += light.vy;
+  near = d < 70;
+  // 단계: 행동에 따라 바뀐다
+  if (near && me.still >= 1.4) setStage(4);
+  else if (me.still >= 1.4) setStage(3);
+  else if (chases > 120) setStage(2);
+  else if (chases > 8) setStage(1);
+  else setStage(0);
+  // 그리기
+  g.fillStyle = C.bg; g.fillRect(0,0,Wd,Hd);
+  trail.push([me.x, me.y]); if (trail.length > 90) trail.shift();
+  g.strokeStyle = C.fg; g.globalAlpha = .18; g.lineWidth = 1.5; g.beginPath(); trail.forEach(([x,y],i)=> i ? g.lineTo(x,y) : g.moveTo(x,y)); g.stroke(); g.globalAlpha = 1;
+  const pulse = reduce ? 0 : Math.sin(now/600)*4;
+  for (let k=6;k>0;k--){ g.globalAlpha = .06; g.fillStyle = C.warm; g.beginPath(); g.arc(light.x, light.y, 14 + k*14 + pulse, 0, Math.PI*2); g.fill(); }
+  g.globalAlpha = 1; g.fillStyle = C.warm; g.beginPath(); g.arc(light.x, light.y, 12, 0, Math.PI*2); g.fill();
+  if (stage === 4){ const r = 24 + ((now/900)%1)*40; g.globalAlpha = .6*(1-((now/900)%1)); g.strokeStyle = C.warm; g.lineWidth = 2; g.beginPath(); g.arc(me.x, me.y, r, 0, Math.PI*2); g.stroke(); g.globalAlpha = 1; }
+  g.fillStyle = C.fg; g.beginPath(); g.arc(me.x, me.y, 8, 0, Math.PI*2); g.fill();
+  requestAnimationFrame(frame);
+}
+function clamp(v,a=0,b=1){ return Math.max(a, Math.min(b, v)); }
+requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

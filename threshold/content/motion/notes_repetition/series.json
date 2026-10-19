@@ -1,0 +1,29 @@
+{
+ "brand": "Tracé",
+ "sets": {
+  "reel1_stairs": {
+   "title": "릴스 1 · 계단은 어디로 가는가 (처음/끝 카드)",
+   "kind": "hookreels",
+   "cards": [
+    {"type": "big", "label": "Tracé Notes · 반복과 진전 1/3", "h": "계단은\n[[어디로 가는가]]", "sub": "펜로즈 계단 · 에셔 · 인셉션"},
+    {"type": "big", "label": "질문", "h": "계속 움직이고 있다는 것만으로,\n[[어딘가로 가고 있다고]]\n말할 수 있을까?", "sub": "다음 · 반응인가, 진전인가", "size": 70}
+   ]
+  },
+  "reel2_loops": {
+   "title": "릴스 2 · 반응인가, 진전인가 (처음/끝 카드)",
+   "kind": "hookreels",
+   "cards": [
+    {"type": "big", "label": "Tracé Notes · 반복과 진전 2/3", "h": "반응인가,\n[[진전인가]]", "sub": "피드백 루프 · 알고리즘 · 습관"},
+    {"type": "big", "label": "질문", "h": "시스템은 행동을 돕는 도구인가,\n[[무엇을 진전이라 여길지]]\n만드는 환경인가?", "sub": "다음 · 다르게 반복하기", "size": 66}
+   ]
+  },
+  "reel3_difference": {
+   "title": "릴스 3 · 다르게 반복하기 (처음/끝 카드)",
+   "kind": "hookreels",
+   "cards": [
+    {"type": "big", "label": "Tracé Notes · 반복과 진전 3/3", "h": "다르게\n[[반복하기]]", "sub": "들뢰즈 · 빛을 쫓는 인터랙션"},
+    {"type": "big", "label": "질문", "h": "필요한 건 더 나은 조작인가,\n[[내가 반복하는 구조에 대한]]\n새로운 인식인가?", "sub": "Tracé Notes · 반복과 진전", "size": 66}
+   ]
+  }
+ }
+}

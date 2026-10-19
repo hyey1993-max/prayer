@@ -27,15 +27,18 @@ const html = `<!doctype html><meta charset=utf-8><style>${fonts}</style>${pre}<b
   const page = await browser.newPage();
   await page.setContent(html);
   await page.evaluate(async () => { await Promise.all(["900 40px 'Noto Sans KR'","400 40px 'Noto Sans KR'","400 20px 'IBM Plex Mono'"].map(f=>document.fonts.load(f, "가Aé"))); await document.fonts.ready; });
-  const list = await page.evaluate(() => window.TRACE_SCENES.list);
+  const { list, W, H } = await page.evaluate(() => ({ list: window.TRACE_SCENES.list, W: window.TRACE_SCENES.W || 1080, H: window.TRACE_SCENES.H || 1350 }));
+  // LOOPS: 한 장면을 몇 바퀴 담을지 (기본 2). ONLY=1,3: 그 번호의 장면만 다시 뽑는다
+  const loops = Number(process.env.LOOPS || 2), only = process.env.ONLY ? process.env.ONLY.split(",").map(Number) : null;
   for (let i = 0; i < list.length; i++) {
-    const sc = list[i], fps = 30, n = Math.round(sc.period * fps * 2);
+    if (only && !only.includes(i + 1)) continue;
+    const sc = list[i], fps = 30, n = Math.round(sc.period * fps * loops);
     const name = `${String(i + 1).padStart(2, "0")}_${sc.group.toLowerCase()}_${sc.en.toLowerCase().replace(/\s+/g, "_")}.mp4`;
     const ff = spawn(ffmpeg, ["-y", "-loglevel", "error", "-f", "image2pipe", "-framerate", String(fps), "-c:v", "mjpeg", "-i", "-",
       "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "20", "-preset", "medium", "-movflags", "+faststart", path.join(outDir, name)]);
     for (let f = 0; f < n; f++) {
-      const url = await page.evaluate(([i, t]) => { const c = window.__off || (window.__off = Object.assign(document.createElement("canvas"), { width: 1080, height: 1350 }));
-        window.TRACE_SCENES.renderAt(i, t, c.getContext("2d")); return c.toDataURL("image/jpeg", 0.93); }, [i, f / fps]);
+      const url = await page.evaluate(([i, t, W, H]) => { const c = window.__off || (window.__off = Object.assign(document.createElement("canvas"), { width: W, height: H }));
+        window.TRACE_SCENES.renderAt(i, t, c.getContext("2d")); return c.toDataURL("image/jpeg", 0.93); }, [i, f / fps, W, H]);
       if (!ff.stdin.write(Buffer.from(url.split(",")[1], "base64"))) await new Promise(r => ff.stdin.once("drain", r));
     }
     ff.stdin.end(); await new Promise(r => ff.on("close", r));
