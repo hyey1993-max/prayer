@@ -1,8 +1,8 @@
-# Tracé Notes · 반복과 진전 (릴스 3편 캡션)
+# Tracé Notes · 반복과 진전 (릴스 4편 캡션)
 
 장면 문장은 보내준 정리를 줄인 것. 연구·작품 정보는 아래 출처에서 확인한 것만.
 
-## 1/3 · 계단은 어디로 가는가 (`mp4/notes_reel1_stairs_9x16.mp4`)
+## 1/4 · 계단은 어디로 가는가 (`mp4/notes_reel1_stairs_9x16.mp4`)
 
 ```
 계단은 어디로 가는가.
@@ -18,30 +18,54 @@
 #Trace #TraceNotes #펜로즈계단 #에셔 #인셉션 #UX #UX디자인
 ```
 
-## 2/3 · 반응인가, 진전인가 (`mp4/notes_reel2_loops_9x16.mp4`)
+## 2/4 · 반응인가, 진전인가 (`mp4/notes_reel2_loops_9x16.mp4`)
 
 ```
 반응인가, 진전인가.
 
-피드백 루프 · 행위 주체감은 내 행동이 결과를 일으켰다고 느끼는 경험이다. 반복 시스템에서는 피드백이 진전의 감각만 강화할 수 있다. 시스템은 행동에 반응하는가, 행동이 목표에 기여하는가.
+행위 주체감 · 내 행동이 결과를 일으켰다고 느끼는 경험. 행동할 수 있는가, 결과를 만들었다고 느끼는가, 그리고 그것이 원래 목표에 기여하는가. 개별 클릭은 타당해도 전체 경로가 목표로 쌓인다는 보장은 없다.
 
-알고리즘 피드백 루프 · 1,401명이 참여한 실험에서 사람의 작은 편향이 AI에 반영되고, 다시 사람의 편향을 키웠다. 증폭은 사람끼리보다 컸고, 참가자는 그 영향을 잘 알아차리지 못했다.
+선호 오염 · 추천 시스템은 노출 → 반응 → 선호의 증거로 기록 → 다음 노출의 순환 안에 있다. 추천 뒤에 모은 데이터에는 추천이 남긴 흔적이 섞인다. 반응을 측정하는 것과 원래 의도를 아는 것은 같지 않다.
 
-습관 형성 · 신체활동을 위한 디지털 행동 변화 연구 41편에서 가장 많이 쓴 기법은 자기 모니터링, 목표 설정, 단서와 알림이었다. 반복은 목적의 수단인가, 시스템의 목적이 되었는가.
+피드백 루프 · 1,401명이 참여한 실험에서 사람의 작은 편향이 AI에 반영되고, 다시 사람의 편향을 키웠다. 증폭은 사람끼리보다 컸고, 참가자는 그 영향을 잘 알아차리지 못했다.
 
-시스템은 행동을 돕는 도구인가, 무엇을 진전이라 여길지 만드는 환경인가?
+시스템은 선호를 발견하는가, 선호를 만들어 가는가?
 
-참고 · Limerick, Coyle & Moore (2014) Frontiers in Human Neuroscience / Glickman & Sharot (2024) Nature Human Behaviour / Zhu et al. (2024) JMIR
+참고 · Limerick, Coyle & Moore (2014) Frontiers in Human Neuroscience / Adomavicius et al. (2022) AI Magazine / Glickman & Sharot (2024) Nature Human Behaviour
 
-#Trace #TraceNotes #UX #HCI #피드백루프 #알고리즘 #습관형성
+#Trace #TraceNotes #UX #HCI #행위주체감 #추천시스템 #피드백루프
 ```
 
-## 3/3 · 다르게 반복하기 (`mp4/notes_reel3_difference_9x16.mp4`)
+## 3/4 · 반복은 무엇을 쌓는가 (`mp4/notes_reel3_accumulate_9x16.mp4`)
+
+```
+반복은 무엇을 쌓는가.
+
+신체활동을 위한 디지털 개입 연구 41편에서 가장 많이 쓴 기법은 자기 모니터링, 목표 설정, 단서와 알림이었다. 반복으로 운동을 이어가고 악기를 익힌다. 다만 행동이 계속된다는 사실만으로 목표 달성이나 복지를 입증할 수는 없다.
+
+같은 반복이라도 쌓이는 것이 다르다.
+숙련 → 능력 · 정확도 · 이해
+목표 지향적 습관 → 목적에 기여하는 행동
+자기강화적 소비 루프 → 추가 행동과 추가 노출
+편향된 피드백 루프 → 과도한 확신
+
+그래서 반복한 횟수가 아니라, 반복이 남긴 변화를 잰다. 학습 앱이라면 지식의 유지와 전이를, 추천 서비스라면 발견의 다양성과 만족을.
+
+반복한 횟수가 아니라, 반복이 남긴 변화를 보고 있는가?
+
+참고 · Zhu et al. (2024) JMIR
+
+#Trace #TraceNotes #UX #습관형성 #행동변화 #UX리서치
+```
+
+## 4/4 · 다르게 반복하기 (`mp4/notes_reel4_difference_9x16.mp4`)
 
 ```
 다르게 반복하기.
 
 들뢰즈의 《차이와 반복》(1968)에서 반복은 같은 것의 재생산에 그치지 않는다. 반복 속에서 차이가 생긴다. 같은 동작을 반복해도, 이해는 달라질 수 있다.
+
+같은 계단을 세 번 본다. 처음에는 정상적인 계단, 다음에는 불가능한 구조, 그리고 내가 처음에 무엇을 당연하게 받아들였는지. 구조가 달라지지 않아도, 구조를 경험하는 방식은 달라질 수 있다.
 
 빛을 쫓는 인터랙션 · 다가갈수록 빛은 멀어지고, 빠를수록 더 멀어진다. 멈추면 빛이 먼저 다가온다.
 접근 · 내 행동은 어떤 결과를 만들까?
@@ -50,7 +74,9 @@
 정지 · 멈추는 것도 시스템과 관계 맺는 방식인가?
 전환 · 목표에 다가가는 것 말고 다른 관계가 있을까?
 
-필요한 건 더 나은 조작인가, 내가 반복하는 구조에 대한 새로운 인식인가?
+네 층위 · 행동의 반복, 행동의 순환, 행동의 의미, 반복의 철학. 반복의 가치는 지속만으로 평가할 수 없다. (네 연구를 결합해 세운 종합 가설)
+
+반복 시스템에서 변해야 하는 것은 사용자의 행동인가, 시스템의 규칙인가, 아니면 둘의 관계를 이해하는 방식인가?
 
 #Trace #TraceNotes #들뢰즈 #차이와반복 #인터랙션 #UX디자인
 ```
@@ -59,5 +85,6 @@
 
 - 펜로즈 계단 · 에셔: https://en.wikipedia.org/wiki/Penrose_stairs · https://en.wikipedia.org/wiki/Ascending_and_Descending · https://escherinhetpaleis.nl/en/escher-today/ascending-and-descending
 - Limerick, Coyle & Moore (2014): https://www.frontiersin.org/journals/human-neuroscience/articles/10.3389/fnhum.2014.00643/full
+- Adomavicius, Bockstedt, Curley & Zhang (2022) “Recommender Systems, Ground Truth, and Preference Pollution”, AI Magazine 43(2): https://ojs.aaai.org/index.php/aimagazine/article/view/18144
 - Glickman & Sharot (2024): https://pmc.ncbi.nlm.nih.gov/articles/pmid/39695250
 - Zhu et al. (2024) JMIR: https://www.jmir.org/2024/1/e54375

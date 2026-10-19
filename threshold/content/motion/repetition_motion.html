@@ -1,7 +1,7 @@
 <title>Tracé Notes · 반복과 진전</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;700;900&display=swap">
 <style>
-/* 릴스용 9:16 장면 8개. 미리보기에서는 작은 캔버스로 나란히 돌린다. */
+/* 릴스용 9:16 장면 12개. 미리보기에서는 작은 캔버스로 나란히 돌린다. */
 :root{--bg:#0d0d10;--fg:#ecebe6;--dim:#8f8d86;color-scheme:dark;--mono:"IBM Plex Mono",ui-monospace,monospace;--sans:"Noto Sans KR",system-ui,sans-serif}
 body{background:var(--bg);color:var(--fg);font:15px/1.6 var(--sans);margin:0;padding:24px 16px 56px}
 main{max-width:1200px;margin:0 auto}
@@ -13,7 +13,7 @@ figcaption{font:400 12px var(--mono);color:var(--dim);margin-top:6px}
 </style>
 <main>
   <h1>Tracé Notes · <b>반복과 진전</b></h1>
-  <p>계단(구조) → 피드백 루프(연구) → 다르게 반복하기. 릴스 3편으로 나눈다.</p>
+  <p>계단 → 반응인가 진전인가 → 반복은 무엇을 쌓는가 → 다르게 반복하기. 릴스 4편으로 나눈다.</p>
   <div class="grid" id="grid"></div>
 </main>
 <script>
@@ -88,7 +88,7 @@ const SO = (() => { const pts=[]; for (const st of STEPS) for (const [u,v] of [[
 const SCENES = [];
 const add = (no, group, en, kicker, title, note, period, draw) => SCENES.push({no, group, en, kicker, title, note, period, draw});
 
-add("01/08","stairs","penrose","PENROSE STAIRS · 1958",
+add("01/12","stairs","penrose","PENROSE STAIRS · 1958",
   "부분은 계단인데, 전체는 계단이 아니다.",
   "펜로즈 계단. 한 칸 한 칸은 정상이지만 이어 붙이면 계속 올라가도 높이가 변하지 않는다. 철학이 아니라 기하학적 불가능성을 보여주는 시각적 역설이다.",
   12, (g,t,p) => {
@@ -103,7 +103,7 @@ add("01/08","stairs","penrose","PENROSE STAIRS · 1958",
     text(g, "0", W-120, 1200, {size:64, font:SANS, weight:900, align:"right", color:C.warm});
   });
 
-add("02/08","stairs","escher","ESCHER · ASCENDING AND DESCENDING · 1960",
+add("02/12","stairs","escher","ESCHER · ASCENDING AND DESCENDING · 1960",
   "양쪽 어느 쪽으로 걸어도, 같은 자리.",
   "에셔의 「오르내리기」. 에셔는 계단 위 사람들을 정체 모를 수도회의 수도사로 짐작했고, 지치면 돌아서 내려가도 된다고 썼다. 그리고 두 사람은 ‘당분간’ 이 의식에 참여하기를 거부한다.",
   14, (g,t,p) => {
@@ -117,7 +117,7 @@ add("02/08","stairs","escher","ESCHER · ASCENDING AND DESCENDING · 1960",
     text(g, "참여하지 않는 둘", W/2, 1180, {size:24, a:.55, track:3, color:C.warm});
   });
 
-add("03/08","stairs","inception","INCEPTION · 2010",
+add("03/12","stairs","inception","INCEPTION · 2010",
   "불가능한 구조도, 그 안에서는 현실처럼 작동한다.",
   "《인셉션》은 불가능한 계단을 꿈속에서 걸을 수 있는 공간으로 쓴다. 문제는 반복이 아니라, 현실을 판단하는 기준 자체가 흔들릴 수 있다는 것.",
   12, (g,t,p) => {
@@ -132,26 +132,41 @@ add("03/08","stairs","inception","INCEPTION · 2010",
   });
 
 // 피드백 루프: 목표·기대 → 행동 → 피드백 → 해석. 진전의 감각은 차오르는데 목표까지의 거리는 그대로
-add("04/08","loops","feedback","SENSE OF AGENCY · HCI",
-  "시스템이 반응했다고, 목표에 다가간 것은 아니다.",
-  "행위 주체감은 내 행동이 결과를 일으켰다고 느끼는 경험이다(Limerick, Coyle & Moore, 2014). 반복 시스템에서는 피드백이 진전의 감각만 강화할 수 있다. 시스템은 행동에 반응하는가, 행동이 목표에 기여하는가.",
-  10, (g,t,p) => {
-    const cx=W/2, cy=740, R=220, labels=["목표·기대","행동","피드백","해석"];
+add("04/12","loops","agency","SENSE OF AGENCY · HCI",
+  "통제한다고 느껴도, 목표에 다가간다는 보장은 없다.",
+  "행위 주체감은 내 행동이 결과를 일으켰다고 느끼는 경험이다(Limerick, Coyle & Moore, 2014). 개별 클릭은 타당해도 전체 경로가 목표로 쌓인다는 보장은 없다. 통제감이 거짓이라는 뜻은 아니다. 그 통제가 어디까지 미치는가의 문제다.",
+  12, (g,t,p) => {
+    const cx=W/2, cy=690, R=200, labels=["목표·기대","행동","피드백","해석"];
     ring(g, cx, cy, R, C.fg, .35, 2.5);
     labels.forEach((s,i)=>{ const a=-Math.PI/2+i*Math.PI/2, x=cx+Math.cos(a)*R, y=cy+Math.sin(a)*R;
-      dot(g, x, y, 10, C.fg, .8); text(g, s, x + Math.cos(a)*70, y + Math.sin(a)*70 + 10, {size:28, font:SANS, a:.85}); });
-    const a = -Math.PI/2 + (t/2.5)*Math.PI*2; dot(g, cx+Math.cos(a)*R, cy+Math.sin(a)*R, 16, C.warm);
-    const laps = t/2.5, sense = 1 - Math.pow(.72, laps);
-    // 막대 두 개
-    const bx=150, bw=W-300;
-    text(g, "진전의 감각", bx, 1100, {size:24, align:"left", a:.6, track:2});
-    line(g, [[bx,1124],[bx+bw,1124]], C.fg, 10, .12); line(g, [[bx,1124],[bx+bw*sense,1124]], C.warm, 10, .95);
-    text(g, "목표까지의 거리", bx, 1180, {size:24, align:"left", a:.6, track:2});
-    line(g, [[bx,1204],[bx+bw,1204]], C.fg, 10, .12); line(g, [[bx,1204],[bx+bw*.82,1204]], C.cool, 10, .9);
+      dot(g, x, y, 10, C.fg, .8); text(g, s, x + Math.cos(a)*64, y + Math.sin(a)*64 + 10, {size:26, font:SANS, a:.85}); });
+    const a = -Math.PI/2 + (t/2.4)*Math.PI*2; dot(g, cx+Math.cos(a)*R, cy+Math.sin(a)*R, 16, C.warm);
+    const Q3 = [["행동할 수 있는가", "예"], ["결과를 만들었다고 느끼는가", "예"], ["원래 목표에 기여하는가", "?"]];
+    Q3.forEach(([q,ans],i)=>{ const y = 1010 + i*72, on = seg(p, .12 + i*.18, .26 + i*.18);
+      text(g, q, 150, y, {size:30, font:SANS, align:"left", a:.85*on});
+      const last = i===2; text(g, ans, W-150, y, {size:30, font:SANS, weight:900, align:"right", a:on*(last ? .6+.4*Math.sin(t*4) : 1), color: last ? C.warm : C.fg});
+      line(g, [[150,y+22],[W-150,y+22]], C.fg, 1, .15*on); });
+  });
+
+// 선호 오염: 시스템이 보여준 것 안에서 고른 반응을, 원래 취향의 증거로 기록한다
+add("05/12","loops","pollution","PREFERENCE POLLUTION · AI MAGAZINE 2022",
+  "시스템이 만든 선택지 안의 반응을, 원래 취향으로 읽는다.",
+  "Adomavicius 외, 2022. 추천 시스템은 추천 → 반응 → 기록 → 다음 추천의 순환 안에 있다. 추천 뒤에 모은 ‘정답’ 데이터에는 추천이 남긴 흔적이 섞인다(선호 오염). 반응을 측정하는 것과 원래 의도를 아는 것은 같지 않다.",
+  14, (g,t,p) => {
+    const cols=8, rows=6, x0=190, y0=470, gap=100, r=rng(5), rounds=4, k=p*rounds, cur=Math.min(rounds-1, Math.floor(k)), u=k-cur;
+    const pts=[]; for (let j=0;j<rows;j++) for (let i=0;i<cols;i++) pts.push([x0+i*gap, y0+j*gap]);
+    const target=[x0+6*gap, y0+1*gap];                               // 처음 고른 쪽으로 점점 좁혀진다
+    const radius = [520, 330, 200, 110][cur];
+    pts.forEach(([x,y])=>{ const inside = Math.hypot(x-target[0], y-target[1]) < radius; dot(g, x, y, 9, C.fg, inside ? .9 : .14); });
+    g.save(); g.beginPath(); g.rect(0, 400, W, 680); g.clip(); ring(g, target[0], target[1], radius, C.cool, .35, 2); g.restore();
+    if (u > .5) { dot(g, target[0], target[1], 15, C.warm); ring(g, target[0], target[1], 30, C.warm, .7*(u-.5)*2, 3); }
+    const steps=["노출","반응","선호의 증거로 기록","다음 노출"], si=Math.min(3, Math.floor(u*4));
+    steps.forEach((sx,i)=> text(g, sx, 160 + i*255, 1120, {size:26, font:SANS, weight: i===si ? 900 : 400, a: i===si ? 1 : .35, align:"left"}));
+    text(g, `${cur+1}회째 · 보여준 범위`, W-110, 420, {size:22, align:"right", a:.5, track:2});
   });
 
 // 알고리즘 피드백 루프: 작은 편향이 돌 때마다 커진다
-add("05/08","loops","algorithm","HUMAN–AI FEEDBACK LOOP · 2024",
+add("06/12","loops","algorithm","HUMAN–AI FEEDBACK LOOP · 2024",
   "작은 편향이 시스템을 거쳐, 더 커져서 돌아온다.",
   "Glickman & Sharot, Nature Human Behaviour. 1,401명이 참여한 실험에서 사람의 작은 편향이 AI에 반영되고, 다시 사람의 편향을 키웠다. 증폭은 사람끼리보다 컸고, 참가자는 그 영향을 잘 알아차리지 못했다.",
   12, (g,t,p) => {
@@ -170,27 +185,37 @@ add("05/08","loops","algorithm","HUMAN–AI FEEDBACK LOOP · 2024",
     text(g, `${Math.min(cur+1,rounds)}회째`, W-110, bot+40, {size:24, align:"right", a:.55, track:2});
   });
 
-// 세 가지 반복
-add("06/08","loops","habits","HABIT FORMATION · JMIR 2024",
-  "반복은 목적의 수단인가, 시스템의 목적인가.",
-  "Zhu 외, 2024. 신체활동을 위한 디지털 행동 변화 연구 41편을 분석했다. 가장 많이 쓴 기법은 자기 모니터링, 목표 설정, 단서와 알림. 모든 상업용 UX에 그대로 일반화할 수는 없다.",
+// 반복이 쌓는 것: 네 가지 반복과 각자가 누적시키는 것
+add("07/12","accumulate","accumulates","HABIT FORMATION · JMIR 2024",
+  "반복이 문제가 아니다. 반복이 무엇을 쌓는지가 문제다.",
+  "Zhu 외, 2024. 신체활동 디지털 개입 연구 41편에서 자기 모니터링, 목표 설정, 단서와 알림이 가장 많이 쓰였다. 반복으로 운동을 이어가고 악기를 익힌다. 다만 행동이 계속된다는 사실만으로 목표 달성이나 복지를 입증할 수는 없다.",
+  12, (g,t,p) => {
+    const R4 = [["숙련을 위한 반복","능력 · 정확도 · 이해",C.fg],["목표 지향적 습관","목적에 기여하는 행동",C.fg],
+                ["자기강화적 소비 루프","추가 행동과 추가 노출",C.warm],["편향된 피드백 루프","판단에 대한 과도한 확신",C.warm]];
+    R4.forEach(([name,acc,col],i)=>{ const y=470+i*165, on=seg(p,.05+i*.12,.2+i*.12);
+      const a=t*3 + i; ring(g, 175, y, 34, col, .5*on, 2.5); dot(g, 175+Math.cos(a)*34, y+Math.sin(a)*34, 9, col, on);
+      text(g, name, 250, y-10, {size:32, font:SANS, weight:700, align:"left", a:on});
+      text(g, "→ " + acc, 250, y+34, {size:26, font:SANS, align:"left", a:.6*on});
+      const fill = clamp((p-.1-i*.12)/.6); for (let k=0;k<Math.floor(fill*14);k++) dot(g, 250+k*46, y+76, 7, col, .7*on); });
+  });
+
+// 횟수가 아니라 변화: 방문 수는 빨리 늘지만, 남은 변화는 따로 잰다
+add("08/12","accumulate","measure","FROM COUNT TO CHANGE",
+  "반복한 횟수가 아니라, 반복이 남긴 변화를 잰다.",
+  "학습 앱이라면 방문 수보다 지식의 유지와 전이를, 추천 서비스라면 클릭 수보다 발견의 다양성과 만족을 본다. 사용자 반응을 재는 것과 사용자가 무엇을 얻었는지 아는 것은 다르다.",
   10, (g,t,p) => {
-    const cols = [[200,"생산적"],[540,"유지되는"],[880,"자기강화"]], cy=760, R=110;
-    cols.forEach(([x,label],i)=>{
-      text(g, label, x, 1110, {size:30, font:SANS, weight:700, a:.9}); text(g, "반복", x, 1150, {size:24, font:SANS, a:.5});
-      const pts=[]; const turns=3;
-      for (let s=0;s<=240;s++){ const u=s/240, a=u*turns*Math.PI*2;
-        if (i===0) pts.push([x+Math.cos(a)*R, cy+170 - u*340 + Math.sin(a)*R*.35]);   // 돌면서 위로 올라가는 나선
-        else pts.push([x+Math.cos(a)*R, cy+Math.sin(a)*R*.35]); }
-      if (i===2) for (let w=0; w<5; w++) line(g, pts.map(([px,py])=>[px,py]), C.warm, 2 + w*1.6*(.5+.5*Math.sin(t*2)), .12);
-      line(g, pts, i===2 ? C.warm : C.fg, 2, i===0 ? .45 : .35);
-      const sp = i===2 ? 1 + p*2.2 : 1, k = ((t*sp)/6) % 1;
-      const [dx,dy] = along(pts, i===0 ? (t/10)%1 : k); dot(g, dx, dy, 14, i===2 ? C.warm : C.fg);
-    });
+    const visits = Math.floor(p*140);
+    text(g, "반복 횟수", 150, 500, {size:26, align:"left", a:.6, track:2});
+    text(g, String(visits), 150, 620, {size:110, font:SANS, weight:900, align:"left"});
+    for (let k=0;k<Math.min(70,visits/2);k++) line(g, [[150+ (k%35)*22, 680 + Math.floor(k/35)*70],[150+(k%35)*22, 730+Math.floor(k/35)*70]], C.fg, 3, .45);
+    text(g, "남은 변화", 150, 920, {size:26, align:"left", a:.6, track:2});
+    const ch = [["지식의 유지와 전이", .35+.25*seg(p,.4,1)], ["발견의 다양성", .2+.1*seg(p,.5,1)], ["만족", .45]];
+    ch.forEach(([s,v],i)=>{ const y=990+i*70; text(g, s, 150, y, {size:26, font:SANS, align:"left", a:.8});
+      line(g, [[520,y-9],[W-150,y-9]], C.fg, 10, .12); line(g, [[520,y-9],[520+(W-670)*v,y-9]], C.warm, 10, .9); });
   });
 
 // 들뢰즈: 동일성의 반복 vs 차이를 생성하는 반복
-add("07/08","difference","deleuze","DELEUZE · DIFFERENCE AND REPETITION · 1968",
+add("09/12","difference","deleuze","DELEUZE · DIFFERENCE AND REPETITION · 1968",
   "같은 동작을 반복해도, 이해는 달라질 수 있다.",
   "들뢰즈에게 반복은 같은 것의 재생산에 그치지 않는다. 반복 속에서 차이가 생긴다. 반복을 끊어야 할 함정으로만 볼지, 새로운 경험을 만드는 장치로 볼지가 갈린다.",
   12, (g,t,p) => {
@@ -211,15 +236,30 @@ add("07/08","difference","deleuze","DELEUZE · DIFFERENCE AND REPETITION · 1968
     }
   });
 
+// 같은 계단을 세 번: 구조는 그대로인데 보이는 방식이 바뀐다
+add("10/12","difference","seen","THE SAME STAIRS, THREE TIMES",
+  "구조가 달라지지 않아도, 구조를 경험하는 방식은 달라진다.",
+  "처음에는 정상적인 계단, 다음에는 불가능한 구조, 그리고 내가 처음에 무엇을 당연하게 받아들였는지. 계단을 탈출해야만 변화가 생기는 것은 아니다.",
+  15, (g,t,p) => {
+    const ph = p < .33 ? 0 : p < .66 ? 1 : 2;
+    const caps = ["처음 · 정상적인 계단", "다시 · 불가능한 구조", "또다시 · 내가 당연하게 받아들인 것"];
+    if (ph === 0){ g.save(); g.beginPath(); g.rect(0, 380, W/2+40, 800); g.clip(); drawStairs(g, SO.S, SO.ox, SO.oy); g.restore(); }
+    else drawStairs(g, SO.S, SO.ox, SO.oy, ph === 2 ? .3 : 1);
+    if (ph === 1){ const [sx,sy] = stairPos(N-.05, SO.S, SO.ox, SO.oy); ring(g, sx, sy-10, 60 + 8*Math.sin(t*3), C.warm, .8, 3); }
+    if (ph === 2){ const pts=[]; for (let k=0;k<=N*8;k++) pts.push(stairPos(k/8, SO.S, SO.ox, SO.oy)); line(g, pts, C.warm, 4, .9); }
+    const [x,y] = stairPos(t/5*N/2, SO.S, SO.ox, SO.oy); dot(g, x, y-14, 14, ph===2 ? C.warm : C.fg);
+    caps.forEach((c,i)=> text(g, c, W/2, 1120 + i*48, {size:28, font:SANS, weight: i===ph ? 900 : 400, a: i===ph ? 1 : .3}));
+  });
+
 // 빛을 쫓는 인터랙션: 접근 → 추격 → 반복 → 정지 → 전환
 const LIGHT = [ [0,"접근","내 행동은 어떤 결과를 만들까?"], [.2,"추격","더 많은 노력이 항상 더 큰 진전을 만드는가?"],
   [.42,"반복","나는 규칙을 이해하는가, 같은 규칙을 반복하는가?"], [.64,"정지","멈추는 것도 시스템과 관계 맺는 방식인가?"], [.82,"전환","목표에 다가가는 것 말고 다른 관계가 있을까?"] ];
-add("08/08","difference","light","INTERACTION · CHASING THE LIGHT",
+add("11/12","difference","light","INTERACTION · CHASING THE LIGHT",
   "다가갈수록 멀어지는 빛. 멈추면, 빛이 먼저 온다.",
   "같은 규칙을 반복하게 하면서도 기대와 결과가 어긋나게 만든다. 다만 규칙이 너무 불투명하면 역설이 아니라 고장 난 인터페이스로 느껴진다.",
   20, (g,t,p) => {
     const st = [...LIGHT].reverse().find(s => p >= s[0]), i = LIGHT.indexOf(st);
-    const cx=W/2, cy=760;
+    const cx=W/2, cy=730;
     // 관객(점)과 빛의 위치를 단계별로
     let me, light;
     const q = (a,b) => clamp((p-a)/(b-a));
@@ -236,6 +276,21 @@ add("08/08","difference","light","INTERACTION · CHASING THE LIGHT",
     // 단계 표시
     LIGHT.forEach(([a,name],k)=> text(g, name, 130 + k*205, 1120, {size:28, font:SANS, weight: k===i ? 900 : 400, a: k===i ? 1 : .35, align:"center"}));
     text(g, st[2], W/2, 1190, {size:28, font:SANS, a:.85});
+  });
+
+// 네 층위: 행동의 반복 · 순환 · 의미 · 철학
+add("12/12","difference","layers","SYNTHESIS · FOUR LAYERS",
+  "반복의 가치는 지속만으로 평가할 수 없다.",
+  "반복적 인터랙션은 행동을 재생산할 뿐 아니라, 사용자가 시스템의 규칙과 자신의 행동을 해석하는 방식까지 만들 수 있다. 네 연구를 결합해 세운 종합 가설이다.",
+  14, (g,t,p) => {
+    const L4 = [["① 행동의 반복","습관 형성 연구"],["② 행동의 순환","HCI · 알고리즘 피드백"],["③ 행동의 의미","행위 주체감"],["④ 반복의 철학","들뢰즈 《차이와 반복》"]];
+    const cx=W/2, cy=730;
+    L4.forEach(([a,b],i)=>{ const on = seg(p, .05+i*.15, .2+i*.15), r = 75 + i*70;
+      ring(g, cx, cy, r, i===3 ? C.warm : C.fg, .35*on + (i===3 ? .3*on : 0), 2);
+      const ang = -Math.PI/2 + t*.25*(i%2 ? -1 : 1) + i, dx = cx+Math.cos(ang)*r, dy = cy+Math.sin(ang)*r; dot(g, dx, dy, 10, i===3 ? C.warm : C.fg, on); });
+    L4.forEach(([a,b],i)=>{ const on = seg(p, .05+i*.15, .2+i*.15), x = 150 + (i%2)*420, y = 1070 + Math.floor(i/2)*90;
+      text(g, a, x, y, {size:28, font:SANS, weight:700, align:"left", a:on});
+      text(g, b, x, y + 36, {size:22, font:SANS, align:"left", a:.5*on}); });
   });
 
 // ---------- 렌더 ----------
