@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tracé Notes · 반복과 진전: 장면 영상(9:16)을 묶어 릴스 4편을 만든다.
+"""Tracé Notes · 반복과 진전: 장면 영상(9:16)을 묶어 릴스 2편을 만든다.
 처음 카드 → 장면들 → 끝 카드(질문). 장면은 capture_motion.js 로 LOOPS=1 로 뽑은 것.
   LOOPS=1 node scripts/capture_motion.js content/motion/repetition_motion.html content/motion/mp4_notes <ffmpeg> assets/fonts assets/fonts
   python3 scripts/render_cards.py content/motion/notes_repetition/series.json
@@ -15,7 +15,7 @@ CLIPS = ROOT / "content" / "motion" / "mp4_notes"
 CARDS = ROOT / "content" / "motion" / "notes_repetition" / "cards"
 OUT = ROOT / "content" / "motion" / "mp4"
 FF = imageio_ffmpeg.get_ffmpeg_exe()
-REELS = {"reel1_stairs": "stairs", "reel2_loops": "loops", "reel3_accumulate": "accumulate", "reel4_difference": "difference"}   # 카드 세트: 장면 묶음
+REELS = {"reel1_main": "main", "reel2_loops": "loops"}   # 카드 세트: 장면 묶음
 INTRO, OUTRO, FADE = 2.0, 3.2, .3
 
 
