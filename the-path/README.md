@@ -14,11 +14,11 @@ dashboard, or portfolio page.
   met twice: first by measuring it, then without being able to. When it
   returns, the same object meets a different relation, and the I on screen
   (your cursor) takes its form from that relation.
-- **Oscillation** — a self-running piece: one grid of digits deformed by six
+- **Oscillation** — an interaction study: one grid of digits deformed by six
   oscillating patterns (twist, tunnel, barrel, interference, flow, lines).
-  It needs no input. Its own choreography moves each pattern's center, swells
-  and settles the amplitude, drifts the frequency, sends ripples that flip
-  bits, and morphs from one pattern to the next every few seconds.
+  The pointer moves the center of each deformation and its speed drives the
+  amplitude; click sends a ripple that flips bits, scroll changes frequency,
+  1–6 or ←/→ change pattern, and the digits morph from one form to the next.
 
 ## Run it
 
@@ -45,6 +45,5 @@ Then open the printed local URL.
   machine `OBSERVE → CLASSIFY → WAIT → ENCOUNTER → RETURN`, then back to the
   first question. Tunables in `config/constants.ts`.
 - `src/experiences/oscillation/` — the six pattern mappings
-  (`core/patterns.ts`), the choreography that drives them (`core/director.ts`),
-  and a pre-rendered digit atlas.
+  (`core/patterns.ts`), a pre-rendered digit atlas, and the interaction loop.
   Tunables in `config/constants.ts`.

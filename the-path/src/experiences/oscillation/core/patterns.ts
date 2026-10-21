@@ -25,6 +25,8 @@ export const OWN_BIT = -1
  * in [-1, 1], y in [-0.75, 0.75]). Writes into `out` to avoid allocation. */
 export type Pattern = (u: number, v: number, c: PatternContext, out: Sample) => void
 
+const TAU = Math.PI * 2
+
 /** A ribbon twisting along its length. Digits read out their own depth. */
 const twist: Pattern = (u, v, c, out) => {
   const theta = u * Math.PI * 0.9 * c.k + c.t * 0.6 + c.fx * 1.6
@@ -130,3 +132,8 @@ export const PATTERNS: readonly { name: string; map: Pattern }[] = [
   { name: 'FLOW', map: flow },
   { name: 'LINES', map: lines },
 ]
+
+/** Slow wandering focus for when nobody is there. */
+export function idleFocus(t: number, amount: number): { x: number; y: number } {
+  return { x: Math.sin(t * 0.21 * TAU * 0.25) * amount, y: Math.sin(t * 0.17 * TAU * 0.25 + 1.1) * amount * 0.6 }
+}
