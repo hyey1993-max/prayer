@@ -1,6 +1,6 @@
-# The Path · The Particular · The I That Emerges
+# The Path · The Particular · The I That Emerges · Oscillation
 
-Three experimental, browser-based interactive pieces in one app, switched
+Four experimental, browser-based interactive pieces in one app, switched
 from the small tabs in the top-left corner. None of them is a game,
 dashboard, or portfolio page.
 
@@ -14,6 +14,11 @@ dashboard, or portfolio page.
   met twice: first by measuring it, then without being able to. When it
   returns, the same object meets a different relation, and the I on screen
   (your cursor) takes its form from that relation.
+- **Oscillation** — an interaction study: one grid of digits deformed by six
+  oscillating patterns (twist, tunnel, barrel, interference, flow, lines).
+  The pointer moves the center of each deformation and its speed drives the
+  amplitude; click sends a ripple that flips bits, scroll changes frequency,
+  1–6 or ←/→ change pattern, and the digits morph from one form to the next.
 
 ## Run it
 
@@ -39,3 +44,6 @@ Then open the printed local URL.
   presence, encounter, session memory and the returning relation. State
   machine `OBSERVE → CLASSIFY → WAIT → ENCOUNTER → RETURN`, then back to the
   first question. Tunables in `config/constants.ts`.
+- `src/experiences/oscillation/` — the six pattern mappings
+  (`core/patterns.ts`), a pre-rendered digit atlas, and the interaction loop.
+  Tunables in `config/constants.ts`.
