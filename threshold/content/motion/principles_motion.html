@@ -30,7 +30,7 @@ figcaption{font:400 12px var(--mono);color:var(--dim);margin-top:6px}
 <header>
   <div>
     <h1>Tracé <b>Principles</b> in Motion</h1>
-    <p class="lead">UX 원칙 6 · 산책 원칙 4 · 지도 원칙 4. 장면마다 6~9초로 반복된다. 카드를 누르면 크게 본다.</p>
+    <p class="lead">UX 원칙 6 · 산책 원칙 5 · 지도 원칙 4 · 반복 원칙 1. 장면마다 6~9초로 반복된다. 카드를 누르면 크게 본다.</p>
   </div>
   <div class="controls">
     <button id="play" type="button" aria-pressed="true">재생 중</button>
@@ -313,8 +313,35 @@ const add = (group, no, title, en, period, draw) => SCENES.push({group, no, titl
   });
 }
 
+// LOOP 01 · 반복 속에서 낯설게 한다: 펜로즈 계단을 두 바퀴 돈다. 두 번째 바퀴에서 같은 계단의 한 칸이 낯설게 보인다
+{ const n=[6,6,2,2], NS=16, DZ=4/NS, dirs=[[1,0],[0,1],[-1,0],[0,-1]], ST=[]; let x=0,y=0,z=0;
+  n.forEach((m,k)=>{ for(let i=0;i<m;i++){ ST.push({x,y,z,dir:dirs[k]}); x+=dirs[k][0]; y+=dirs[k][1]; z+=DZ; } });
+  const iso=(x,y,z,S,ox,oy)=>[ox+(x-y)*Math.cos(Math.PI/6)*S, oy+(x+y)*Math.sin(Math.PI/6)*S-z*S];
+  const fit=(()=>{ const q=[]; for(const s of ST) for(const [u,v] of [[0,0],[1,0],[1,1],[0,1]]){ const [dx,dy]=s.dir;
+      q.push(iso(s.x+dx*u+dy*v,s.y+dy*u-dx*v,s.z,1,0,0), iso(s.x+dx*u+dy*v,s.y+dy*u-dx*v,s.z+DZ,1,0,0)); }
+    const xs=q.map(a=>a[0]), ys=q.map(a=>a[1]), S=Math.min(760/(Math.max(...xs)-Math.min(...xs)), 520/(Math.max(...ys)-Math.min(...ys)));
+    return {S, ox:W/2-S*(Math.min(...xs)+Math.max(...xs))/2, oy:640-S*(Math.min(...ys)+Math.max(...ys))/2}; })();
+  const poly=(g,pts,fill,stroke,a)=>{ g.globalAlpha=a; g.fillStyle=fill; g.beginPath(); pts.forEach(([x,y],i)=>i?g.lineTo(x,y):g.moveTo(x,y)); g.closePath(); g.fill();
+    g.strokeStyle=stroke; g.lineWidth=2.4; g.stroke(); g.globalAlpha=1; };
+  const face=(s,{S,ox,oy})=>{ const [dx,dy]=s.dir, P=(u,v,zz)=>iso(s.x+dx*u+dy*v, s.y+dy*u-dx*v, zz, S, ox, oy);
+    return [[P(0,0,s.z),P(1,0,s.z),P(1,.9,s.z),P(0,.9,s.z)], [P(1,0,s.z),P(1,0,s.z+DZ),P(1,.9,s.z+DZ),P(1,.9,s.z)]]; };
+  const pos=(k,{S,ox,oy})=>{ const kk=((k%NS)+NS)%NS, i=Math.floor(kk), u=kk-i, s=ST[i], [dx,dy]=s.dir;
+    return iso(s.x+dx*u+dy*.45, s.y+dy*u-dx*.45, s.z+DZ*clamp((u-.75)/.25)+.02, S, ox, oy); };
+  const SEE=11;                                      // 두 번째 바퀴에서 낯설게 보이는 칸
+  add("LOOP","01/01","반복 속에서 낯설게 한다","Defamiliarize",12,(g,t,p)=>{
+    const lap=p<.5?0:1, k=(p*2%1)*NS, fade=1-seg(p,.95,1), here=lap===1 && k>SEE;
+    ST.forEach((s,i)=>{ const [top,ris]=face(s,fit), warm=i===SEE && here;
+      poly(g,top, warm?"rgba(201,143,102,.35)":"rgba(242,240,234,.08)", warm?C.warm:"rgba(242,240,234,.75)", 1);
+      poly(g,ris, warm?"rgba(201,143,102,.5)":"rgba(242,240,234,.16)", warm?C.warm:"rgba(242,240,234,.75)", 1); });
+    if (here){ const [cx,cy]=pos(SEE+.5,fit), r=seg(p,.5+(SEE+1)/NS/2,.5+(SEE+4)/NS/2); if(r<1) ring(g,cx,cy-10,30+r*80,C.warm,(1-r)*.9,3); }
+    const [x,y]=pos(k,fit); dot(g,x,y-14,14,C.fg,fade);
+    text(g, here ? "SAME STAIRS, SEEN ANEW" : "SAME STAIRS", W/2, 1010, {size:22, a:.55*fade, track:3});
+    text(g, `LAP ${lap+1}`, W-120, 300, {size:22, align:"right", a:.45, track:3});
+  });
+}
+
 // ---------- 그리기 ----------
-const GROUPS = [["UX","UX Principles"],["WALK","Walking Principles"],["MAP","Map Principles"]];
+const GROUPS = [["UX","UX Principles"],["WALK","Walking Principles"],["MAP","Map Principles"],["LOOP","Loop Principles"]];
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 let playing = !reduce, start = performance.now(), pausedAt = 0;
 const canvases = [];
