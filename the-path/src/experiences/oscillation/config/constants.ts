@@ -1,5 +1,5 @@
-// Every parameter for OSCILLATION — an interaction study of a field of digits
-// deformed by oscillatory motion.
+// Every parameter for OSCILLATION — a self-running study of a field of
+// digits deformed by oscillatory motion. Nothing here waits for input.
 
 export const CONFIG = {
   // Narrow screens get a coarser grid so each digit stays legible.
@@ -17,26 +17,35 @@ export const CONFIG = {
   },
 
   motion: {
-    morphMs: 1400,
+    morphMs: 1600,
     timeScale: 1,
     reducedTimeScale: 0.35,
   },
 
-  focus: {
-    ease: 0.06,
-    // When no pointer is present, the focus drifts on a slow Lissajous.
-    idleDrift: 0.35,
+  // The piece's own choreography — what a hand on the mouse used to do.
+  choreography: {
+    // Each pattern holds this long (piece time, seconds) before morphing on.
+    patternHoldSec: 8,
+    // The focus — each pattern's center of deformation — wanders this far.
+    focusRangeX: 0.75,
+    focusRangeY: 0.5,
+    focusSpeed: 0.11,
+    // Amplitude swells and settles on its own slow wave.
+    ampSwing: 0.9,
+    ampSpeed: 0.13,
+    // Spatial frequency drifts within this range.
+    frequencyMin: 0.7,
+    frequencyMax: 1.8,
+    frequencySpeed: 0.05,
+    // Ripples arrive on an irregular beat.
+    rippleGapMinSec: 1.8,
+    rippleGapMaxSec: 4.4,
+    // Surges of energy at each event, decaying back.
+    surgeOnPattern: 0.8,
+    surgeOnRipple: 0.45,
+    surgeDecay: 0.96,
+    surgeAmp: 1.2,
   },
-
-  // Pointer speed injects energy into the oscillation; it decays back.
-  energy: {
-    // Field units per second at which energy saturates.
-    speedRef: 2.4,
-    decay: 0.95,
-    ampBoost: 1.4,
-  },
-
-  frequency: { initial: 1, min: 0.4, max: 3, wheel: 0.0012 },
 
   ripple: {
     speed: 0.85,
@@ -47,18 +56,15 @@ export const CONFIG = {
     max: 6,
   },
 
-  hover: {
+  // A lens that rides along with the focus: digits there grow and flicker.
+  lens: {
     radius: 96,
     magnify: 0.9,
     brighten: 0.55,
-    // Chance per frame (at full energy) that a digit under the pointer flips.
-    flip: 0.08,
+    flip: 0.05,
   },
 
   bits: { flipPerSec: 0.025 },
-
-  // With no input for idleMs, the piece cycles patterns on its own.
-  auto: { idleMs: 10000, everyMs: 9000 },
 
   visual: {
     bg: '#000000',

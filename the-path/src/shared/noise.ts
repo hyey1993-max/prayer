@@ -1,4 +1,4 @@
-import { createRng } from '../../../shared/rng'
+import { createRng } from './rng'
 
 /** Smooth, deterministic, non-repeating-looking signal in -1..1: a sum of
  * sines at incommensurate frequencies. The object's "own life" is built from

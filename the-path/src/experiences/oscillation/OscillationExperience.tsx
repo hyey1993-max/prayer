@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { CONFIG } from './config/constants'
-import { idleFocus, OWN_BIT, PATTERNS, type PatternContext, type Sample } from './core/patterns'
+import { OWN_BIT, PATTERNS, type PatternContext, type Sample } from './core/patterns'
+import { createDirector } from './core/director'
 import { createGlyphAtlas } from './rendering/glyphs'
 import { createRng } from '../../shared/rng'
 import { usePrefersReducedMotion } from '../../shared/usePrefersReducedMotion'
@@ -13,14 +14,13 @@ interface Ripple {
 
 const easeInOutCubic = (x: number) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2)
 
+/** Runs on its own. No input changes what it does. */
 export default function OscillationExperience() {
   const [pattern, setPattern] = useState(0)
-  const [touched, setTouched] = useState(false)
   const reducedMotion = usePrefersReducedMotion()
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const readoutRef = useRef<HTMLDivElement>(null)
-  const requestRef = useRef<(index: number, manual: boolean) => void>(() => {})
   const reducedRef = useRef(reducedMotion)
   useEffect(() => {
     reducedRef.current = reducedMotion
@@ -53,12 +53,15 @@ export default function OscillationExperience() {
     const cols = narrow ? CONFIG.grid.narrowCols : CONFIG.grid.cols
     const rows = narrow ? CONFIG.grid.narrowRows : CONFIG.grid.rows
     const n = cols * rows
-    const rng = createRng(Math.floor(Math.random() * 0xffffffff))
+    const seed = Math.floor(Math.random() * 0xffffffff)
+    const rng = createRng(seed)
+    const direct = createDirector(seed)
     const atlas = createGlyphAtlas()
+    const c = CONFIG.choreography
 
     const bits = new Uint8Array(n)
     for (let i = 0; i < n; i++) bits[i] = rng() < 0.5 ? 1 : 0
-    // Last-drawn layout, so a pattern change morphs from wherever things are.
+    // Last-drawn layout, so each pattern change morphs from wherever things are.
     const curX = new Float32Array(n)
     const curY = new Float32Array(n)
     const curS = new Float32Array(n)
@@ -72,13 +75,9 @@ export default function OscillationExperience() {
     let morphStart = -Infinity
     let hasLayout = false
     let t = 0
-    let k: number = CONFIG.frequency.initial
-    let energy = 0
-    let focus = { x: 0, y: 0 }
-    let pointer: { x: number; y: number } | null = null
-    let lastPointerField: { x: number; y: number; at: number } | null = null
-    let lastInputAt = performance.now()
-    let lastAutoAt = performance.now()
+    let surge = 0
+    let nextPatternAt = c.patternHoldSec
+    let nextRippleAt = 1.2
     const ripples: Ripple[] = []
 
     const scaleOf = () => {
@@ -86,86 +85,17 @@ export default function OscillationExperience() {
       const wf = width < fr.narrowBreakpoint ? fr.narrowWidthFrac : fr.widthFrac
       return Math.min(width * wf, height * fr.heightFrac)
     }
-    const toField = (sx: number, sy: number) => {
-      const s = scaleOf()
-      return { x: (sx - width / 2) / s, y: (sy - height / 2) / s }
-    }
 
-    const requestPattern = (index: number, manual: boolean) => {
-      const next = ((index % PATTERNS.length) + PATTERNS.length) % PATTERNS.length
-      if (next === current) return
+    const advancePattern = (now: number) => {
       fromX.set(curX)
       fromY.set(curY)
       fromS.set(curS)
       fromA.set(curA)
-      morphStart = performance.now()
-      current = next
-      if (manual) lastInputAt = morphStart
-      lastAutoAt = morphStart
-      setPattern(next)
+      morphStart = now
+      current = (current + 1) % PATTERNS.length
+      surge = Math.max(surge, c.surgeOnPattern)
+      setPattern(current)
     }
-    requestRef.current = requestPattern
-
-    const markInput = () => {
-      lastInputAt = performance.now()
-      setTouched(true)
-    }
-
-    const local = (e: PointerEvent) => {
-      const r = canvas.getBoundingClientRect()
-      return { x: e.clientX - r.left, y: e.clientY - r.top }
-    }
-    const onMove = (e: PointerEvent) => {
-      const p = local(e)
-      pointer = p
-      const now = performance.now()
-      const f = toField(p.x, p.y)
-      if (lastPointerField) {
-        const dt = Math.max(8, now - lastPointerField.at) / 1000
-        const speed = Math.hypot(f.x - lastPointerField.x, f.y - lastPointerField.y) / dt
-        energy = Math.max(energy, Math.min(1, speed / CONFIG.energy.speedRef))
-      }
-      lastPointerField = { x: f.x, y: f.y, at: now }
-      markInput()
-    }
-    const onLeave = () => {
-      pointer = null
-      lastPointerField = null
-    }
-    const onDown = (e: PointerEvent) => {
-      const p = local(e)
-      pointer = p
-      const f = toField(p.x, p.y)
-      ripples.push({ x: f.x, y: f.y, born: t })
-      if (ripples.length > CONFIG.ripple.max) ripples.shift()
-      markInput()
-    }
-    const onWheel = (e: WheelEvent) => {
-      e.preventDefault()
-      k = Math.min(CONFIG.frequency.max, Math.max(CONFIG.frequency.min, k * Math.exp(-e.deltaY * CONFIG.frequency.wheel)))
-      markInput()
-    }
-    const onKey = (e: KeyboardEvent) => {
-      if (e.target instanceof HTMLButtonElement && (e.key === ' ' || e.key === 'Enter')) return
-      if (e.key >= '1' && e.key <= String(PATTERNS.length)) {
-        requestPattern(Number(e.key) - 1, true)
-      } else if (e.key === 'ArrowRight') {
-        requestPattern(current + 1, true)
-      } else if (e.key === 'ArrowLeft') {
-        requestPattern(current - 1, true)
-      } else if (e.key === ' ') {
-        e.preventDefault()
-        ripples.push({ x: focus.x, y: focus.y, born: t })
-        if (ripples.length > CONFIG.ripple.max) ripples.shift()
-      } else return
-      markInput()
-    }
-
-    canvas.addEventListener('pointermove', onMove)
-    canvas.addEventListener('pointerdown', onDown)
-    canvas.addEventListener('pointerleave', onLeave)
-    canvas.addEventListener('wheel', onWheel, { passive: false })
-    window.addEventListener('keydown', onKey)
 
     const sample: Sample = { x: 0, y: 0, s: 0, a: 0, digit: OWN_BIT }
     const pctx: PatternContext = { t: 0, k: 1, amp: 1, fx: 0, fy: 0 }
@@ -182,29 +112,35 @@ export default function OscillationExperience() {
       const timeScale = reducedRef.current ? CONFIG.motion.reducedTimeScale : CONFIG.motion.timeScale
       t += dt * timeScale
 
-      // Focus follows the pointer, or drifts when nobody is there.
-      const target = pointer ? toField(pointer.x, pointer.y) : idleFocus(t, CONFIG.focus.idleDrift)
-      target.x = Math.max(-1.1, Math.min(1.1, target.x))
-      target.y = Math.max(-0.8, Math.min(0.8, target.y))
-      const fe = Math.min(1, CONFIG.focus.ease * f)
-      focus = { x: focus.x + (target.x - focus.x) * fe, y: focus.y + (target.y - focus.y) * fe }
-      energy *= Math.pow(CONFIG.energy.decay, f)
+      const d = direct(t)
+      surge *= Math.pow(c.surgeDecay, f * timeScale)
 
-      if (now - lastInputAt > CONFIG.auto.idleMs && now - lastAutoAt > CONFIG.auto.everyMs) {
-        requestPattern(current + 1, false)
+      // --- its own events ---
+      if (t >= nextPatternAt) {
+        advancePattern(now)
+        nextPatternAt = t + c.patternHoldSec
       }
+      if (t >= nextRippleAt) {
+        // Ripples start near the focus, a little off it, so they read as
+        // something the field does to itself.
+        const a = rng() * Math.PI * 2
+        const r = 0.1 + rng() * 0.35
+        ripples.push({ x: d.fx + Math.cos(a) * r, y: d.fy + Math.sin(a) * r * 0.7, born: t })
+        if (ripples.length > CONFIG.ripple.max) ripples.shift()
+        surge = Math.max(surge, c.surgeOnRipple)
+        nextRippleAt = t + c.rippleGapMinSec + rng() * (c.rippleGapMaxSec - c.rippleGapMinSec)
+      }
+      while (ripples.length > 0 && t - ripples[0].born > CONFIG.ripple.lifeSec) ripples.shift()
 
       // Ambient bit flips — the field is never quite still.
       const flips = Math.round(n * CONFIG.bits.flipPerSec * dt * timeScale) + (rng() < 0.5 ? 1 : 0)
       for (let i = 0; i < flips; i++) bits[Math.floor(rng() * n)] ^= 1
 
-      while (ripples.length > 0 && t - ripples[0].born > CONFIG.ripple.lifeSec) ripples.shift()
-
       pctx.t = t
-      pctx.k = k
-      pctx.amp = 1 + CONFIG.energy.ampBoost * energy
-      pctx.fx = focus.x
-      pctx.fy = focus.y
+      pctx.k = d.k
+      pctx.amp = d.amp + c.surgeAmp * surge
+      pctx.fx = d.fx
+      pctx.fy = d.fy
 
       const map = PATTERNS[current].map
       const morphing = hasLayout && now - morphStart < CONFIG.motion.morphMs
@@ -216,8 +152,11 @@ export default function OscillationExperience() {
       const spacing = (2 * scale) / cols
       const glyphH = spacing * CONFIG.glyph.scale
       const glyphW = glyphH * (atlas.cellW / atlas.cellH)
-      const hr = CONFIG.hover.radius
       const rp = CONFIG.ripple
+      const lens = CONFIG.lens
+      const lensX = cx + d.fx * scale
+      const lensY = cy + d.fy * scale
+      const flipChance = lens.flip * (0.3 + surge) * f
 
       ctx.fillStyle = CONFIG.visual.bg
       ctx.fillRect(0, 0, width, height)
@@ -251,12 +190,12 @@ export default function OscillationExperience() {
             const age = t - r.born
             const dx = x - r.x
             const dy = y - r.y
-            const d = Math.hypot(dx, dy) || 1
-            const ring = (d - age * rp.speed) / rp.width
+            const dist = Math.hypot(dx, dy) || 1
+            const ring = (dist - age * rp.speed) / rp.width
             const band = Math.exp(-ring * ring) * (1 - age / rp.lifeSec)
             if (band < 0.01) continue
-            x += (dx / d) * band * rp.push
-            y += (dy / d) * band * rp.push
+            x += (dx / dist) * band * rp.push
+            y += (dy / dist) * band * rp.push
             s *= 1 + band * rp.grow
             a = Math.max(a, band)
             if (band > 0.5) flipped = !flipped
@@ -265,14 +204,12 @@ export default function OscillationExperience() {
           const sx = cx + x * scale
           const sy = cy + y * scale
 
-          if (pointer) {
-            const d = Math.hypot(sx - pointer.x, sy - pointer.y)
-            if (d < hr) {
-              const near = 1 - d / hr
-              s *= 1 + near * CONFIG.hover.magnify
-              a = Math.min(1, a + near * CONFIG.hover.brighten)
-              if (rng() < near * energy * CONFIG.hover.flip * f) bits[idx] ^= 1
-            }
+          const ld = Math.hypot(sx - lensX, sy - lensY)
+          if (ld < lens.radius) {
+            const near = 1 - ld / lens.radius
+            s *= 1 + near * lens.magnify
+            a = Math.min(1, a + near * lens.brighten)
+            if (rng() < near * flipChance) bits[idx] ^= 1
           }
 
           if (flipped) digit = digit <= 1 ? digit ^ 1 : (digit + 5) % 10
@@ -288,10 +225,10 @@ export default function OscillationExperience() {
 
       if (readoutRef.current && now - lastReadout > 100) {
         lastReadout = now
+        const sign = (v: number) => `${v >= 0 ? '+' : ''}${v.toFixed(2)}`
         readoutRef.current.textContent =
-          `FREQ ${k.toFixed(2)}  ·  AMP ${pctx.amp.toFixed(2)}  ·  ` +
-          `FOCUS ${focus.x >= 0 ? '+' : ''}${focus.x.toFixed(2)} ${focus.y >= 0 ? '+' : ''}${focus.y.toFixed(2)}  ·  ` +
-          `T ${t.toFixed(1)}`
+          `FREQ ${d.k.toFixed(2)}  ·  AMP ${pctx.amp.toFixed(2)}  ·  ` +
+          `FOCUS ${sign(d.fx)} ${sign(d.fy)}  ·  T ${t.toFixed(1)}`
       }
 
       raf = requestAnimationFrame(tick)
@@ -301,11 +238,6 @@ export default function OscillationExperience() {
     return () => {
       cancelAnimationFrame(raf)
       ro.disconnect()
-      canvas.removeEventListener('pointermove', onMove)
-      canvas.removeEventListener('pointerdown', onDown)
-      canvas.removeEventListener('pointerleave', onLeave)
-      canvas.removeEventListener('wheel', onWheel)
-      window.removeEventListener('keydown', onKey)
     }
   }, [])
 
@@ -315,25 +247,16 @@ export default function OscillationExperience() {
         ref={canvasRef}
         className="osc-canvas"
         role="img"
-        aria-label={`A field of digits in the ${PATTERNS[pattern].name.toLowerCase()} pattern`}
+        aria-label={`A self-running field of digits, now in the ${PATTERNS[pattern].name.toLowerCase()} pattern`}
       />
       <div ref={readoutRef} className="osc-readout" aria-hidden="true" />
-      <nav className="osc-patterns" aria-label="Pattern">
+      <ol className="osc-patterns" aria-hidden="true">
         {PATTERNS.map((p, i) => (
-          <button
-            key={p.name}
-            type="button"
-            className={i === pattern ? 'is-active' : ''}
-            aria-current={i === pattern}
-            onClick={() => requestRef.current(i, true)}
-          >
+          <li key={p.name} className={i === pattern ? 'is-active' : ''}>
             <span className="osc-index">{String(i + 1).padStart(2, '0')}</span> {p.name}
-          </button>
+          </li>
         ))}
-      </nav>
-      <p className={`osc-hint${touched ? ' is-hidden' : ''}`} aria-hidden="true">
-        MOVE · CLICK · SCROLL · 1–6
-      </p>
+      </ol>
     </div>
   )
 }

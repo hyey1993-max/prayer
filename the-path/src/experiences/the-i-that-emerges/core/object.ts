@@ -1,6 +1,6 @@
 import { CONFIG } from '../config/constants'
 import type { Vec2 } from '../models/types'
-import { makeSmoothNoise } from './noise'
+import { makeSmoothNoise } from '../../../shared/noise'
 
 /** What the object is on its own terms — fixed for its whole life, so that
  * when it is met again it is the same object. */
