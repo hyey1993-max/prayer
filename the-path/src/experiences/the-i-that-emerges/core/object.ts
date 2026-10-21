@@ -29,6 +29,8 @@ export interface ObjectState {
   orientation: number
   bulge: number
   ownTime: number
+  /** Rotation of its point volume; slows as it is measured. */
+  spin: number
   center: Vec2
   boundary: Vec2[]
 }
@@ -58,6 +60,7 @@ export function createObject(nature: ObjectNature): ObjectState {
     orientation: 0,
     bulge: 0,
     ownTime: 0,
+    spin: 0,
     center: { x: 0, y: 0 },
     boundary: Array.from({ length: CONFIG.object.vertices }, () => ({ x: 0, y: 0 })),
   }
@@ -114,6 +117,7 @@ export function stepObject(
   obj.offset.x += obj.vel.x * f
   obj.offset.y += obj.vel.y * f
 
+  obj.spin += dt * CONFIG.dots.spinSpeed * (0.1 + 0.9 * obj.autonomy)
   const phaseRate = 0.3 + 0.7 * obj.autonomy
   o.harmonics.forEach((h, i) => {
     obj.phases[i] += h.speed * dt * phaseRate

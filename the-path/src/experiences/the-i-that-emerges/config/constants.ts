@@ -13,11 +13,33 @@ export const CONFIG = {
     ],
     wanderRadius: 44,
     wanderTimeScale: 0.09,
-    hue: 18,
+    hue: 30,
     hueDrift: 9,
-    saturation: 0.34,
-    lightness: 0.55,
+    saturation: 0.24,
+    lightness: 0.86,
     damping: 0.86,
+  },
+
+  // The object is drawn as a volume of tiny points whose silhouette follows
+  // its measured outline. Measurement snaps them to a halftone lattice and
+  // flattens their depth; on its own it turns and breathes.
+  dots: {
+    count: 1500,
+    halftoneStep: 5,
+    spinSpeed: 0.22,
+    tilt: 0.38,
+    breathe: 0.7,
+    // During a meeting, points within reach flow toward the I.
+    reach: 170,
+    pull: 0.35,
+  },
+
+  // When waiting begins, the measurement labels come apart letter by letter.
+  letters: {
+    lifeMs: 7000,
+    speedMin: 5,
+    speedMax: 24,
+    spin: 0.45,
   },
 
   // I–It: each measurement takes a little of the object's own motion away
@@ -38,7 +60,6 @@ export const CONFIG = {
     minMs: 6500,
     // ...and no input at all for this long.
     quietMs: 2600,
-    labelFadeMs: 4200,
     autonomyRecoverEase: 0.008,
   },
 
@@ -104,10 +125,10 @@ export const CONFIG = {
   },
 
   visual: {
-    bg: '#f1eee7',
-    ink: [33, 30, 26] as const,
-    gridAlphaMax: 0.09,
-    threadAlphaMax: 0.28,
+    bg: '#020202',
+    ink: [236, 234, 228] as const,
+    gridAlphaMax: 0.3,
+    threadAlphaMax: 0.3,
   },
 
   reducedMotion: {

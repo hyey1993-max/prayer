@@ -29,13 +29,15 @@ import { createIField, stepIField } from './core/ifield'
 import { canAdvance, iFormFor, scaled } from './experience/phase'
 import {
   drawBackground,
+  drawDotObject,
   drawGrid,
   drawIField,
   drawLabels,
-  drawObject,
   drawSpecimenFrame,
   drawThreads,
+  makeSphere,
 } from './rendering/draw'
+import { drawLetters, scatterLabels, stepLetters, type Letter } from './rendering/letters'
 import { usePrefersReducedMotion } from '../../shared/usePrefersReducedMotion'
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t
@@ -85,6 +87,9 @@ export default function TheIThatEmergesExperience() {
     const ifield = createIField()
     const memory = createMemory()
     const attributes: Attribute[] = []
+    const sphere = makeSphere(CONFIG.dots.count)
+    let letters: Letter[] = []
+    let lettersBornAt = 0
 
     let obj: ObjectState = createObject(nature)
     let encounter: EncounterState = createEncounter()
@@ -105,6 +110,11 @@ export default function TheIThatEmergesExperience() {
       current = next
       phaseStartedAt = now
       remember(memory, now, next, 'phase')
+      if (next === 'wait') {
+        // The measurements are not concluded — they come apart.
+        letters = scatterLabels(ctx, obj, attributes, width, seed + session * 31)
+        lettersBornAt = now
+      }
       if (next === 'encounter') encounter = createEncounter()
       if (next === 'return') {
         // The same object as at the beginning — only the relation differs.
@@ -208,6 +218,7 @@ export default function TheIThatEmergesExperience() {
       let gridOrder = 0
       let frameOrder = 0
       let labelAlpha = 0
+      let flatten = 0
 
       // Moves toward where the person was a moment ago, stopping `keep` px
       // short of them; how far it commits depends on how open it is.
@@ -260,6 +271,7 @@ export default function TheIThatEmergesExperience() {
           gridOrder = order
           frameOrder = order
           labelAlpha = 1
+          flatten = order
           const idle = now - presence.lastInputAt
           if (idle >= dur(CONFIG.classify.pauseToWaitMs)) {
             remember(memory, now, current, 'pause', idle)
@@ -279,7 +291,7 @@ export default function TheIThatEmergesExperience() {
           obj.outline = ease(obj.outline, 0, 0.02)
           gridOrder = order
           frameOrder = order
-          labelAlpha = Math.max(0, 1 - elapsed / dur(CONFIG.wait.labelFadeMs))
+          flatten = order
           memory.waitMs = elapsed
           if (elapsed >= dur(CONFIG.wait.minMs) && now - presence.lastInputAt >= dur(CONFIG.wait.quietMs)) {
             goTo('encounter', now)
@@ -384,8 +396,16 @@ export default function TheIThatEmergesExperience() {
       drawGrid(ctx, width, height, o, gridOrder)
       drawSpecimenFrame(ctx, obj.center, frameOrder, specimen)
       drawThreads(ctx, obj, ifield, threads)
-      drawObject(ctx, obj)
+      drawDotObject(ctx, obj, sphere, flatten, ifield.visible ? ifield.pos : null, coupling)
       drawLabels(ctx, obj, attributes, width, labelAlpha)
+      if (letters.length > 0) {
+        const life = 1 - (now - lettersBornAt) / dur(CONFIG.letters.lifeMs)
+        if (life <= 0) letters = []
+        else {
+          stepLetters(letters, dt)
+          drawLetters(ctx, letters, life)
+        }
+      }
       drawIField(ctx, ifield, current === 'classify')
 
       raf = requestAnimationFrame(tick)

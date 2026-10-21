@@ -19,7 +19,7 @@ const EXPERIENCES: { id: ExperienceId; label: string }[] = [
 // Pieces with a fixed ground of their own, regardless of system theme.
 const MENU_TONE: Partial<Record<ExperienceId, string>> = {
   'the-particular': ' on-dark',
-  'the-i-that-emerges': ' on-light',
+  'the-i-that-emerges': ' on-dark',
 }
 
 export default function App() {

@@ -21,20 +21,23 @@ export function anchorAngleFor(index: number): number {
   return start + (index / (ATTRIBUTE_ORDER.length - 1)) * spread
 }
 
-function hslToHex(h: number, s: number, l: number): string {
+function hslToRgb(h: number, s: number, l: number): [number, number, number] {
   const a = s * Math.min(l, 1 - l)
   const f = (n: number) => {
     const k = (n + h / 30) % 12
-    const c = l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1))
-    return Math.round(c * 255)
-      .toString(16)
-      .padStart(2, '0')
+    return Math.round((l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1))) * 255)
   }
-  return `#${f(0)}${f(8)}${f(4)}`.toUpperCase()
+  return [f(0), f(8), f(4)]
+}
+
+export function objectRgb(obj: ObjectState): [number, number, number] {
+  return hslToRgb(((obj.hue % 360) + 360) % 360, obj.saturation, CONFIG.object.lightness)
 }
 
 export function objectColor(obj: ObjectState): string {
-  return hslToHex(((obj.hue % 360) + 360) % 360, obj.saturation, CONFIG.object.lightness)
+  return `#${objectRgb(obj)
+    .map((c) => c.toString(16).padStart(2, '0'))
+    .join('')}`.toUpperCase()
 }
 
 function area(obj: ObjectState): number {
