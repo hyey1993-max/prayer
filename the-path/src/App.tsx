@@ -4,23 +4,30 @@ const ThePathExperience = lazy(() => import('./experiences/the-path/ThePathExper
 const TheParticularExperience = lazy(
   () => import('./experiences/the-particular/TheParticularExperience'),
 )
+const TheIThatEmergesExperience = lazy(
+  () => import('./experiences/the-i-that-emerges/TheIThatEmergesExperience'),
+)
 
-type ExperienceId = 'the-path' | 'the-particular'
+type ExperienceId = 'the-path' | 'the-particular' | 'the-i-that-emerges'
 
 const EXPERIENCES: { id: ExperienceId; label: string }[] = [
   { id: 'the-path', label: 'The Path' },
   { id: 'the-particular', label: 'The Particular' },
+  { id: 'the-i-that-emerges', label: 'The I That Emerges' },
 ]
+
+// Pieces with a fixed ground of their own, regardless of system theme.
+const MENU_TONE: Partial<Record<ExperienceId, string>> = {
+  'the-particular': ' on-dark',
+  'the-i-that-emerges': ' on-light',
+}
 
 export default function App() {
   const [active, setActive] = useState<ExperienceId>('the-path')
 
   return (
     <div className="app-shell">
-      <nav
-        className={`experience-menu${active === 'the-particular' ? ' on-dark' : ''}`}
-        aria-label="Select piece"
-      >
+      <nav className={`experience-menu${MENU_TONE[active] ?? ''}`} aria-label="Select piece">
         {EXPERIENCES.map((exp) => (
           <button
             key={exp.id}
@@ -35,11 +42,9 @@ export default function App() {
       </nav>
 
       <Suspense fallback={null}>
-        {active === 'the-path' ? (
-          <ThePathExperience key="the-path" />
-        ) : (
-          <TheParticularExperience key="the-particular" />
-        )}
+        {active === 'the-path' && <ThePathExperience key="the-path" />}
+        {active === 'the-particular' && <TheParticularExperience key="the-particular" />}
+        {active === 'the-i-that-emerges' && <TheIThatEmergesExperience key="the-i-that-emerges" />}
       </Suspense>
     </div>
   )

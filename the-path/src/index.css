@@ -219,6 +219,140 @@ body {
   }
 }
 
+/* THE I THAT EMERGES sits on a fixed paper ground, regardless of theme. */
+.experience-menu.on-light button {
+  color: rgba(33, 30, 26, 0.34);
+}
+.experience-menu.on-light button:hover {
+  color: rgba(33, 30, 26, 0.62);
+}
+.experience-menu.on-light button.is-active {
+  color: rgba(33, 30, 26, 0.78);
+  border-bottom-color: rgba(33, 30, 26, 0.35);
+}
+
+.tie-root {
+  position: absolute;
+  inset: 0;
+  background: #f1eee7;
+  color: rgb(33, 30, 26);
+  --tie-serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+}
+
+.tie-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: none;
+}
+
+.tie-intro,
+.tie-closing {
+  position: absolute;
+  left: 50%;
+  bottom: calc(9% + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  width: min(30em, calc(100% - 2.5em));
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+}
+
+.tie-intro {
+  opacity: 0;
+  transition: opacity 1400ms ease-out;
+}
+
+.tie-intro.is-visible {
+  opacity: 1;
+}
+
+.tie-kicker,
+.tie-terms {
+  margin: 0;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: rgba(33, 30, 26, 0.42);
+}
+
+.tie-question {
+  margin: 0.9rem 0 0.7rem;
+  font-family: var(--tie-serif);
+  font-size: clamp(1.25rem, 2.6vw, 1.7rem);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.005em;
+  line-height: 1.3;
+  color: rgba(33, 30, 26, 0.86);
+}
+
+.tie-invitation {
+  margin: 0 0 1.4rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  color: rgba(33, 30, 26, 0.58);
+}
+
+.tie-closing .tie-question,
+.tie-quote,
+.tie-again {
+  opacity: 0;
+  transition: opacity 2600ms ease-out;
+}
+
+.tie-closing .is-visible {
+  opacity: 1;
+}
+
+.tie-quote {
+  margin: 1.4rem auto 0;
+  max-width: 26em;
+}
+
+.tie-quote p {
+  margin: 0;
+  font-family: var(--tie-serif);
+  font-size: 0.86rem;
+  line-height: 1.65;
+  color: rgba(33, 30, 26, 0.62);
+}
+
+.tie-quote cite {
+  display: block;
+  margin-top: 0.7rem;
+  font-style: normal;
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(33, 30, 26, 0.38);
+}
+
+.tie-again {
+  margin-top: 1.8rem;
+  padding: 0.3em 0;
+  background: none;
+  border: none;
+  border-bottom: 1px solid rgba(33, 30, 26, 0.3);
+  font: inherit;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(33, 30, 26, 0.6);
+  cursor: pointer;
+  pointer-events: none;
+}
+
+.tie-again.is-visible {
+  pointer-events: auto;
+}
+
+.tie-again:hover,
+.tie-again:focus-visible {
+  color: rgba(33, 30, 26, 0.9);
+}
+
 .the-path-canvas {
   display: block;
   width: 100%;

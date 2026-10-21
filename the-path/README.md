@@ -1,10 +1,19 @@
-# The Path
+# The Path · The Particular · The I That Emerges
 
-An experimental, browser-based interactive piece — not a game, dashboard, or
-portfolio page. You move a single point through a graph you can only ever
-see one step of. Some edges that look efficient turn out to go nowhere.
-Some edges that look like nothing open into everything. Near the end, the
-view pulls back and shows the shape of where you've been.
+Three experimental, browser-based interactive pieces in one app, switched
+from the small tabs in the top-left corner. None of them is a game,
+dashboard, or portfolio page.
+
+- **The Path** — you move a single point through a graph you can only ever
+  see one step of. Near the end, the view pulls back and shows the shape of
+  where you've been.
+- **The Particular** — a system classifies a population and tries, again and
+  again, to predict one person. The model genuinely improves; the person
+  genuinely keeps exceeding it.
+- **The I That Emerges** — after Martin Buber's *I and Thou*. One object,
+  met twice: first by measuring it, then without being able to. When it
+  returns, the same object meets a different relation, and the I on screen
+  (your cursor) takes its form from that relation.
 
 ## Run it
 
@@ -13,19 +22,20 @@ npm install
 npm run dev
 ```
 
-Then open the printed local URL. Click anywhere to begin, then click a
-connected point to move toward it. Once the piece settles into its final
-view, drag to pan and scroll to zoom.
+Then open the printed local URL.
 
 ## Structure
 
-- `src/graph/` — graph types, a seeded PRNG, and `generate.ts`, which builds
-  the entire graph once, up front. Nothing about its shape changes during
-  play; only what has been *discovered* changes.
-- `src/state/session.ts` — the interaction state machine (`entry` →
-  `exploring` ⇄ `moving` ⇄ `blocked` → `reveal` → `retrospective`), plus
-  discovery/visibility bookkeeping.
-- `src/scene/` — the canvas renderer: camera easing, drawing, pointer
-  interaction, and the final zoom-out.
-- `src/params.ts` — every tunable constant (graph shape, timing, visuals) in
-  one place.
+- `src/App.tsx` — the tab shell. Only the active piece is mounted, so each
+  piece's animation loop and timers stop when you switch away.
+- `src/shared/` — camera math, seeded PRNG, and theme/motion hooks shared by
+  the pieces.
+- `src/experiences/the-path/` — graph generation, session state machine,
+  canvas scene. Tunables in `params.ts`.
+- `src/experiences/the-particular/` — k-means classification, prediction with
+  an irreducible residual, experience state machine. Tunables in
+  `config/constants.ts`.
+- `src/experiences/the-i-that-emerges/` — the object's own life, measurement,
+  presence, encounter, session memory and the returning relation. State
+  machine `OBSERVE → CLASSIFY → WAIT → ENCOUNTER → RETURN`, then back to the
+  first question. Tunables in `config/constants.ts`.
