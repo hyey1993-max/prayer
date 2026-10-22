@@ -7,13 +7,13 @@
    "part": "Notes",
    "cards": [
     {
-     "type": "big",
+     "type": "cover",
      "label": "Tracé Notes · Margaret Heffernan",
      "h_en": "The human skills we need in an unpredictable world",
      "h": "예측할 수 없는 세상에서\n우리에게 [[필요한 능력들]]",
      "sub_en": "Notes on Margaret Heffernan's TED talk (TEDSummit 2019)",
-     "sub": "마거릿 헤퍼넌의 TED 강연을 듣고 · 넘겨서 보기 →",
-     "size": 76
+     "sub": "마거릿 헤퍼넌의 TED 강연을 듣고",
+     "photo": "heffernan_ted.jpg"
     },
     {
      "label": "Margaret Heffernan · TED",

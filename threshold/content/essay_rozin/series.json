@@ -7,20 +7,22 @@
    "part": "Notes",
    "cards": [
     {
-     "type": "big",
+     "type": "cover",
      "label": "Tracé Notes · Daniel Rozin",
      "h_en": "A mirror that waits for you",
      "h": "관람자가 들어올 때\n[[완성되는]] 작품",
      "sub_en": "Exploring the boundary between digital and physical",
-     "sub": "디지털과 물리적 사이의 경계 · 넘겨서 보기 →",
-     "size": 84
+     "sub": "디지털과 물리적 사이의 경계",
+     "photo": "rozin_portrait.jpg"
     },
     {
      "label": "Daniel Rozin · Interactive Art",
      "h_en": "Interactive installation, mechanical mirrors, kinetic art",
      "h": "상호 대화형 설치 미술,\n[[기계 거울]]",
      "t_en": "Daniel Rozin: interactive installation art, the Mechanical Mirror, kinetic artist.\nUsing many materials: wood, paper, fans, plastic, fur, dolls.",
-     "t": "다니엘 로진: 상호 대화형 설치 미술, 기계 거울(Mechanical Mirror), 키네틱 아티스트\n다양한 소재의 활용: 나무, 종이, 부채, 플라스틱, 솜털, 인형"
+     "t": "다니엘 로진: 상호 대화형 설치 미술, 기계 거울(Mechanical Mirror), 키네틱 아티스트\n다양한 소재의 활용: 나무, 종이, 부채, 플라스틱, 솜털, 인형",
+     "img": "rozin_materials.jpg",
+     "img_h": 420
     },
     {
      "label": "Quote · 인용",
@@ -41,7 +43,9 @@
      "h_en": "Three things in his work",
      "h": "그의 작품의\n[[세 가지]]",
      "t_en": "1. Using many kinds of materials\n2. Expressing the union and motion of digital image pixels and mechanical mechanisms\n3. Communicating directly with the audience, completed through interaction and relationship",
-     "t": "1. 다양한 소재의 활용\n2. 디지털 이미지의 픽셀(pixel)과 기계적 메커니즘의 결합과 운동을 표현\n3. 관객과 직접 소통하고, 상호작용성(interaction)과 관계를 통한 완성"
+     "t": "1. 다양한 소재의 활용\n2. 디지털 이미지의 픽셀(pixel)과 기계적 메커니즘의 결합과 운동을 표현\n3. 관객과 직접 소통하고, 상호작용성(interaction)과 관계를 통한 완성",
+     "img": "rozin_works.jpg",
+     "img_h": 300
     },
     {
      "label": "Daniel Rozin · Interactive Art",
@@ -49,21 +53,26 @@
      "h": "나무거울\n[[Wooden Mirror]], 1999",
      "t_en": "Hundreds of tile-shaped cedar pieces are controlled by stepping motors so they can rotate. Each piece of wood moves on its own, turning the person in front into an image, like a mirror.",
      "t": "수백개 타일 모양 삼나무 조각이 회전할 수 있도록 스태핑 모터로 제어\n나무 조각 하나하나가 따로 움직이며 전면에 등장하는 사람 모습을 거울처럼 이미지로 만들어내는 작품",
-     "fig": "mirror"
+     "img": "rozin_diagram.jpg",
+     "img_h": 400
     },
     {
      "label": "Daniel Rozin · Interactive Art",
      "h_en": "How it works",
      "h": "나무가\n[[거울이 되는]] 원리",
      "t_en": "A camera hidden behind the wooden tiles → sends the image to a computer in real time → turns it into a video signal → software the artist designed processes it and sends it back to the motors → the tiles reflect and move exactly with the viewer's image and motion",
-     "t": "나무 타일 뒤에 숨겨진 카메라 -> 실시간으로 대상 이미지를 컴퓨터로 전달 -> 이미지 영상신호로 변화 -> 작가가 직접 설계한 소프트웨어가 영상처리를 통해 다시 모터로 보냄 -> 관객의 이미지와 움직임에 따라 똑같이 반사하고 움직이는 원리"
+     "t": "나무 타일 뒤에 숨겨진 카메라 -> 실시간으로 대상 이미지를 컴퓨터로 전달 -> 이미지 영상신호로 변화 -> 작가가 직접 설계한 소프트웨어가 영상처리를 통해 다시 모터로 보냄 -> 관객의 이미지와 움직임에 따라 똑같이 반사하고 움직이는 원리",
+     "img": "rozin_wooden.jpg",
+     "img_h": 300
     },
     {
      "label": "Daniel Rozin · Interactive Art",
      "h_en": "Between digital and physical",
      "h": "디지털과 물리적 사이의\n[[경계를 탐구한다]]",
      "t_en": "\"Exploring the boundary between digital and physical\"\nWith the mirror and self-recognition as his theme, his work explores the boundary between analog and digital in depth and is expanding contemporary art-science convergence in new ways.",
-     "t": "“디지털과 물리적 사이의 경계를 탐구한다”\n거울과 자아 인식을 주제로 아날로그와 디지털의 경계를 심도 있게 탐구하고 있는 그의 작품은 현대 과학융합예술을 새롭게 확장하고 있다."
+     "t": "“디지털과 물리적 사이의 경계를 탐구한다”\n거울과 자아 인식을 주제로 아날로그와 디지털의 경계를 심도 있게 탐구하고 있는 그의 작품은 현대 과학융합예술을 새롭게 확장하고 있다.",
+     "img": "rozin_pompom.jpg",
+     "img_h": 380
     },
     {
      "label": "Interactive · Fluxus · Kinetic",
@@ -77,21 +86,38 @@
      "h_en": "Calder, Jansen, Paik",
      "h": "칼더, 얀센,\n[[백남준]]",
      "t_en": "Alexander Calder; Theo Jansen, the Dutch installation artist and kinetic artist; and Nam June Paik of Korea, who founded video art.",
-     "t": "알렉산더 칼더, 네덜란드 출신의 설치미술가 겸 키네틱 아티스트인 테오 얀센, 비디오 아트를 창시한 한국의 백남준"
+     "t": "알렉산더 칼더, 네덜란드 출신의 설치미술가 겸 키네틱 아티스트인 테오 얀센, 비디오 아트를 창시한 한국의 백남준",
+     "img": "rozin_kinetic.jpg",
+     "img_h": 420
     },
     {
      "label": "Fluxus · 플럭서스",
      "h_en": "Fluxus: a 20th-century art revolution",
      "h": "플럭서스 아트:\n[[20세기 예술혁명]]",
      "t_en": "A breaking of common sense that began in art and influenced many fields.\nA movement against the commodification and materialization of art and elitism tied to capital, seeking to connect life and art.",
-     "t": "예술에서 시작된 상식의 파괴가 많은 분야에 영향을 줌\n예술의 상품화와 물질화 및 자본과 결합된 엘리트주의를 반대하고, 삶과 예술을 연결하려는 운동"
+     "t": "예술에서 시작된 상식의 파괴가 많은 분야에 영향을 줌\n예술의 상품화와 물질화 및 자본과 결합된 엘리트주의를 반대하고, 삶과 예술을 연결하려는 운동",
+     "img": "rozin_fluxus2.jpg",
+     "img_h": 380
     },
     {
      "label": "Interactive art · 인터랙티브 아트",
      "h_en": "Interactive art: a turning point",
      "h": "인터랙티브 아트:\n[[컴퓨터와 인간 관계]]의 전환기",
      "t_en": "Interactive art: a turning point in the relationship between computers and people.\nTennis for Two: the first full-fledged two-way media, and its relation to the birth of interactive art.\nNam June Paik: Participation TV",
-     "t": "인터랙티브 아트\n컴퓨터와 인간 관계의 전환기\n테니스 포 투 : 최초의 본격적인 쌍방향 미디어, 인터랙티브 아트의 탄생과 관계\n백남준: 참여 TV"
+     "t": "인터랙티브 아트\n컴퓨터와 인간 관계의 전환기\n테니스 포 투 : 최초의 본격적인 쌍방향 미디어, 인터랙티브 아트의 탄생과 관계\n백남준: 참여 TV",
+     "img": [
+      "rozin_tennis.jpg",
+      "rozin_paik.jpg"
+     ],
+     "img_h": 240
+    },
+    {
+     "type": "title",
+     "label": "Interactive art · 인터랙티브 아트",
+     "h_en": "Pedal through a city of words",
+     "h": "제프리 쇼\n[[읽을 수 있는 도시]]",
+     "sub": "Jeffrey Shaw, The Legible City, 1989",
+     "photo": "rozin_legible.jpg"
     },
     {
      "label": "Interactive art · 인터랙티브 아트",

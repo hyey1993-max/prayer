@@ -1,8 +1,8 @@
 # Between Digital and Analog · 디지털과 아날로그 경험 사이 최적화 (캐러셀 캡션, 영어 + 한글)
 
 카드와 캡션 속 한글 문장은 블로그 슬라이드 원문 그대로, 영어는 그 번역.
-슬라이드의 영화 장면·앨범 커버·페이스북 화면 이미지는 저작권 때문에 쓰지 않고, 신호 그림은 직접 그렸다.
-이미지: `cards/analog_carousel/01.jpg` ~ `15.jpg` (15장, 1080×1350)
+사진은 블로그 슬라이드의 이미지를 잘라 썼다 (photos/essay/analog_*.jpg). 7·8번의 신호 그림은 직접 그렸다.
+이미지: `cards/analog_carousel/01.jpg` ~ `16.jpg` (16장, 1080×1350)
 
 ```
 Digital picks 0 or 1. Where do you live?

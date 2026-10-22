@@ -140,6 +140,17 @@ def fig_svg(name):
     return ""
 
 
+def img_html(card):
+    """card["img"]: photos/essay 안 파일 이름 하나 또는 둘(나란히). card["img_h"]: 높이(px, 기본 400)"""
+    names = card.get("img") or []
+    names = [names] if isinstance(names, str) else names
+    if not names:
+        return ""
+    h = card.get("img_h", 400)
+    pics = "".join(f'<img src="data:image/jpeg;base64,{b64(ROOT / "photos" / "essay" / n)}">' for n in names)
+    return f'<div class=pics style="height:{h}px">{pics}</div>'
+
+
 def page_long(card, idx, total, brand, part, bg):
     """연재 캐러셀: 표지(cover) / 섹션(section) / 본문(body) / 마무리(end)"""
     w, h = SIZES["longform"]
@@ -203,7 +214,7 @@ def page_hook(card, idx, total, brand, part, bg, kind="hook"):
         big = "cover" if typ == "cover" else ""
         foot = {"cover": "넘겨서 보기 →", "end": "저장해두고 다시 보기"}.get(typ, "")
         inner = f"""<div class=photo style="background-image:{photo}"></div>
-<div class=low><p class=label>{esc(card.get("label"))}</p><h1 class="{big}">{hl(card["h"])}</h1>
+<div class=low><p class=label>{esc(card.get("label"))}</p>{en_h}<h1 class="{big}">{hl(card["h"])}</h1>{en_sub}
 <p class=sub>{esc(card.get("sub"))}</p><p class=foot>{foot}</p></div>"""
     elif typ == "big":
         big_style = f' style="font-size:{card["size"]}px"' if card.get("size") else ""
@@ -217,7 +228,7 @@ def page_hook(card, idx, total, brand, part, bg, kind="hook"):
     else:
         body = (f'<p class="body duo"><span class=ten>{esc(card["t_en"])}</span>{esc(card.get("t"))}</p>' if card.get("t_en")
                 else f'<p class=body>{esc(card.get("t"))}</p>')
-        inner = f'<div class=pad><p class=label>{esc(card.get("label"))}</p>{en_h}<h1{" class=sm" if card.get("t_en") else ""}>{hl(card["h"])}</h1>{fig_svg(card.get("fig", "")).replace("/>", " />")}{body}</div>'
+        inner = f'<div class=pad><p class=label>{esc(card.get("label"))}</p>{en_h}<h1{" class=sm" if card.get("t_en") else ""}>{hl(card["h"])}</h1>{img_html(card)}{fig_svg(card.get("fig", "")).replace("/>", " />")}{body}</div>'
     return f"""<!doctype html><meta charset=utf-8><style>{css()}
 *{{box-sizing:border-box;margin:0;padding:0}}
 html,body{{width:{w}px;height:{h}px;background:#0b0b0a;color:#f2f1ec;overflow:hidden}}
@@ -247,6 +258,7 @@ h1.sm{{font-size:64px}}
 .ten{{font:400 27px/1.55 "SansKR",sans-serif;color:#a9a7a0}}
 ol.pairs li{{padding:26px 0}} ol.pairs li span{{display:flex;flex-direction:column;gap:8px}}
 ol.pairs i{{font:400 28px "SansKR",sans-serif;font-style:normal;color:#a9a7a0}}
+.pics{{display:flex;gap:16px;flex:none}} .pics img{{flex:1;min-width:0;height:100%;object-fit:contain;background:#000;border-radius:4px}}
 .fig{{width:100%;height:auto;flex:none}} .fig text{{font:400 24px "SansKR",sans-serif;fill:#9a9891;letter-spacing:.06em}}
 </style><body>{top}{inner}</body>"""
 

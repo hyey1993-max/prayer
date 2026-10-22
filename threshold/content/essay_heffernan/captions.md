@@ -1,7 +1,7 @@
 # Margaret Heffernan · 예측할 수 없는 세상에서 우리에게 필요한 능력들 (캐러셀 캡션, 영어 + 한글)
 
 블로그 노트의 영어 문장(강연 인용)은 그대로 위에, 한글은 그 번역으로 아래에 둔다. 2번 카드의 한글은 "complicated system> complex system shift"를 풀어 쓴 번역이다.
-TED 강연 화면·사진은 쓰지 않았다. 강연 정보는 출처에서 확인한 것만.
+표지 사진은 블로그에 넣은 TED 강연 화면에서 잘라 썼다 (photos/essay/heffernan_ted.jpg). 강연 정보는 출처에서 확인한 것만.
 이미지: `cards/heffernan_carousel/01.jpg` ~ `08.jpg` (8장, 1080×1350)
 
 ```
