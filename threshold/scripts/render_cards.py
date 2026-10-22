@@ -75,6 +75,32 @@ def esc(t):
     return html.escape(t or "").replace("\n", "<br>")
 
 
+def fig_svg(name):
+    """카드에 넣는 간단한 그림 (선만, 노란 강조색). card["fig"]: waves | convert | between"""
+    import math
+    W, H, Y = 952, 220, 110
+    sine = " ".join(f"{x},{Y - 70 * math.sin(x / W * math.pi * 4):.1f}" for x in range(0, W + 1, 8))
+    if name == "waves":       # 왼쪽 아날로그(연속), 오른쪽 디지털(0/1)
+        a = " ".join(f"{x},{Y - 70 * math.sin(x / 440 * math.pi * 3):.1f}" for x in range(0, 441, 6))
+        d, x = [], 510
+        for i, b in enumerate([1, 0, 1, 1, 0, 1, 0, 0, 1]):
+            y = Y - 70 if b else Y + 70; d += [f"{x},{y}", f"{x + 49},{y}"]; x += 49
+        return (f'<svg class=fig viewBox="0 0 {W} {H + 50}"><polyline points="{a}" fill=none stroke="#f2f1ec" stroke-width=4/>'
+                f'<polyline points="{" ".join(d)}" fill=none stroke="#f2c94c" stroke-width=4/>'
+                f'<text x=0 y={H + 44}>ANALOG · 연속</text><text x=510 y={H + 44}>DIGITAL · 0 / 1</text></svg>')
+    if name == "convert":     # 연속된 곡선을 일정한 간격으로 끊어 기록한다
+        bars = "".join(f'<rect x={x - 14} y={min(Y, Y - 70 * math.sin(x / W * math.pi * 4)):.1f} width=28 height={abs(70 * math.sin(x / W * math.pi * 4)) + 2:.1f} fill="#f2c94c"/>'
+                       for x in range(40, W, 80))
+        return (f'<svg class=fig viewBox="0 0 {W} {H + 50}"><line x1=0 y1={Y} x2={W} y2={Y} stroke="#f2f1ec44" stroke-width=2/>{bars}'
+                f'<polyline points="{sine}" fill=none stroke="#f2f1ec" stroke-width=4/><text x=0 y={H + 44}>ANALOG → DIGITAL · 끊어서 기록한다</text></svg>')
+    if name == "between":     # 0과 1, 그리고 그 사이
+        dots = "".join(f'<circle cx={80 + i * 792 / 40:.1f} cy={Y} r={3 + 5 * math.sin(i / 40 * math.pi):.1f} fill="#f2c94c"/>' for i in range(1, 40))
+        return (f'<svg class=fig viewBox="0 0 {W} {H + 50}"><line x1=80 y1={Y} x2=872 y2={Y} stroke="#f2f1ec55" stroke-width=2/>{dots}'
+                f'<circle cx=80 cy={Y} r=26 fill=none stroke="#f2f1ec" stroke-width=4/><circle cx=872 cy={Y} r=26 fill="#f2f1ec"/>'
+                f'<text x=68 y={Y - 46}>0</text><text x=862 y={Y - 46}>1</text><text x=330 y={H + 44}>ANALOG · 0과 1 사이</text></svg>')
+    return ""
+
+
 def page_long(card, idx, total, brand, part, bg):
     """연재 캐러셀: 표지(cover) / 섹션(section) / 본문(body) / 마무리(end)"""
     w, h = SIZES["longform"]
@@ -149,7 +175,7 @@ def page_hook(card, idx, total, brand, part, bg, kind="hook"):
     else:
         body = (f'<p class="body duo"><span class=ten>{esc(card["t_en"])}</span>{esc(card.get("t"))}</p>' if card.get("t_en")
                 else f'<p class=body>{esc(card.get("t"))}</p>')
-        inner = f'<div class=pad><p class=label>{esc(card.get("label"))}</p>{en_h}<h1{" class=sm" if card.get("t_en") else ""}>{hl(card["h"])}</h1>{body}</div>'
+        inner = f'<div class=pad><p class=label>{esc(card.get("label"))}</p>{en_h}<h1{" class=sm" if card.get("t_en") else ""}>{hl(card["h"])}</h1>{fig_svg(card.get("fig", "")).replace("/>", " />")}{body}</div>'
     return f"""<!doctype html><meta charset=utf-8><style>{css()}
 *{{box-sizing:border-box;margin:0;padding:0}}
 html,body{{width:{w}px;height:{h}px;background:#0b0b0a;color:#f2f1ec;overflow:hidden}}
@@ -177,6 +203,7 @@ h1.sm{{font-size:64px}}
 .sub.en{{color:#9a9891}}
 .body.duo{{font-size:31px;line-height:1.68;display:flex;flex-direction:column;gap:22px}}
 .ten{{font:400 27px/1.55 "SansKR",sans-serif;color:#a9a7a0}}
+.fig{{width:100%;height:auto;flex:none}} .fig text{{font:400 24px "SansKR",sans-serif;fill:#9a9891;letter-spacing:.06em}}
 </style><body>{top}{inner}</body>"""
 
 
