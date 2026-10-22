@@ -131,6 +131,9 @@ def page_hook(card, idx, total, brand, part, bg, kind="hook"):
     photo = f"url(data:image/jpeg;base64,{b64(bg)})" if bg else "none"
     right = f'{html.escape(part)} · {idx + 1:02d}/{total:02d}' if part else ""   # part가 없으면 쪽 번호도 뺀다 (릴스 표지 등)
     top = f'<div class=bar><span>{html.escape(brand)}</span><span>{right}</span></div>'
+    # 영어 + 한글: 영어(h_en, sub_en, t_en)를 위에, 한글을 아래에 둔다
+    en_h = f'<p class=hen>{hl(card["h_en"])}</p>' if card.get("h_en") else ""
+    en_sub = f'<p class="sub en">{esc(card["sub_en"])}</p>' if card.get("sub_en") else ""
     if typ in ("cover", "title", "end"):
         big = "cover" if typ == "cover" else ""
         foot = {"cover": "넘겨서 보기 →", "end": "저장해두고 다시 보기"}.get(typ, "")
@@ -139,12 +142,14 @@ def page_hook(card, idx, total, brand, part, bg, kind="hook"):
 <p class=sub>{esc(card.get("sub"))}</p><p class=foot>{foot}</p></div>"""
     elif typ == "big":
         big_style = f' style="font-size:{card["size"]}px"' if card.get("size") else ""
-        inner = f'<div class="pad mid"><p class=label>{esc(card.get("label"))}</p><h1 class=big{big_style}>{hl(card["h"])}</h1><p class=sub>{esc(card.get("sub"))}</p></div>'
+        inner = f'<div class="pad mid"><p class=label>{esc(card.get("label"))}</p>{en_h}<h1 class=big{big_style}>{hl(card["h"])}</h1>{en_sub}<p class=sub>{esc(card.get("sub"))}</p></div>'
     elif typ == "list":
         rows = "".join(f'<li><b>{i + 1:02d}</b><span>{hl(x)}</span></li>' for i, x in enumerate(card["items"]))
         inner = f'<div class=pad><p class=label>{esc(card.get("label"))}</p><h1>{hl(card["h"])}</h1><ol>{rows}</ol><p class=foot>{esc(card.get("sub"))}</p></div>'
     else:
-        inner = f'<div class=pad><p class=label>{esc(card.get("label"))}</p><h1>{hl(card["h"])}</h1><p class=body>{esc(card.get("t"))}</p></div>'
+        body = (f'<p class="body duo"><span class=ten>{esc(card["t_en"])}</span>{esc(card.get("t"))}</p>' if card.get("t_en")
+                else f'<p class=body>{esc(card.get("t"))}</p>')
+        inner = f'<div class=pad><p class=label>{esc(card.get("label"))}</p>{en_h}<h1{" class=sm" if card.get("t_en") else ""}>{hl(card["h"])}</h1>{body}</div>'
     return f"""<!doctype html><meta charset=utf-8><style>{css()}
 *{{box-sizing:border-box;margin:0;padding:0}}
 html,body{{width:{w}px;height:{h}px;background:#0b0b0a;color:#f2f1ec;overflow:hidden}}
@@ -167,6 +172,11 @@ h1.big{{font-size:{100 if reels else 88}px;line-height:1.24}}
 ol{{list-style:none;display:flex;flex-direction:column;gap:0}}
 li{{display:flex;gap:28px;align-items:baseline;padding:20px 0;border-top:1px solid #f2f1ec33;font:900 44px/1.3 "HeavyKR",sans-serif;word-break:keep-all}}
 li b{{font:400 28px "SansKR",sans-serif;color:#f2c94c;min-width:44px}}
+.hen{{font:900 44px/1.2 "HeavyKR",sans-serif;letter-spacing:-.01em;color:#f2f1ecb3;margin-bottom:-14px}}
+h1.sm{{font-size:64px}}
+.sub.en{{color:#9a9891}}
+.body.duo{{font-size:31px;line-height:1.68;display:flex;flex-direction:column;gap:22px}}
+.ten{{font:400 27px/1.55 "SansKR",sans-serif;color:#a9a7a0}}
 </style><body>{top}{inner}</body>"""
 
 
