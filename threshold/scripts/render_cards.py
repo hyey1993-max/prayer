@@ -98,6 +98,17 @@ def fig_svg(name):
         return (f'<svg class=fig viewBox="0 0 {W} {H + 50}"><line x1=80 y1={Y} x2=872 y2={Y} stroke="#f2f1ec55" stroke-width=2/>{dots}'
                 f'<circle cx=80 cy={Y} r=26 fill=none stroke="#f2f1ec" stroke-width=4/><circle cx=872 cy={Y} r=26 fill="#f2f1ec"/>'
                 f'<text x=68 y={Y - 46}>0</text><text x=862 y={Y - 46}>1</text><text x=330 y={H + 44}>ANALOG · 0과 1 사이</text></svg>')
+    if name == "mirror":      # 나무거울: 타일마다 밝기(기울기)를 달리해 사람 모습을 만든다
+        tiles = []
+        for j in range(8):
+            for i in range(30):
+                x, y = 16 + i * 31.5, 6 + j * 27
+                cx, cy = x + 12, y + 10
+                head = ((cx - 476) / 105) ** 2 + ((cy - 70) / 62) ** 2 < 1
+                body = cy > 150 and abs(cx - 476) < 120 + (cy - 150) * 1.6
+                on = head or body
+                tiles.append(f'<rect x={x:.1f} y={y:.1f} width=26 height=21 rx=2 fill="{"#f2c94c" if on else "#f2f1ec"}" opacity={.9 if on else .16 + .1 * math.sin(i * .9 + j * 1.3) ** 2:.2f}/>')
+        return f'<svg class=fig viewBox="0 0 {W} {H + 50}">{"".join(tiles)}<text x=0 y={H + 44}>WOODEN MIRROR · 타일 하나하나가 픽셀이 된다</text></svg>'
     return ""
 
 

@@ -1,0 +1,115 @@
+{
+ "brand": "Tracé",
+ "sets": {
+  "rozin_carousel": {
+   "title": "Daniel Rozin · Interactive Art (영어+한글 캐러셀)",
+   "kind": "hook",
+   "part": "Notes",
+   "cards": [
+    {
+     "type": "big",
+     "label": "Tracé Notes · Daniel Rozin",
+     "h_en": "A mirror that waits for you",
+     "h": "관람자가 들어올 때\n[[완성되는]] 작품",
+     "sub_en": "Exploring the boundary between digital and physical",
+     "sub": "디지털과 물리적 사이의 경계 · 넘겨서 보기 →",
+     "size": 84
+    },
+    {
+     "label": "Daniel Rozin · Interactive Art",
+     "h_en": "Interactive installation, mechanical mirrors, kinetic art",
+     "h": "상호 대화형 설치 미술,\n[[기계 거울]]",
+     "t_en": "Daniel Rozin: interactive installation art, the Mechanical Mirror, kinetic artist.\nUsing many materials: wood, paper, fans, plastic, fur, dolls.",
+     "t": "다니엘 로진: 상호 대화형 설치 미술, 기계 거울(Mechanical Mirror), 키네틱 아티스트\n다양한 소재의 활용: 나무, 종이, 부채, 플라스틱, 솜털, 인형"
+    },
+    {
+     "label": "Quote · 인용",
+     "h_en": "New tools give emotion life",
+     "h": "감정과 표현에\n[[생명력을 부여하는 도구]]",
+     "t_en": "\"As always, the source and inspiration of new design is still human emotion, expression and aesthetic sense. The tools that bring them to life have changed over the last century and are still changing. Designers must be able to handle and develop the new tools and languages they need to express themselves.\"",
+     "t": "“예전에도 그래 왔듯이 지금도 여전히 새로운 디자인의 원천과 영감은 사람의 감정과 표현 그리고 미적 감각이다. 여기에 생명력을 부여하는 도구가 지난 세기 동안 변해 왔으며 지금도 변하고 있다. 디자이너는 자신을 표현하기 위해 필요한 새로운 도구들과 언어를 다루고 개발하는 능력이 있어야 한다.”"
+    },
+    {
+     "label": "Quote · 인용",
+     "h_en": "The viewer completes the loop",
+     "h": "관람자가 들어올 때\n[[순환 고리가 완성된다]]",
+     "t_en": "\"What I create is a kind of precondition. Only when viewers and participants step into it is a loop completed.\nThe new direction of design is set by technologists. Not only because their designs are new, but because they can develop new technology.\"",
+     "t": "“내가 창조하는 것은 일종의 전제조건이다. 관람자와 참여자가 이 안에 들어올 때 비로소 하나의 순환 고리가 완성되는 것이다.\n디자인의 새로운 방향은 기술자들이 정한다. 그들의 디자인이 새롭기 때문만은 아니다. 그들이 새로운 기술을 개발할 수 있기 때문이다.”"
+    },
+    {
+     "label": "Daniel Rozin · Interactive Art",
+     "h_en": "Three things in his work",
+     "h": "그의 작품의\n[[세 가지]]",
+     "t_en": "1. Using many kinds of materials\n2. Expressing the union and motion of digital image pixels and mechanical mechanisms\n3. Communicating directly with the audience, completed through interaction and relationship",
+     "t": "1. 다양한 소재의 활용\n2. 디지털 이미지의 픽셀(pixel)과 기계적 메커니즘의 결합과 운동을 표현\n3. 관객과 직접 소통하고, 상호작용성(interaction)과 관계를 통한 완성"
+    },
+    {
+     "label": "Daniel Rozin · Interactive Art",
+     "h_en": "Wooden Mirror, 1999",
+     "h": "나무거울\n[[Wooden Mirror]], 1999",
+     "t_en": "Hundreds of tile-shaped cedar pieces are controlled by stepping motors so they can rotate. Each piece of wood moves on its own, turning the person in front into an image, like a mirror.",
+     "t": "수백개 타일 모양 삼나무 조각이 회전할 수 있도록 스태핑 모터로 제어\n나무 조각 하나하나가 따로 움직이며 전면에 등장하는 사람 모습을 거울처럼 이미지로 만들어내는 작품",
+     "fig": "mirror"
+    },
+    {
+     "label": "Daniel Rozin · Interactive Art",
+     "h_en": "How it works",
+     "h": "나무가\n[[거울이 되는]] 원리",
+     "t_en": "A camera hidden behind the wooden tiles → sends the image to a computer in real time → turns it into a video signal → software the artist designed processes it and sends it back to the motors → the tiles reflect and move exactly with the viewer's image and motion",
+     "t": "나무 타일 뒤에 숨겨진 카메라 -> 실시간으로 대상 이미지를 컴퓨터로 전달 -> 이미지 영상신호로 변화 -> 작가가 직접 설계한 소프트웨어가 영상처리를 통해 다시 모터로 보냄 -> 관객의 이미지와 움직임에 따라 똑같이 반사하고 움직이는 원리"
+    },
+    {
+     "label": "Daniel Rozin · Interactive Art",
+     "h_en": "Between digital and physical",
+     "h": "디지털과 물리적 사이의\n[[경계를 탐구한다]]",
+     "t_en": "\"Exploring the boundary between digital and physical\"\nWith the mirror and self-recognition as his theme, his work explores the boundary between analog and digital in depth and is expanding contemporary art-science convergence in new ways.",
+     "t": "“디지털과 물리적 사이의 경계를 탐구한다”\n거울과 자아 인식을 주제로 아날로그와 디지털의 경계를 심도 있게 탐구하고 있는 그의 작품은 현대 과학융합예술을 새롭게 확장하고 있다."
+    },
+    {
+     "label": "Interactive · Fluxus · Kinetic",
+     "h_en": "Kinetic art: art that moves",
+     "h": "키네틱 아트:\n[[움직이는 예술]]",
+     "t_en": "Kinetic art means artworks that move themselves or include moving parts. Dealing with light, sound, motion and color together, kinetic art blurs the boundaries not only of fine art but of all the arts.",
+     "t": "키네틱 아트(kinetic art)는 작품 자체가 움직이거나 움직이는 부분을 포함하는 예술작품을 뜻한다.\n빛·소리·움직임·색채 등을 종합적으로 취급하는 이런 키네틱 아트 작품은 미술뿐만 아니라 예술 전반의 영역 구분을 모호하게 만든다."
+    },
+    {
+     "label": "Kinetic art · 키네틱 아트",
+     "h_en": "Calder, Jansen, Paik",
+     "h": "칼더, 얀센,\n[[백남준]]",
+     "t_en": "Alexander Calder; Theo Jansen, the Dutch installation artist and kinetic artist; and Nam June Paik of Korea, who founded video art.",
+     "t": "알렉산더 칼더, 네덜란드 출신의 설치미술가 겸 키네틱 아티스트인 테오 얀센, 비디오 아트를 창시한 한국의 백남준"
+    },
+    {
+     "label": "Fluxus · 플럭서스",
+     "h_en": "Fluxus: a 20th-century art revolution",
+     "h": "플럭서스 아트:\n[[20세기 예술혁명]]",
+     "t_en": "A breaking of common sense that began in art and influenced many fields.\nA movement against the commodification and materialization of art and elitism tied to capital, seeking to connect life and art.",
+     "t": "예술에서 시작된 상식의 파괴가 많은 분야에 영향을 줌\n예술의 상품화와 물질화 및 자본과 결합된 엘리트주의를 반대하고, 삶과 예술을 연결하려는 운동"
+    },
+    {
+     "label": "Interactive art · 인터랙티브 아트",
+     "h_en": "Interactive art: a turning point",
+     "h": "인터랙티브 아트:\n[[컴퓨터와 인간 관계]]의 전환기",
+     "t_en": "Interactive art: a turning point in the relationship between computers and people.\nTennis for Two: the first full-fledged two-way media, and its relation to the birth of interactive art.\nNam June Paik: Participation TV",
+     "t": "인터랙티브 아트\n컴퓨터와 인간 관계의 전환기\n테니스 포 투 : 최초의 본격적인 쌍방향 미디어, 인터랙티브 아트의 탄생과 관계\n백남준: 참여 TV"
+    },
+    {
+     "label": "Interactive art · 인터랙티브 아트",
+     "h_en": "The Legible City",
+     "h": "제프리 쇼\n[[읽을 수 있는 도시]]",
+     "t_en": "Jeffrey Shaw's 1989 work The Legible City is an interactive installation in which visitors pedal a bicycle fixed in the gallery and move through a virtual 'text city' built from computer graphics, as if in a game. The text city simulates real cities such as Manhattan, Amsterdam and Karlsruhe, and visitors explore the virtual space selectively through a small monitor map in front of the bicycle, inside the giant city on the screen.",
+     "t": "제프리 쇼의 1989년 작품 'Legible City'는 관객이 전시장 안에 고정되어 있는 자전거의 페달을 밟으면서 마치 게임처럼 컴퓨터 그래픽으로 구성된 가상의 '텍스트 도시'로 들어가 곳곳을 이동하는 인터랙티브 설치미술 작품이다. 가상의 '텍스트 도시'는 맨하탄, 암스테르담, 칼스루에 등과 같은 실제 도시의 공간이 시뮬레이션 되었고, 관객은 스크린 속의 거대한 도시 속에서 자전거 앞의 소형 모니터 지도를 통해 선택적으로 가상 공간을 체험한다."
+    },
+    {
+     "type": "big",
+     "label": "Your turn · 당신은?",
+     "h_en": "In front of the mirror, do you move (1) or watch (2)?",
+     "h": "다가가 움직인다 [[1]]\n멀리서 본다 [[2]]",
+     "sub_en": "Comment 1 or 2 · Save it for your next exhibition",
+     "sub": "작품 앞의 나는? 댓글로 1 또는 2 · 다음 전시 전에 저장",
+     "size": 76
+    }
+   ]
+  }
+ }
+}
