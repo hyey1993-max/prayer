@@ -208,6 +208,9 @@ def page_hook(card, idx, total, brand, part, bg, kind="hook"):
     elif typ == "big":
         big_style = f' style="font-size:{card["size"]}px"' if card.get("size") else ""
         inner = f'<div class="pad mid"><p class=label>{esc(card.get("label"))}</p>{en_h}<h1 class=big{big_style}>{hl(card["h"])}</h1>{en_sub}<p class=sub>{esc(card.get("sub"))}</p></div>'
+    elif typ == "pairs":      # 영어 + 한글 목록: 줄마다 번호, 위 영어, 아래 한글
+        rows = "".join(f'<li><b>{n}</b><span><i>{esc(en)}</i>{hl(ko)}</span></li>' for n, en, ko in card["items"])
+        inner = f'<div class=pad><p class=label>{esc(card.get("label"))}</p>{en_h}<h1 class=sm>{hl(card["h"])}</h1><ol class=pairs>{rows}</ol></div>'
     elif typ == "list":
         rows = "".join(f'<li><b>{i + 1:02d}</b><span>{hl(x)}</span></li>' for i, x in enumerate(card["items"]))
         inner = f'<div class=pad><p class=label>{esc(card.get("label"))}</p><h1>{hl(card["h"])}</h1><ol>{rows}</ol><p class=foot>{esc(card.get("sub"))}</p></div>'
@@ -242,6 +245,8 @@ h1.sm{{font-size:64px}}
 .sub.en{{color:#9a9891}}
 .body.duo{{font-size:31px;line-height:1.68;display:flex;flex-direction:column;gap:22px}}
 .ten{{font:400 27px/1.55 "SansKR",sans-serif;color:#a9a7a0}}
+ol.pairs li{{padding:26px 0}} ol.pairs li span{{display:flex;flex-direction:column;gap:8px}}
+ol.pairs i{{font:400 28px "SansKR",sans-serif;font-style:normal;color:#a9a7a0}}
 .fig{{width:100%;height:auto;flex:none}} .fig text{{font:400 24px "SansKR",sans-serif;fill:#9a9891;letter-spacing:.06em}}
 </style><body>{top}{inner}</body>"""
 

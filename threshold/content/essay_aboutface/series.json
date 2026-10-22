@@ -1,0 +1,142 @@
+{
+ "brand": "Tracé",
+ "sets": {
+  "aboutface_carousel": {
+   "title": "Alan Cooper · About Face 4 (영어+한글 캐러셀)",
+   "kind": "hook",
+   "part": "Notes",
+   "cards": [
+    {
+     "type": "big",
+     "label": "Tracé Notes · Alan Cooper, About Face 4",
+     "h_en": "Software should behave like a considerate human being.",
+     "h": "소프트웨어는\n[[사려깊은 인간]]처럼\n행동해야 한다.",
+     "sub_en": "What considerate people and products have in common",
+     "sub": "사려깊은 인간과 제품의 공통점 16가지 · 넘겨서 보기 →",
+     "size": 84
+    },
+    {
+     "label": "Alan Cooper · About Face 4 · 01–04",
+     "h_en": "Interested, deferential, forthcoming",
+     "h": "관심을 갖고\n[[존중하는]] 제품",
+     "type": "pairs",
+     "items": [
+      [
+       "01",
+       "Take an interest",
+       "관심을 더 갖는다."
+      ],
+      [
+       "02",
+       "Are deferential",
+       "존중할 줄 안다."
+      ],
+      [
+       "03",
+       "Are forthcoming",
+       "명백하게 밝힌다."
+      ],
+      [
+       "04",
+       "Use common sense",
+       "상식적으로 생각한다."
+      ]
+     ]
+    },
+    {
+     "label": "Alan Cooper · About Face 4 · 05–08",
+     "h_en": "Discreet, anticipating, conscientious",
+     "h": "니즈를\n[[먼저 생각하는]] 제품",
+     "type": "pairs",
+     "items": [
+      [
+       "05",
+       "Use discretion",
+       "신중하다."
+      ],
+      [
+       "06",
+       "Anticipate people's needs",
+       "사람의 니즈를 생각한다."
+      ],
+      [
+       "07",
+       "Are conscientious",
+       "의식적이다."
+      ],
+      [
+       "08",
+       "Don't burden you with their personal problems",
+       "개인적인 문제를 남에게 짐 지우지 않는다."
+      ]
+     ]
+    },
+    {
+     "label": "Alan Cooper · About Face 4 · 09–12",
+     "h_en": "Informed, perceptive, self-confident",
+     "h": "묻기보다\n[[알아채는]] 제품",
+     "type": "pairs",
+     "items": [
+      [
+       "09",
+       "Keep you informed",
+       "계속 정보를 제공한다."
+      ],
+      [
+       "10",
+       "Are perceptive",
+       "직관적이다."
+      ],
+      [
+       "11",
+       "Are self-confident",
+       "자신감에 차 있다."
+      ],
+      [
+       "12",
+       "Don't ask a lot of questions",
+       "너무 많은 질문은 하지 않는다."
+      ]
+     ]
+    },
+    {
+     "label": "Alan Cooper · About Face 4 · 13–16",
+     "h_en": "Graceful, flexible, responsible",
+     "h": "실수도\n[[아름다운]] 제품",
+     "type": "pairs",
+     "items": [
+      [
+       "13",
+       "Fail gracefully",
+       "실수도 아름답다."
+      ],
+      [
+       "14",
+       "Know when to bend the rules",
+       "언제 규칙을 굽혀야 하는 지 안다."
+      ],
+      [
+       "15",
+       "Take responsibility",
+       "책임감을 갖는다."
+      ],
+      [
+       "16",
+       "Help you avoid awkward mistakes",
+       "당황스러운 실수를 피하게 해준다."
+      ]
+     ]
+    },
+    {
+     "type": "big",
+     "label": "Your turn · 당신은?",
+     "h_en": "Which one does your favorite app miss? Comment the number.",
+     "h": "내가 쓰는 앱에\n[[없는 것]]은 몇 번?",
+     "sub_en": "Comment 01–16 · Save it for your next design review",
+     "sub": "01~16 중 번호를 댓글로 · 다음 디자인 리뷰 전에 저장",
+     "size": 84
+    }
+   ]
+  }
+ }
+}
