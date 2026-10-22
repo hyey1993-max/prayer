@@ -114,6 +114,18 @@ def fig_svg(name):
                 f'<circle cx=60 cy=105 r=12 fill="#f2f1ec"/><circle cx=892 cy=105 r=12 fill="#f2f1ec"/>'
                 f'<line x1=60 y1=60 x2=60 y2=150 stroke="#f2f1ec44" stroke-width=2/><line x1=892 y1=60 x2=892 y2=150 stroke="#f2f1ec44" stroke-width=2/>'
                 f'<text x=110 y=40>FASTEST · 기술이 고른 빠른 길</text><text x=110 y={H + 44} style="fill:#f2c94c">BY THE SEA · 사람이 원한 해변 길</text></svg>')
+    if name == "systems":     # complicated(정해진 순서로 이어진 부품) → complex(서로 얽혀 예측할 수 없는 연결)
+        import random
+        r = random.Random(4)
+        left = [(40 + (k % 4) * 110, 30 + (k // 4) * 80) for k in range(12)]
+        lines = "".join(f'<line x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} stroke="#f2f1ec88" stroke-width=3/>' for a, b in zip(left, left[1:]))
+        dots = "".join(f'<circle cx={x} cy={y} r=10 fill="#f2f1ec"/>' for x, y in left)
+        right = [(560 + r.random() * 370, 20 + r.random() * 180) for _ in range(16)]
+        web = "".join(f'<line x1={a[0]:.0f} y1={a[1]:.0f} x2={b[0]:.0f} y2={b[1]:.0f} stroke="#f2c94c88" stroke-width=2/>'
+                      for i, a in enumerate(right) for b in right[i + 1:] if (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2 < 150 ** 2)
+        web += "".join(f'<circle cx={x:.0f} cy={y:.0f} r=10 fill="#f2c94c"/>' for x, y in right)
+        return (f'<svg class=fig viewBox="0 0 {W} {H + 50}">{lines}{dots}{web}<path d="M470,110 L520,110 M508,98 L520,110 L508,122" fill=none stroke="#f2f1ec" stroke-width=3/>'
+                f'<text x=0 y={H + 44}>COMPLICATED · 정해진 순서</text><text x=560 y={H + 44} style="fill:#f2c94c">COMPLEX · 예측할 수 없는 연결</text></svg>')
     if name == "mirror":      # 나무거울: 타일마다 밝기(기울기)를 달리해 사람 모습을 만든다
         tiles = []
         for j in range(8):
