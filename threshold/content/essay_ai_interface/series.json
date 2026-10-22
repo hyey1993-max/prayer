@@ -1,0 +1,116 @@
+{
+ "brand": "Tracé",
+ "sets": {
+  "ai_interface_carousel": {
+   "title": "AI Interface · 인공지능 인터페이스란? (영어+한글 캐러셀)",
+   "kind": "hook",
+   "part": "Notes",
+   "cards": [
+    {
+     "type": "big",
+     "label": "Tracé Notes · AI Interface",
+     "h_en": "Are you using technology, or being led by it?",
+     "h": "기술을 사용하는 사람인가,\n[[기술에 끌려가는 사람]]인가?",
+     "sub_en": "What is an AI interface?",
+     "sub": "인공지능 인터페이스란? · 넘겨서 보기 →",
+     "size": 72
+    },
+    {
+     "label": "AI Interface · 인공지능 인터페이스",
+     "h_en": "Interface, by the dictionary",
+     "h": "인터페이스의\n[[사전적 의미]]",
+     "t_en": "1. The part that connects a central processing unit and its peripherals by converting electrical signals, or that connecting device.\n2. A device that connects people and computers, like a keyboard or display.\n3. The part where pieces of software touch or share. Plain word: connection.\n4. \"A boundary surface between ~\", \"harmonizing and connecting different elements\", \"a device that connects computers and people\"",
+     "t": "1.전기 신호의 변환(變換)으로 중앙 처리 장치와 그 주변 장치를 서로 잇는 부분. 또는, 그 접속 장치.\n2.키보드나 디스플레이 등처럼 사람과 컴퓨터를 연결하는 장치.\n3. 소프트웨어끼리 접촉·공통되는 부분. 순화어는 접속\n4. “ ~사이의 경계면”, “서로 다른 요소들을 조화. 연결시키는 것”, “컴퓨터와 인간을 연결해주는 장치”"
+    },
+    {
+     "label": "AI Interface · 인공지능 인터페이스",
+     "h_en": "So anyone can use a computer",
+     "h": "누구나 쉽게\n[[컴퓨터를 이용하도록]]",
+     "t_en": "An interface (Human-Computer Interface, Human-Computer Interaction, User Interface, Interface) refers to all the technology that lets anyone use a computer easily through interaction between people and computers.\nComputer interfaces are evolving through keyboards, mice, mobile and AI speakers.\nIn other words, an interface is the way people can easily use the technology of computers to accomplish their own tasks.",
+     "t": "인터페이스 (Human-Computer Interface, Human-Computer interaction, User Interface, Interface) 는 인간과 컴퓨터의 상호작용을 통하여 누구나 쉽게 컴퓨터를 이용할 수 있도록 하는 기술 전반을 칭한다.\n컴퓨터의 인터페이스는 키보드나 마우스, 모바일, 인공지능 스피커 등으로 발전하고 있다.\n그러니까, 사람이 컴퓨터라는 기술을 통해 사람의 과업을 달성하기 위해 손쉽게 이용할 수 있도록 하는 방식이 인터페이스이다."
+    },
+    {
+     "label": "AI Interface · 인공지능 인터페이스",
+     "h_en": "Subject, tool, goal",
+     "h": "주체, 도구,\n[[목표]]",
+     "t_en": "What matters here:\nThe subject is the person\nThe tool is the computer\nThe goal is the goal the person wants to reach (the direction they want)",
+     "t": "여기서 중요한 건,\n주체는 사람\n도구는 컴퓨터\n목표는 사람이 달성하고자(원하는 방향)의 목표이다.",
+     "fig": "triad"
+    },
+    {
+     "label": "AI Interface · 인공지능 인터페이스",
+     "h_en": "When the three get confused",
+     "h": "이 3가지가\n[[혼동되기 시작한다면]]?",
+     "t_en": "What if these three start to get confused in AI interfaces?\nFor example, what if the computer becomes the subject, and the goal becomes the computer's goal instead of the person's?\nWe would no longer use the computer as a tool; the computer would be using people as tools.\nSo I think these three must not be forgotten when designing AI interfaces.",
+     "t": "인공지능 인터페이스에서 이 3가지가 혼동되기 시작한다면?\n예를 들면 컴퓨터가 주체가 되고, 목표가 사람이 아닌 컴퓨터가 달성하고자 하는 목표가 된다면?\n우린 컴퓨터를 도구로 사용하는 것이 아니라, 컴퓨터가 사람을 도구로 사용하는 방향이 되버리는 것이다.\n그래서 이 3가지의 목표가 인공지능 인터페이스 설계 시 잊어서는 안되는 것이라고 생각한다."
+    },
+    {
+     "label": "AI Interface · 인공지능 인터페이스",
+     "h_en": "Her: when a tool stops being a tool",
+     "h": "도구가 도구로서\n[[동작할 수 없게 되자]]",
+     "t_en": "In the famous AI film Her, the AI Samantha exists as a tool that helps a person. But as the AI gains intelligence beyond humans, Samantha is no longer satisfied with Theodore alone and talks with many people at once; when the AI can no longer be a tool that satisfies Theodore, it disappears.\nIn other words, when a tool can no longer work as a tool, it disappears.",
+     "t": "예를 들면 유명한 인공지능 영화 HER에서 사만다라는 인공지능은 사람의 행위를 도와주는 도구로써 존재하는데, 인공지능이 사람보다 높은 지능을 갖게 되고 사만다가 테오도르 한명으로 만족하지 못하고 동시에 여러명과 대화하면서 인공지능이 더이상 테오도르를 만족시키는 도구가 될 수 없게 되자 인공지능은 사라진다.\n즉, 도구가 도구로서 동작할 수 없게 되자 사라지는 것이다."
+    },
+    {
+     "label": "AI Interface · 인공지능 인터페이스",
+     "h_en": "People at the center",
+     "h": "사람을 중심으로\n[[컴퓨터를 이용하는]] 방향",
+     "t_en": "So AI interfaces should be designed so that the person, as subject, can easily accomplish their tasks through the computer as a tool, and should move toward using computers with people at the center.\nHowever advanced a technology is, if people don't want it, there is also a duty not to use it. Because technology is a tool people made.",
+     "t": "그래서 인공지능 인터페이스는 사람이라는 주체가 컴퓨터라는 도구를 통해 사람의 과업을 달성하기 용이하도록 설계 되야 하고, 사람을 중심으로 컴퓨터를 이용하는 방향이 되야 한다.\n아무리 기술이 뛰어나더라도 사람이 원하지 않는 것이라면 사용하지 않을 의무도 있는 것이다. 왜냐하면 기술은 사람이 만들어낸 도구이니까."
+    },
+    {
+     "label": "AI Interface · 인공지능 인터페이스",
+     "h_en": "Tesla and Porsche",
+     "h": "테슬라와\n[[포르셰]]",
+     "t_en": "I was once asked: what is the difference between Tesla's self-driving with an interface and a Porsche whose self-driving works well without one?\nHowever great Porsche's technology is, for it to work in the direction people want, it needs people's instructions and actions, that is, work through an interface.",
+     "t": "예를 들어, 테슬라의 인터페이스가 있는 자율주행과 포르셰가 이러한 인터페이스 없이 자율주행이 잘 작동하는 것이 무슨 차이가 있냐는 질문을 받은 적이 있다.\n포르셰가 아무리 뛰어난 기술을 갖고 있다고 한들, 그 기술이 사람이 원하는 방향으로 작동하려면 사람의 지시, 작업 즉 인터페이스를 통한 작업이 필요하다."
+    },
+    {
+     "label": "AI Interface · 인공지능 인터페이스",
+     "h_en": "The fast road or the beach road",
+     "h": "빠른 길이 아니라\n[[해변이 있는 한적한 길]]",
+     "t_en": "Say the Porsche, with no interface at all, uses brilliant self-driving to find the fastest road to the destination. But today this driver didn't want the fast road; they wanted a drive along a quiet road by the beach. What if the car ignores the person's intent and drives on, saying this road is faster? Are we people who use technology, or people led by it?",
+     "t": "포르셰가 아무런 인터페이스 없이 너무나도 뛰어난 자율주행 기술로 목적지로 가는 빠른 길을 찾아 간다고 하자. 그런데 이 운전자는 오늘 빠른 길로 가고 싶은 것이 아닌 해변이 있는 한적한 길로 드라이브를 하고 싶었다. 그런데 자율주행은 이 길이 빠르다며 사람의 의도를 무시한채 달린다면? 우리는 기술을 사용하는 사람인가? 기술에 끌려가는 사람인가?",
+     "fig": "roads"
+    },
+    {
+     "label": "AI Interface · 인공지능 인터페이스",
+     "h_en": "An interface to communicate",
+     "h": "사람과 기술이\n[[소통할 수 있도록]]",
+     "t_en": "That is why we need interfaces: a communication interface that lets technology work the way people intend. Letting people and technology communicate. People have far more complex and colorful individuality than technology.",
+     "t": "그래서 인터페이스가 필요한 것이고 기술을 사람의 의도대로 작동할 수 있는 커뮤니케이션 인터페이스가 필요하다고 생각한다. 사람과 기술이 소통할 수 있도록 하는 것. 사람은 기술보다 훨씬 복잡하고 다채로운 개성을 지녔다."
+    },
+    {
+     "label": "AI Interface · 인공지능 인터페이스",
+     "h_en": "Data can't fill every need",
+     "h": "데이터는\n[[니즈를 다 채워줄 수 없다]]",
+     "t_en": "Just as the sum of someone's experiences doesn't necessarily define them, and what insight they gained from those experiences says more about who they are, AI made of data cannot perfectly fill all our needs.\nSo AI interfaces must be easy to use and simple, and delicate enough to connect these complex, subtle human needs.",
+     "t": "사람들이 겪은 경험의 합이 꼭 그사람을 의미하는 것이 아니고, 경험으로 어떤 인사이트를 얻었느냐로 그 사람을 의미하는 바가 더 큰 것 처럼. 데이터로 이루어진 인공지능은 꼭 맞게 우리의 니즈를 다 채워줄 수 없다.\n그래서 인공지능 인터페이스는 사용하기 쉽고, 단순해야 하며, 사람에 대한 이런 복잡하고 섬세한 니즈를 연결 시킬 수 있도록 충분히 섬세해야 한다."
+    },
+    {
+     "label": "AI Interface · 인공지능 인터페이스",
+     "h_en": "From touch to voice to gesture",
+     "h": "터치에서 음성,\n[[제스처까지]]",
+     "t_en": "So I think Tesla can build self-driving cars that make better decisions by gathering data through its interface screen, through this communication data.\nTo find ways to communicate naturally with AI, from touch to voice, from NUI to gestures, I think we first need to build the infrastructure to improve and develop today's technology through data on the usage patterns people communicate with.",
+     "t": "그래서 테슬라가 인터페이스 화면을 통해 데이터를 쌓고 이러한 커뮤니케이션 데이터를 통해 더 나은 결정을 하는 자율주행 자동차를 만들 수 있다라는 생각이 든다.\n터치에서 음성, NUI에서 제스처 방식까지 인공지능 기술과 자연스럽게 소통할 수 있는 방식을 찾기 위해선, 우선 지금의 기술을 사용자가 어떤 사용패턴으로 소통하는 지에 대한 데이터를 통해 개선하고 발전 시킬 수 있는 인프라를 쌓는 것이라고 생각한다."
+    },
+    {
+     "label": "Conclusion · 결론",
+     "h_en": "Without an interface, no tool",
+     "h": "인터페이스 없이는\n[[도구가 될 수 없다]]",
+     "t_en": "An AI interface lets people use technology to accomplish their tasks. Even powerful technology cannot become a tool without a user interface. When a tool fails to be a tool, the technology means nothing.",
+     "t": "인공지능 인터페이스는 사람이 기술을 사용해 과업을 달성할 수 있도록 하는 것. 강력한 기술이더라도 사용자 인터페이스 없이는 도구가 될 수 없다. 도구가 도구가 되지 못할때 그 기술은 아무 의미가 없다."
+    },
+    {
+     "type": "big",
+     "label": "Your turn · 당신은?",
+     "h_en": "Today, did you use technology (1) or follow it (2)?",
+     "h": "기술을 사용했다 [[1]]\n기술에 끌려갔다 [[2]]",
+     "sub_en": "Comment 1 or 2 · Save it before your next AI project",
+     "sub": "오늘의 나는? 댓글로 1 또는 2 · 다음 AI 프로젝트 전에 저장",
+     "size": 76
+    }
+   ]
+  }
+ }
+}

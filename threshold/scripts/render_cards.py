@@ -98,6 +98,22 @@ def fig_svg(name):
         return (f'<svg class=fig viewBox="0 0 {W} {H + 50}"><line x1=80 y1={Y} x2=872 y2={Y} stroke="#f2f1ec55" stroke-width=2/>{dots}'
                 f'<circle cx=80 cy={Y} r=26 fill=none stroke="#f2f1ec" stroke-width=4/><circle cx=872 cy={Y} r=26 fill="#f2f1ec"/>'
                 f'<text x=68 y={Y - 46}>0</text><text x=862 y={Y - 46}>1</text><text x=330 y={H + 44}>ANALOG · 0과 1 사이</text></svg>')
+    if name == "triad":       # 주체(사람) → 도구(컴퓨터) → 목표(사람의 목표)
+        nodes = [(120, "SUBJECT", "주체 · 사람", True), (476, "TOOL", "도구 · 컴퓨터", False), (832, "GOAL", "목표 · 사람의 목표", True)]
+        out = [f'<line x1=200 y1=90 x2=396 y2=90 stroke="#f2f1ec88" stroke-width=3/><line x1=556 y1=90 x2=752 y2=90 stroke="#f2f1ec88" stroke-width=3/>',
+               '<path d="M386,80 L400,90 L386,100 M742,80 L756,90 L742,100" fill=none stroke="#f2f1ec88" stroke-width=3/>']
+        for x, en, ko, warm in nodes:
+            c = "#f2c94c" if warm else "#f2f1ec"
+            out.append(f'<circle cx={x} cy=90 r=70 fill=none stroke="{c}" stroke-width=4/><text x={x} y=98 text-anchor=middle style="fill:{c}">{en}</text>'
+                       f'<text x={x} y={H + 30} text-anchor=middle>{ko}</text>')
+        return f'<svg class=fig viewBox="0 0 {W} {H + 50}">{"".join(out)}</svg>'
+    if name == "roads":       # 자율주행이 고른 빠른 길 vs 사람이 원한 해변 길
+        coast = " ".join(f"{x},{150 - 60 * math.sin(x / W * math.pi) + 14 * math.sin(x / 38):.1f}" for x in range(60, 893, 6))
+        return (f'<svg class=fig viewBox="0 0 {W} {H + 50}"><line x1=60 y1=60 x2=892 y2=60 stroke="#f2f1ec" stroke-width=4 stroke-dasharray="14 12"/>'
+                f'<polyline points="{coast}" fill=none stroke="#f2c94c" stroke-width=5/>'
+                f'<circle cx=60 cy=105 r=12 fill="#f2f1ec"/><circle cx=892 cy=105 r=12 fill="#f2f1ec"/>'
+                f'<line x1=60 y1=60 x2=60 y2=150 stroke="#f2f1ec44" stroke-width=2/><line x1=892 y1=60 x2=892 y2=150 stroke="#f2f1ec44" stroke-width=2/>'
+                f'<text x=110 y=40>FASTEST · 기술이 고른 빠른 길</text><text x=110 y={H + 44} style="fill:#f2c94c">BY THE SEA · 사람이 원한 해변 길</text></svg>')
     if name == "mirror":      # 나무거울: 타일마다 밝기(기울기)를 달리해 사람 모습을 만든다
         tiles = []
         for j in range(8):
