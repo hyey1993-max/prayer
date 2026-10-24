@@ -22,7 +22,7 @@ html,body{margin:0;background:var(--bg);color:var(--ink)}
 body{display:grid;place-items:center;min-height:100vh;padding:16px;box-sizing:border-box}
 canvas{width:min(100%,calc((100vh - 32px)*0.8));height:auto;aspect-ratio:4/5;touch-action:none;cursor:grab;display:block}
 </style>
-<canvas id=c width=1080 height=1350 role=img aria-label="Dimensions of Tracé: 16개 원칙이 축, 구, 궤도, 평면, 반구로 놓인 구가 천천히 돈다. 끌어서 돌릴 수 있다."></canvas>
+<canvas id=c width=1080 height=1350 role=img aria-label="Dimensions of Tracé: 16 principles placed on an axis, sphere, orbit, planes and hemispheres, slowly rotating. Drag to rotate."></canvas>
 <script>
 (() => {
 "use strict";
@@ -32,6 +32,7 @@ const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const ease = k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
 const seg = (t, a, b) => ease(clamp((t - a) / (b - a)));
 const D = Math.PI / 180;
+const vis = d => .28 + .67 * ease(clamp((d + .25) / .5));        // 앞 1, 뒤 .28: 경계에서 갑자기 바뀌지 않게
 
 // ---------- 3차원 ----------
 // 원: 중심 c, 서로 수직인 반지름 벡터 u, v. 점 = c + u cos a + v sin a
@@ -72,17 +73,20 @@ const LEGEND = [["I.", "Axis of form · Condense ↔ Flow", "형태의 축 · �
 function txt(g, s, x, y, font, a = 1, align = "center"){ g.font = font; g.textAlign = align; g.lineJoin = "round";
   g.globalAlpha = a; g.strokeStyle = BG; g.lineWidth = 7; g.strokeText(s, x, y); g.fillStyle = `rgb(${INK})`; g.fillText(s, x, y); g.globalAlpha = 1; }
 function ring3(g, o, th, k, w = 2.2, dash = null){       // k: 0~1 그려진 만큼
-  const N = 160, n = Math.floor(N * k); g.lineWidth = w; g.setLineDash(dash || []);
+  if (dash){                                                     // 점선 궤도: 원 위의 고정된 점들 (돌면서 무늬가 흔들리지 않게)
+    const M = 130, m = Math.floor(M * k);
+    for (let i = 0; i < m; i++){ const p = proj(at(o, i / M * 2 * Math.PI), th);
+      g.fillStyle = `rgba(${INK},${vis(p[2])})`; g.beginPath(); g.arc(p[0], p[1], 1.7, 0, Math.PI * 2); g.fill(); }
+    return; }
+  const N = 160, n = Math.floor(N * k); g.lineWidth = w; g.setLineDash([]);
   for (let i = 0; i < n; i++){ const a = proj(at(o, i / N * 2 * Math.PI), th), b = proj(at(o, (i + 1) / N * 2 * Math.PI), th);
-    g.strokeStyle = `rgba(${INK},${a[2] + b[2] > 0 ? .95 : .3})`; g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]); g.stroke(); }
+    g.strokeStyle = `rgba(${INK},${vis((a[2] + b[2]) / 2)})`; g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]); g.stroke(); }
   g.setLineDash([]); }
-function node(g, p, en, ko, a, big){
-  const front = p[2] > 0, al = a * (front ? 1 : .32), r = (big ? 15 : 9) * (front ? 1 : .8);
+function node(g, p, en, a, big){
+  const v = vis(p[2]), al = a * v, r = (big ? 12 : 7) * (.8 + .2 * v);
   g.globalAlpha = al; g.fillStyle = BG; g.strokeStyle = `rgb(${INK})`; g.lineWidth = 2.2;
   g.beginPath(); g.arc(p[0], p[1], r, 0, Math.PI * 2); g.fill(); g.stroke(); g.globalAlpha = 1;
-  const left = p[0] < CX - 40, right = p[0] > CX + 40, align = left ? "right" : right ? "left" : "center", dx = left ? -r - 10 : right ? r + 10 : 0;
-  txt(g, en, p[0] + dx, p[1] - 8, "400 22px SK, sans-serif", al, align);
-  if (front) txt(g, ko, p[0] + dx, p[1] + 16, "400 16px GB, serif", al * .8, align);   // 뒤쪽은 영어 이름만
+  txt(g, en, p[0], p[1] - r - 9, "400 17px SK, sans-serif", al);   // 이름은 늘 점 바로 위에 (좌우로 튀지 않게)
 }
 
 function render(g, t, th){
@@ -91,44 +95,43 @@ function render(g, t, th){
   t = ((t % PERIOD) + PERIOD) % PERIOD;
   const out = 1 - seg(t, PERIOD - 1.6, PERIOD - .2);              // 끝에서 사라졌다가 처음부터 다시 켜진다
   const k = key => seg(t, ...SHOW[key]) * out;
-  txt(g, "Dimensions of Tracé", W / 2, 112, "italic 76px IS, serif");
-  txt(g, "Tracé 원칙의 층위 · 16 principles", W / 2, 156, "400 26px GB, serif");
+  txt(g, "Dimensions of Tracé", W / 2, 118, "italic 58px IS, serif");
+  txt(g, "16 principles", W / 2, 152, "italic 22px IS, serif");
   // I 축
   const ka = k("axis"), top = CY - R - 60, bot = CY + R + 60;
   g.strokeStyle = `rgba(${INK},.9)`; g.lineWidth = 2; g.setLineDash([10, 9]);
   g.beginPath(); g.moveTo(CX, CY - (CY - top) * ka); g.lineTo(CX, CY + (bot - CY) * ka); g.stroke(); g.setLineDash([]);
-  txt(g, "Condense", CX, top - 34, "italic 30px IS, serif", ka); txt(g, "02 나열 말고 응축한다", CX, top - 10, "400 16px GB, serif", ka * .8);
-  txt(g, "Flow", CX, bot + 34, "italic 30px IS, serif", ka); txt(g, "03 동선은 흐르게 둔다", CX, bot + 56, "400 16px GB, serif", ka * .8);
+  txt(g, "Condense", CX, top - 14, "italic 24px IS, serif", ka);
+  txt(g, "Flow", CX, bot + 30, "italic 24px IS, serif", ka);
   // II 바깥 구
   const kl = k("loop");
   g.strokeStyle = `rgba(${INK},.9)`; g.lineWidth = 2; g.setLineDash([10, 9]);
   g.beginPath(); g.arc(CX, CY, R, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * kl); g.stroke(); g.setLineDash([]);
   // VII · VIII 반구
   const kh = seg(t, 9.6, 11) * out;
-  txt(g, "VII. Upper hemisphere · Screen", CX + 150, CY - 200, "italic 24px IS, serif", kh); txt(g, "화면 위의 건축", CX + 150, CY - 178, "400 16px GB, serif", kh * .8);
-  txt(g, "VIII. Lower hemisphere · Street", CX + 150, CY + 226, "italic 24px IS, serif", kh); txt(g, "목적지 없는 걸음", CX + 150, CY + 248, "400 16px GB, serif", kh * .8);
+  txt(g, "VII. Upper hemisphere · Screen", CX + 150, CY - 200, "italic 19px IS, serif", kh * .8);
+  txt(g, "VIII. Lower hemisphere · Street", CX + 150, CY + 232, "italic 19px IS, serif", kh * .8);
   // 원들
   ring3(g, LAYERS.map, th, k("map"), 2, [3, 7]);
   ring3(g, LAYERS.ux, th, k("ux"), 2.4);
   ring3(g, LAYERS.walk, th, k("walk"), 2.4);
   { const o = LAYERS.lab, kk = k("lab"), a0 = -20 * D, a1 = 160 * D, N = 90; g.lineWidth = 2.4;  // 라비린스: 반만 그린 길
     for (let i = 0; i < N * kk; i++){ const p = proj(at(o, a0 + (a1 - a0) * i / N), th), q = proj(at(o, a0 + (a1 - a0) * (i + 1) / N), th);
-      g.strokeStyle = `rgba(${INK},${p[2] + q[2] > 0 ? .95 : .3})`; g.beginPath(); g.moveTo(p[0], p[1]); g.lineTo(q[0], q[1]); g.stroke(); } }
-  txt(g, "The Walker", CX, CY + 8, "italic 30px IS, serif", k("walk")); txt(g, "걷는 사람", CX, CY + 30, "400 16px GB, serif", k("walk") * .8);
+      g.strokeStyle = `rgba(${INK},${vis((p[2] + q[2]) / 2)})`; g.beginPath(); g.moveTo(p[0], p[1]); g.lineTo(q[0], q[1]); g.stroke(); } }
+  txt(g, "The Walker", CX, CY + 8, "italic 24px IS, serif", k("walk"));
   // 점과 이름: 뒤에 있는 것부터
   const pts = NODES.map(([layer, deg, en, ko]) => {
     const p = layer === "loop" ? proj(LOOP_P, th) : proj(at(LAYERS[layer], deg * D), th);
-    return { p, en, ko, a: k(layer), big: layer === "walk" }; }).sort((a, b) => a.p[2] - b.p[2]);
-  pts.forEach(n => n.a > .01 && node(g, n.p, n.en, n.ko, n.a, n.big));
+    return { p, en, a: k(layer), big: layer === "walk" }; }).sort((a, b) => a.p[2] - b.p[2]);
+  pts.forEach(n => n.a > .01 && node(g, n.p, n.en, n.a, n.big));
   // 범례: 지금 켜지는 층위를 진하게
   const cur = Object.keys(SHOW).find(key => t >= SHOW[key][0] && t < SHOW[key][1]) || (t >= 9.6 && t < 11.5 ? "hemi" : "");
   LEGEND.forEach(([n, en, ko, key], i) => {
-    const x = i < 4 ? 70 : 600, y = 1150 + (i % 4) * 37, a = cur ? (key === cur ? 1 : .35) : .85;
-    txt(g, n, x, y, "400 18px SK, sans-serif", a, "left"); txt(g, en, x + 52, y, "400 18px SK, sans-serif", a, "left");
-    txt(g, ko, x + 52, y + 17, "400 14px GB, serif", a * .8, "left"); });
+    const x = i < 4 ? 90 : 590, y = 1170 + (i % 4) * 28, a = cur ? (key === cur ? 1 : .35) : .85;
+    txt(g, n, x, y, "400 15px SK, sans-serif", a, "left"); txt(g, en, x + 46, y, "400 15px SK, sans-serif", a, "left"); });
   g.fillStyle = `rgba(${INK},.6)`; g.fillRect(70, 1302, 940, 1);
-  txt(g, "The Principles of Tracé", 70, 1332, "italic 22px IS, serif", 1, "left");
-  txt(g, "@radiant_walks", 1010, 1332, "italic 22px IS, serif", 1, "right");
+  txt(g, "The Principles of Tracé", 70, 1330, "italic 19px IS, serif", 1, "left");
+  txt(g, "@radiant_walks", 1010, 1330, "italic 19px IS, serif", 1, "right");
 }
 const spin = t => -t / PERIOD * Math.PI * 2 + 20 * D;               // 한 바퀴에 24초
 
