@@ -51,6 +51,7 @@ D.groups.forEach(g => {
   sec.append(ul); host.append(sec);
 });
 paras($("#closing"), D.closing);
+if (window.TRACE_DIMENSIONS && $("#dims")) window.TRACE_DIMENSIONS($("#dims"));   // 원칙의 층위 (Dimensions of Tracé)
 const src = k => D.groups.find(g => g.key === k).source;
 for (const [id, k] of [["#src-ux", "ux"], ["#src-walk", "walk"]]){ const a = $(id); a.href = src(k).url; a.target = "_blank"; a.rel = "noopener"; }
 

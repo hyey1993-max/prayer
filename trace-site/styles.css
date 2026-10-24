@@ -59,6 +59,11 @@ a:focus-visible,input:focus-visible,canvas:focus-visible{outline:2px solid var(-
 .stage + .closing{margin-left:max(0px, calc((100% - 1480px)/2))}
 .closing #closing{font-size:22px;line-height:1.7;max-width:36ch;margin-top:22px}
 .closing #closing p{margin:0 0 14px}
+.dims{margin:44px 0 0;max-width:680px}
+.dims-stage{max-width:640px;margin-top:10px}
+.dims-legend{list-style:none;padding:0;margin:8px 0 0;columns:2;column-gap:24px;font:400 13px/1.9 var(--dot);color:var(--muted)}
+.dims-legend li{break-inside:avoid}
+@media (max-width:520px){ .dims-legend{columns:1} } .dims-legend b{font-weight:500;color:var(--ink);display:inline-block;min-width:4em}
 
 .foot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:20px;border-top:1px solid var(--rule);margin-top:96px;padding-block:28px 40px;
   background:var(--soft);margin-inline:-24px;padding-inline:24px;font-size:14px;color:var(--muted)}
