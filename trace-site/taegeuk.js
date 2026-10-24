@@ -1,0 +1,104 @@
+// 히어로 태극: 입자가 태극 자리로 돌아가려 하고, 흐름장이 양과 음을 서로 반대 방향으로 감는다.
+// 원칙 02 Condense(점이 모인 상태)와 03 Flow(점이 흐르는 상태) 사이의 긴장을 보여준다.
+// 끌면 소용돌이, 슬라이더는 02(0) ↔ 03(1). 아래에는 지금 상태에 가까운 원칙을 띄우고 상세로 잇는다.
+// 표현은 Tyler Hobbs의 흐름장 작업(Fidenza 등)에서 영감을 받았다: 바탕 위, 크기가 다른 여러 색의 점.
+// 양과 음은 색을 나누지 않고 같은 팔레트를 쓰되 밝기만 살짝 기울여, 태극은 은은하게만 드러난다.
+// 응축일 때는 점의 밭, 역동일 때는 점이 흐름을 따라 점선으로 이어진다.
+(() => {
+"use strict";
+const cv = document.getElementById("taegeuk"); if (!cv) return;
+const g = cv.getContext("2d"), mixEl = document.getElementById("mix"), nowEl = document.getElementById("now");
+const W = 1080, H = 1080, CX = 540, CY = 540, R = 400;
+const N = matchMedia("(max-width: 600px)").matches ? 7000 : 12000;
+const TILT = -0.62;
+// 바탕은 페이지 배경색 그대로 (라이트·다크 모두). 테마가 바뀌면 다시 읽는다.
+let BG = "255,255,255";
+const readBG = () => { const m = getComputedStyle(document.body).backgroundColor.match(/\d+/g); if (m) BG = m.slice(0, 3).join(","); };
+readBG(); matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", () => { readBG(); draw(true); });
+addEventListener("trace-theme", () => { readBG(); draw(true); });   // 상단 Light/Dark 버튼
+// 팔레트 [색, 비율, 밝은 색인가]. 양은 밝은 색이, 음은 어두운 색이 조금 더 자주 나온다.
+const INK = [["#d8452e", .15, 0], ["#eea195", .11, 1], ["#e2a93b", .11, 1], ["#8fd3c1", .1, 1], ["#a9c4d8", .07, 1],
+             ["#fbf6ea", .08, 1], ["#3f8f86", .1, 0], ["#23395b", .12, 0], ["#1f4a3c", .07, 0], ["#2b2724", .09, 0]];
+const LEAN = 1.8;                                                 // 기울기 (1이면 양·음 구분 없음)
+// 슬라이더 양 끝의 원칙 (data.js)
+const LAWS = [2, 3].map(no => (window.TRACE?.laws || []).find(l => l.no === no)).filter(Boolean);
+const lerp = (a, b, k) => a + (b - a) * k, clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+function rng(seed){ let s = seed >>> 0; return () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296); }
+function isWhite(x, y){ const c = Math.cos(TILT), s = Math.sin(TILT), u = x*c - y*s, v = x*s + y*c;
+  if (Math.hypot(u, v + R/2) < R/2) return false; if (Math.hypot(u, v - R/2) < R/2) return true; return u < 0; }
+
+const P = new Float32Array(N*6), col = new Uint8Array(N);
+const INKS = INK.map(c => c[0]), ink = new Uint8Array(N), rad = new Float32Array(N);
+const weights = yang => { const w = INK.map(([, p, light]) => p*(light === yang ? LEAN : 1/LEAN)), sum = w.reduce((a, b) => a + b); return w.map(v => v/sum); };
+const WY = weights(1), WN = weights(0);
+const pick = (w, u) => { for (let j = 0; j < w.length; j++){ u -= w[j]; if (u <= 0) return j; } return w.length - 1; };
+{ const r = rng(7);
+  for (let i = 0; i < N; i++){ let x, y; do { x = (r()*2-1)*R; y = (r()*2-1)*R; } while (x*x + y*y > R*R);
+    if (Math.hypot(x, y) > R*.82){ const e = 1 + (r()-.5)*.18; x *= e; y *= e; }
+    col[i] = isWhite(x, y) ? 1 : 0; ink[i] = pick(col[i] ? WY : WN, r()); rad[i] = 1.4 + Math.pow(r(), 2.2)*3.6; const o = i*6; P[o] = CX + x; P[o+1] = CY + y; P[o+4] = x; P[o+5] = y; } }
+
+const st = { mix: .5, auto: true, t: 0, ptr: null, pv: [0, 0], paused: false, visible: true };
+const autoMix = t => .5 - .5*Math.cos(2*Math.PI*t/18);
+function autoPointer(t){ const k = (t % 18)/18; if (k < .30 || k > .62) return null;
+  const u = (k-.30)/.32, a = u*Math.PI*2.2, s = Math.sin(a)*R*.55, c = Math.cos(TILT), sn = Math.sin(TILT);
+  const lx = s*Math.cos(a*.5)*.9, ly = (u-.5)*R*1.6; return [CX + lx*c - ly*sn, CY + lx*sn + ly*c]; }
+
+function step(){
+  st.t += 1/60;
+  if (st.auto){ st.mix = autoMix(st.t); const p = autoPointer(st.t); st.pv = p && st.ptr ? [p[0]-st.ptr[0], p[1]-st.ptr[1]] : [0, 0]; st.ptr = p; }
+  const m = st.mix, spring = lerp(.022, .0018, m), flow = lerp(.06, 1.25, m), damp = lerp(.86, .94, m);
+  const rot = st.t*lerp(.22, .55, m), cr = Math.cos(rot), sr = Math.sin(rot), t = st.t, ptr = st.ptr, pvx = st.pv[0], pvy = st.pv[1];
+  for (let i = 0; i < N; i++){ const o = i*6; let x = P[o], y = P[o+1], vx = P[o+2], vy = P[o+3];
+    vx += (CX + P[o+4]*cr - P[o+5]*sr - x)*spring; vy += (CY + P[o+4]*sr + P[o+5]*cr - y)*spring;
+    const sign = col[i] ? 1 : -1, a = Math.sin(x*.0045 + t*.35)*2.1 + Math.cos(y*.0052 - t*.28)*2.1 + sign*.9;
+    vx += Math.cos(a)*flow*.18; vy += Math.sin(a)*flow*.18;
+    const dx = x - CX, dy = y - CY, d = Math.hypot(dx, dy) + 1;
+    vx += (-dy/d)*.05*(1+m)*sign; vy += (dx/d)*.05*(1+m)*sign;
+    if (ptr){ const ex = x - ptr[0], ey = y - ptr[1], e = Math.hypot(ex, ey);
+      if (e < 210){ const f = 1 - e/210; vx += (-ey/(e+1))*f*2.2 + pvx*f*.22; vy += (ex/(e+1))*f*2.2 + pvy*f*.22; } }
+    vx *= damp; vy *= damp; P[o] = x + vx; P[o+1] = y + vy; P[o+2] = vx; P[o+3] = vy; }
+}
+let lastQ = -1;
+function draw(clear){
+  g.setTransform(cv.width/W, 0, 0, cv.height/H, 0, 0);
+  g.fillStyle = `rgba(${BG},${clear ? 1 : .32})`; g.fillRect(0, 0, W, H);    // 잔상은 짧게: 점이 번지지 않도록
+  // 점 하나, 빠르게 움직이는 입자는 지나온 자리에 점을 한두 개 더 찍어 점선이 된다
+  for (let c = 0; c < INKS.length; c++){
+    g.fillStyle = INKS[c]; g.beginPath();
+    for (let i = 0; i < N; i++){ if (ink[i] !== c) continue; const o = i*6, x = P[o], y = P[o+1], vx = P[o+2], vy = P[o+3], r = rad[i];
+      const sp = Math.hypot(vx, vy), dots = sp > 3.2 ? 3 : sp > 1.4 ? 2 : 1, gap = (r*2.4 + 2)/(sp + 1e-3);
+      for (let k = 0; k < dots; k++){ const px = x - vx*gap*k, py = y - vy*gap*k; g.moveTo(px + r, py); g.arc(px, py, r, 0, 6.2832); } }
+    g.fill();
+  }
+  const q = st.mix < .5 ? 0 : 1, l = LAWS[q];
+  if (q !== lastQ && nowEl && l){ const id = String(l.no).padStart(2, "0"); nowEl.href = `#law-${id}`;
+    nowEl.querySelector(".dot").textContent = `${id} · ${l.en}`; nowEl.querySelector(".ko").textContent = l.law;
+    nowEl.querySelector(".def").textContent = l.def_en; lastQ = q; }
+  if (st.auto && mixEl) mixEl.value = Math.round(st.mix*100);
+}
+
+function setAuto(v){ st.auto = v; if (!v) st.ptr = null; }
+mixEl?.addEventListener("input", () => { setAuto(false); st.mix = mixEl.value/100; if (reduce) { for (let i = 0; i < 3; i++) step(); draw(); } });
+const toC = e => { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left)/r.width*W, (e.clientY - r.top)/r.height*H]; };
+let drag = false;
+cv.addEventListener("pointerdown", e => { drag = true; setAuto(false); cv.setPointerCapture(e.pointerId); st.ptr = toC(e); st.pv = [0, 0]; });
+cv.addEventListener("pointermove", e => { if (!drag) return; const p = toC(e); st.pv = [p[0]-st.ptr[0], p[1]-st.ptr[1]]; st.ptr = p; if (reduce){ step(); draw(); } });
+const up = () => { drag = false; st.ptr = null; st.pv = [0, 0]; };
+cv.addEventListener("pointerup", up); cv.addEventListener("pointercancel", up);
+cv.addEventListener("keydown", e => { if (e.key === "ArrowLeft" || e.key === "ArrowRight"){ setAuto(false);
+  st.mix = clamp(st.mix + (e.key === "ArrowRight" ? .05 : -.05)); if (mixEl) mixEl.value = Math.round(st.mix*100); e.preventDefault(); } });
+
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+window.TAEGEUK_PAUSE = v => { st.paused = v; if (!v) kick(); };
+if ("IntersectionObserver" in window) new IntersectionObserver(es => { st.visible = es[0].isIntersecting; if (st.visible) kick(); }).observe(cv);
+let running = false, last = 0;
+function frame(now){
+  if (st.paused || !st.visible){ running = false; return; }
+  const n = Math.max(1, Math.min(3, Math.round((now - last)/16.7) || 1)); last = now;
+  for (let i = 0; i < n; i++) step(); draw(); requestAnimationFrame(frame);
+}
+function kick(){ if (running || reduce) return; running = true; last = performance.now(); requestAnimationFrame(frame); }
+for (let i = 0; i < 120; i++) step();
+draw(true);
+if (reduce){ setAuto(false); st.mix = .5; for (let i = 0; i < 60; i++) step(); draw(true); } else kick();
+})();
