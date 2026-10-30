@@ -1,0 +1,156 @@
+{
+ "brand": "Tracé",
+ "sets": {
+  "analog_carousel": {
+   "title": "Between Digital and Analog · 디지털과 아날로그 경험 사이 최적화",
+   "kind": "hook",
+   "part": "Notes",
+   "cards": [
+    {
+     "type": "cover",
+     "label": "Tracé Notes · Between Digital and Analog",
+     "h_en": "Digital picks 0 or 1. Analog lives in between.",
+     "h": "아날로그는\n[[0과 1 사이]]에 있다.",
+     "sub_en": "Optimizing between digital and analog experience",
+     "sub": "디지털과 아날로그 경험 사이 최적화",
+     "photo": "analog_knob.jpg"
+    },
+    {
+     "label": "Between Digital and Analog",
+     "h_en": "Digital: something you can count",
+     "h": "분명하게\n[[셀 수 있는]] 것",
+     "t_en": "The dictionary meaning of digital is 'processing data as numerical values or expressing it in numbers.' Digital comes from the Latin digit, meaning 'finger': unlike analog, which is shown as shapes, you can clearly count 1, 2, 3.",
+     "t": "디지털의 사전적 의미는 '자료를 수의 값으로 처리하거나 숫자로 나타내는 것'이다. 디지털(digital)은 '손가락'이란 뜻의 라틴어 '디지트'(digit)에서 온 말로, 이는 모양으로 표시되는 아날로그에 비해 분명하게 1 2 3을 셀 수 있다는 뜻이다.",
+     "img": "analog_binary.jpg",
+     "img_h": 380
+    },
+    {
+     "label": "Between Digital and Analog",
+     "h_en": "An electronic, virtual world",
+     "h": "[[전자 세계]],\n가상 세계",
+     "t_en": "For example: dividing the span between a lowest point 0 and a highest point 1 into countless tiny steps and expressing it as combinations of 0 and 1, like bar graphs whose scales and values you can read at once, clocks that show the time in numbers, digital thermometers, CDs and MP3 players. So 'the digital world' can mean an 'electronic world' or a 'virtual (cyber) world' made by electronic devices.",
+     "t": "예를 들자면 기울기 최저점 0과 최고점 1사이를 무수히 잘게 나누어 0과 1의 조합으로 표현하여 눈금과 수치를 바로 확인할 수 있는 막대그래프, 시각 표시를 숫자로 나타내는 시계, 숫자로 표시되는 온도계, CD, MP3플레이어 등이 그것이다. 그러므로 우리는 '디지털 세계'는 전자적 장비로 만들어진 '전자 세계' 또는 '가상(cyber) 세계'를 가리키는 말로 사용할 수 있다."
+    },
+    {
+     "label": "Between Digital and Analog",
+     "h_en": "What digital does",
+     "h": "디지털의\n[[특징]]",
+     "t_en": "1. It can compress information\n2. It can make clear signals without noise\n3. Computers use digital information in binary, so even large amounts of information can be used easily and accurately with only 0 and 1",
+     "t": "1. 정보를 압축할 수 있다\n2. 잡음이 없는 선명한 신호를 만들 수 있다\n3. 컴퓨터는 이진법으로 디지털 정보를 사용하여 많은 양의 정보도 0과 1만으로 쉽고 정확하게 사용할 수 있다.",
+     "img": "analog_clocks.jpg",
+     "img_h": 300
+    },
+    {
+     "label": "Between Digital and Analog",
+     "h_en": "Analog: a continuous quantity",
+     "h": "[[연속된]]\n물리량",
+     "t_en": "The dictionary meaning of analog is 'expressing numerical values as continuous physical quantities.' It generally refers to expressing or measuring the shapes, movements and sounds of nature that we meet in the real world.",
+     "t": "아날로그의 사전적 의미는 '수의 값을 연속된 물리량으로 나타내는 것'을 말한다. 일반적으로 실제(real) 세계에서 만나는 자연의 모습, 움직임, 소리 등을 표현하거나 측정하는 것을 가리킨다.",
+     "img": "analog_books.jpg",
+     "img_h": 400
+    },
+    {
+     "label": "Between Digital and Analog",
+     "h_en": "The real world",
+     "h": "[[실제]] 세계",
+     "t_en": "For example: drawing nature as it is, as a curve with a gentle slope; a clock that shows time with its hands; a thermometer that shows temperature by the length of a mercury column; vinyl records (LP) and tapes. So 'the analog world' can also mean 'the real world.'",
+     "t": "예를 들자면 자연의 표현을 있는 그대로 비스듬한 기울기를 가진 곡선 그래프로 표현하는 일, 시계 바늘로 시각을 나타내는 시계, 수은주의 길이로 온도를 나타내는 온도계, 레코드판(LP), 테이프(record tape) 등이다. 그러므로 '아날로그 세계'는 '실제 세계'를 가리키는 말로 사용할 수도 있다.",
+     "img": "analog_film.jpg",
+     "img_h": 380
+    },
+    {
+     "label": "Between Digital and Analog",
+     "h_en": "What analog does",
+     "h": "아날로그의\n[[특징]]",
+     "t_en": "1. You can tell subtle differences\n2. It is ambiguous\n3. It is a continuous signal",
+     "t": "1. 미세한 차이를 알 수 있다\n2. 애매모호하다\n3. 연속적인 신호이다",
+     "fig": "waves"
+    },
+    {
+     "label": "Between Digital and Analog",
+     "h_en": "Analog lives between 0 and 1",
+     "h": "[[0과 1 사이]]",
+     "t_en": "If digital chooses between 0 and 1, analog is between 0 and 1.",
+     "t": "디지털이 0과 1중에 선택한다면, 아날로그는 0과 1 사이에 있다.",
+     "fig": "between"
+    },
+    {
+     "label": "Between Digital and Analog",
+     "h_en": "Cut it into steps",
+     "h": "잡음을 없애고\n[[정확도를 올리기 위해]]",
+     "t_en": "Analog signals are converted into digital signals to remove noise and raise accuracy.",
+     "t": "잡음을 없애고 정확도를 올리기 위해 아날로그 신호를 디지털 신호로 변환",
+     "img": "analog_signal.jpg",
+     "img_h": 360
+    },
+    {
+     "label": "Between Digital and Analog",
+     "h_en": "A world ruled by 0 and 1",
+     "h": "[[0과 1]]이\n지배하는 세상",
+     "t_en": "The Matrix, a digital virtual world, a world ruled by 0 and 1.\nFacebook, which added emotions in six kinds.",
+     "t": "영화 매트릭스, 디지털 가상세계, 0과 1이 지배하는 세상\n감정을 6가지로 추가한 페이스북",
+     "img": [
+      "analog_matrix.jpg",
+      "analog_facebook.jpg"
+     ],
+     "img_h": 360
+    },
+    {
+     "label": "Analog sound · 아날로그 음향",
+     "h_en": "We hear with the whole body",
+     "h": "신체 전체로\n[[음을 듣는다]]",
+     "t_en": "Humans hear sound not only with their ears but with their whole body. It is said that even a 40kHz tone we cannot hear affects brain waves as the body responds to it. A CD can only play roughly 20Hz to 20kHz, within the range human ears can hear. So a record, which can capture tones up to 40kHz, can sound better than a CD.",
+     "t": "인간은 귀만이 아니라 신체 전체로 음을 듣는다.\n귀로 들을 수 없는 40KHz의 음이더라도 그 음이 흐르면 신체가 반응하여 뇌파에 영향을 준다고 합니다.\n그런데 CD는 인간의 귀로 들을 수 있는 범위의 주파수 중에서 약 20Hz부터 20KHz까지의 음만을 낼 수 있지요. 따라서 40KHz의 음까지 녹음할 수 있는 레코드가 CD보다 더 좋은 음을 낼 수 있다는 것입니다.",
+     "img": "analog_lpcd.jpg",
+     "img_h": 220
+    },
+    {
+     "label": "Daft Punk · Random Access Memories",
+     "h_en": "More emotional, less aggressive",
+     "h": "진짜 악기연주로\n[[인간의 연주를 앞세웠다]]",
+     "t_en": "Daft Punk, leading electronic artists, put real instruments like guitar, bass and drums ahead of computers, foregrounding human playing within the language of electronic music. 'Music today comes at you with overflowing energy and stimulation but no emotional feeling. We tried to put something more emotional and less aggressive into the music,' they said.",
+     "t": "대표적인 일렉트로닉 아티스트인 다프트펑크는 컴퓨터 대신 기타, 베이스, 드럼 등 진짜 악기연주를 내세워 일렉트로닉 음악 어법을 하면서도 인간의 연주를 앞세웠다. '요즘 음악은 감성적인 느낌 없이 넘치는 에너지와 자극만으로 다가간다. 우리는 보다 감성적이고 덜 공격적인 것을 음악에 담으려고 했다고 말했다.'",
+     "img": "analog_daftpunk.jpg",
+     "img_h": 240
+    },
+    {
+     "label": "Daft Punk · Random Access Memories",
+     "h_en": "Memory can't be written in 0 and 1",
+     "h": "기억은\n[[0과 1로 표현될 수 없다]]",
+     "t_en": "Random Access Memories means, literally, accessing memory at random. Memory cannot be expressed as 0 and 1; it is the essence of the analog, which cannot be duplicated, copied or reproduced.",
+     "t": "Random Access Memories, 즉 번역 그대로 하면 무작위로 기억에 접근한다는 의미다. 기억은 0과 1로 표현될 수 없고, 복제되거나 복사되고 다시 재현될 수 없는 아날로그 속성의 본질이다."
+    },
+    {
+     "label": "Conclusion · 인문학적 접근",
+     "h_en": "Makes sense in 2D, breaks in 3D",
+     "h": "2차원에선 말이 되지만\n[[3차원에선 연결되지 않는]]",
+     "t_en": "Inception: the paradox of creating reality while perceiving it. Telling the virtual from the real is possible through perception that looks from many angles.\nInception, the Penrose stairs, paradox: a phenomenon that makes sense seen in two dimensions but does not connect when examined in three.",
+     "t": "영화 인셉션, 현실을 생성하는 동시에 인식하는 역설, 가상과 실제를 구분하는 것은 다각도로 바라보는 인식을 통해 가능함\n영화 인셉션, 펜로즈의 계단, 파라독스: 2차원으로 바라보면 말이 되지만 3차원 입체적으로 살펴보면 연결되지 않는 현상",
+     "img": [
+      "analog_inception_still.jpg",
+      "analog_penrose_fig.jpg"
+     ],
+     "img_h": 250
+    },
+    {
+     "label": "Conclusion · 결론",
+     "h_en": "Between digital and analog",
+     "h": "디지털과\n[[아날로그 사이]]",
+     "t_en": "The real, analog world where noise and feeling coexist\nTelling the virtual from the real: memory, thought, imagination\nThe virtual, digital world between 0 and 1",
+     "t": "소음과 감성이 공존하는 실제의 아날로그 세계\n가상과 실제의 구분: 기억, 사고, 상상력\n0과 1사이 디지털 가상 세계",
+     "img": "analog_inception_stairs.jpg",
+     "img_h": 420
+    },
+    {
+     "type": "big",
+     "label": "Your turn · 당신은?",
+     "h_en": "Where do you live more? Analog (1) or digital (2)?",
+     "h": "아날로그 [[1]]\n디지털 [[2]]",
+     "sub_en": "Comment 1 or 2 · Save it for your next design",
+     "sub": "더 오래 머무는 세계를 댓글로 · 다음 설계 전에 다시 보려면 저장",
+     "size": 96
+    }
+   ]
+  }
+ }
+}
