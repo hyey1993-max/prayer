@@ -1,0 +1,225 @@
+{
+ "sets": {
+  "making_2_process": {
+   "part": "제작기 2/3 · 과정",
+   "foot": "tracé · Planning: me · Code: Claude Code",
+   "cards": [
+    {
+     "kind": "cover",
+     "meta": "2026.10.04 — ing",
+     "en": "Making tracé, part 2: the process",
+     "h": "헤맨 곳이\n곧 길이었다",
+     "sub": "tracé 제작기 2/3 · 과정\n기획은 내가, 구현은 Claude Code가.",
+     "imgs": [
+      "v1-stamp-map.jpg",
+      "now-08-my-map.jpg"
+     ],
+     "img_h": 560,
+     "caps": [
+      "10/04",
+      "10/28"
+     ],
+     "foot_r": "",
+     "body": []
+    },
+    {
+     "meta": "SCENE 01 · 10/04",
+     "en": "No code needed. But I had to learn the words first.",
+     "h": "코드를 몰라도 만들 수 있다.\n대신 '푸시', '병합', '배포'부터 배웠다.",
+     "body": [
+      "미리 써 둔 기획 문서(제품 원칙, PRD, 사용자 흐름, 용어, 시각 체계, 데이터 모델)를 올리고 한 줄을 보냈다.",
+      "“이걸로 MVP 만들기 실행”",
+      "첫 작업은 엉뚱한 블로그 저장소에 올라갔다. 새 저장소 trace를 만들어 옮겼다. 그리고 같은 질문을 여러 번 했다.",
+      "“깃허브에서 PR 병합해도 돼?”\n“왜 병합했는데 링크에 반영이 안 되지”"
+     ],
+     "foot_r": ""
+    },
+    {
+     "meta": "SCENE 02 · 10/04",
+     "en": "Don't say “make it pretty.” Give it numbers.",
+     "h": "'예쁘게'라고 말하면 안 됐다.\n색, 폰트, 간격을 [[숫자로]] 먼저 정했다.",
+     "body": [
+      "Figma 디자인과 화면이 맞지 않았다. 무료 플랜의 호출 제한 때문에 디자인을 끝까지 읽어 오지도 못했다.",
+      "그래서 방법을 바꿨다. 스크린샷을 올리고, 색상·폰트·모서리·그림자·간격을 토큰으로 먼저 뽑아 파일로 만들게 한 뒤 그 토큰만 쓰게 했다.",
+      "다크 테마도 입혀 봤다. 같은 날 원래 색으로 되돌렸다."
+     ],
+     "foot_r": ""
+    },
+    {
+     "meta": "SCENE 03 · 10/04",
+     "en": "The passport stamps were gone in two days.",
+     "h": "공들인 도장 마커는\n[[이틀]] 만에 사라졌다.",
+     "body": [
+      "“도장 잘리니까 글씨 줄이고, 도장 안의 콘텐츠는 영어로”",
+      "여백 정리를 세 번 부탁했다."
+     ],
+     "imgs": [
+      "v1-stamp-map.jpg"
+     ],
+     "img_h": 560,
+     "foot_r": ""
+    },
+    {
+     "meta": "SCENE 04 · 10/06",
+     "en": "Dropping the map API revealed the concept.",
+     "h": "지도 API를 버리자\n컨셉이 보였다.",
+     "body": [
+      "“지도를 굳이 API 안 쓰고, 내가 돌아다닌 헤맨 곳이 곧 길이고 나의 지도다”",
+      "바탕 지도는 비워 두고, 걸은 선과 남긴 기록만 지도가 된다."
+     ],
+     "imgs": [
+      "v3-mine-empty.jpg",
+      "v3-mine-walked.jpg"
+     ],
+     "img_h": 520,
+     "caps": [
+      "아직 걸은 곳이 없어요",
+      "걸은 길"
+     ],
+     "foot_r": ""
+    },
+    {
+     "meta": "SCENE 05 · 10/06",
+     "en": "That day, I removed more than I made.",
+     "h": "이날 가장 많이 한 일은\n만드는 게 아니라 빼는 것이었다.",
+     "body": [
+      "관계 그래프 탭: “겹치는 내용 같아, 빼도 될 듯”",
+      "무작위 구역 뽑기: “랜덤 뽑기는 빼 줘”",
+      "지도 안의 토글 → MAP | WALK | MY 탭으로"
+     ],
+     "imgs": [
+      "v2-archive-graph.jpg",
+      "now-09-my-grid.jpg"
+     ],
+     "img_h": 500,
+     "strike": "v2-archive-graph.jpg",
+     "foot_r": ""
+    },
+    {
+     "meta": "SCENE 06 · 10/06 — 10/28",
+     "en": "I only found the bugs by walking.",
+     "h": "버그는 결국\n내가 걸어 봐야 보였다.",
+     "body": [
+      "“왜 기록했는데 MY 지도에 안 남지”",
+      "“위치 허용 기능이 안 됨”",
+      "“큐레이션 지도 영역이 다 뭉쳐져서 안 보임”",
+      "10/28 포트폴리오 화면을 찍다가, 웹에서 산책 경로가 아예 기록되지 않던 버그를 찾았다. 약 3주 동안 배포된 상태였다. 고쳤다."
+     ],
+     "foot_r": "",
+     "imgs": [
+      "now-06-walk-live.jpg"
+     ],
+     "img_h": 440
+    },
+    {
+     "meta": "SCENE 07 · 10/06",
+     "en": "What we can show is not what we should show.",
+     "h": "보여줄 수 있는 것과\n보여줘야 하는 것은 다르다.",
+     "body": [
+      "“이 길로 걷기”에는 구역과 거리, 걸어서 걸리는 시간만 보여 준다. 다른 사람이 걸은 경로는 보여 주지 않고 [[시작점]]만.",
+      "경로가 공개되면 동선과 집이 드러날 수 있고, 정해진 길 없이 헤맨다는 컨셉과도 어긋난다. 길 안내는 다른 지도 앱으로 넘긴다."
+     ],
+     "imgs": [
+      "now-02-record-sheet.jpg",
+      "now-03-handoff.jpg"
+     ],
+     "img_h": 470,
+     "foot_r": ""
+    },
+    {
+     "meta": "SCENE 08 · 10/07 — 10/28",
+     "en": "I folded one version, and chose testing over launching.",
+     "h": "하나를 접고,\n출시 대신 [[써 보게]] 하기로 했다.",
+     "body": [
+      "앱 스토어에는 개발자 계정과 개인정보처리방침, 심사가 필요했다.",
+      "“커리어는 그냥 만들어 본 거라 지도만 진행하는 게 좋겠음”",
+      "그래서 웹으로 배포하고, 설문을 붙이고, 홈 화면에 설치하는 웹앱(PWA)으로 만들었다."
+     ],
+     "imgs": [
+      "now-07-walk-summary.jpg"
+     ],
+     "img_h": 470,
+     "foot_r": ""
+    },
+    {
+     "kind": "table",
+     "meta": "14 WRONG TURNS",
+     "en": "Every wrong turn, in one page.",
+     "h": "헤맨 길 [[14]]개",
+     "rows": [
+      [
+       "엉뚱한 저장소에 올라감",
+       "새 저장소로 옮김"
+      ],
+      [
+       "Figma와 화면이 안 맞음",
+       "스크린샷에서 디자인 토큰을 먼저 뽑음"
+      ],
+      [
+       "다크 테마",
+       "같은 날 되돌림"
+      ],
+      [
+       "여권 도장 마커",
+       "이틀 뒤 잉크 점으로"
+      ],
+      [
+       "서울 배경",
+       "도쿄 여행 중 산책으로"
+      ],
+      [
+       "관계 그래프 탭",
+       "만들었다가 삭제"
+      ],
+      [
+       "무작위 구역 뽑기",
+       "만들었다가 삭제"
+      ],
+      [
+       "지도 안 토글",
+       "탭 분리로"
+      ],
+      [
+       "기록이 나의 지도에 안 남음",
+       "수정"
+      ],
+      [
+       "웹 위치 권한 안 됨",
+       "수정, 실패 이유를 화면에 안내"
+      ],
+      [
+       "구역이 뭉쳐 안 보임",
+       "넓게 펼쳐 스와이프하는 지도로"
+      ],
+      [
+       "웹에서 산책 경로 미기록 (약 3주)",
+       "발견해 수정"
+      ],
+      [
+       "커리어판",
+       "접음"
+      ],
+      [
+       "앱 스토어 출시",
+       "보류, 웹 + 설문 + 설치형 웹앱으로"
+      ]
+     ],
+     "foot_r": ""
+    },
+    {
+     "kind": "cover",
+     "meta": "YOUR TURN",
+     "en": "Which wrong turn would you have taken too? Comment the number.",
+     "h": "나도 헤맸을 것 같은 길은\n몇 번? 댓글로.",
+     "sub": "Save it for your first build · Part 3 (what's next) coming — follow along\n처음 만들어 볼 때 다시 보려면 저장 · 3편 '후'는 팔로우하고 받아 보기\n\ntrace-threshold.vercel.app",
+     "foot_r": "",
+     "imgs": [
+      "now-05-walk-idle.jpg"
+     ],
+     "img_h": 520,
+     "body": []
+    }
+   ]
+  }
+ }
+}
